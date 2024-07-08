@@ -1,0 +1,13 @@
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.sourcelink.json
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\bin\Debug\net8.0\Ecommerce.Core.deps.json
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\bin\Debug\net8.0\Ecommerce.Core.dll
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\bin\Debug\net8.0\Ecommerce.Core.pdb
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.dll
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\refint\Ecommerce.Core.dll
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.pdb
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\ref\Ecommerce.Core.dll
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Core\obj\Debug\net8.0\Ecommerce.Core.csproj.AssemblyReference.cache
