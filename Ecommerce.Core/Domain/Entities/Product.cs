@@ -28,15 +28,16 @@ public class Product
     [Range(0, int.MaxValue, ErrorMessage = "Units in stock must be a non-negative value")]
     public int UnitsInStock { get; set; }
 
-    [Required(ErrorMessage = "Units on order is required")]
-    [Range(0, int.MaxValue, ErrorMessage = "Units on order must be a non-negative value")]
-    public int UnitsOnOrder { get; set; }
+  //  [Required(ErrorMessage = "Units on order is required")]
+  //  [Range(0, int.MaxValue, ErrorMessage = "Units on order must be a non-negative value")]
+   // public int UnitsOnOrder { get; set; }
 
     [Required(ErrorMessage = "Reorder level is required")]
     [Range(0, int.MaxValue, ErrorMessage = "Reorder level must be a non-negative value")]
     public int ReorderLevel { get; set; }
-    public DateTime CreatedDate { get; set; }
-    
+    public string ProductCode { get; set; }
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public bool  IsArchived { get; set; }
     public bool Discontinued { get; set; }
     public bool IsFeatured { get; set; }
     public Supplier Supplier { get; set; }
@@ -51,6 +52,6 @@ public class Product
     public ICollection<ProductImage> ProductImages { get; set; }
     public ICollection<ProductCategory> ProductCategories { get; set; }
     public ICollection<ProductTag> ProductTags { get; set; }
-    public  Discount Discount { get; set; }
-    
+    public  Discount Discounts { get; set; }
+
 }

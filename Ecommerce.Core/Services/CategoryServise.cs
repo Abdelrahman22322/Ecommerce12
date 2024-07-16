@@ -5,14 +5,14 @@ using System.Linq.Expressions;
 
 public class CategoryService : ICategoriesServices
 {
-    private readonly IGenericRepository<Category> _categoryRepository;
+    private readonly IGenericRepository<Category?> _categoryRepository;
 
-    public CategoryService(IGenericRepository<Category> categoryRepository)
+    public CategoryService(IGenericRepository<Category?> categoryRepository)
     {
         _categoryRepository = categoryRepository;
     }
 
-    public async Task AddCategory(Category entity)
+    public async Task AddCategory(Category? entity)
     {
         if (string.IsNullOrEmpty(entity.Name))
         {
@@ -23,12 +23,16 @@ public class CategoryService : ICategoriesServices
         await _categoryRepository.SaveAsync();
     }
 
-    public async Task<bool> UpdateAsync(Category entity)
+   
+
+    public async Task<bool> UpdateAsync(Category? entity)
     {
         if (string.IsNullOrEmpty(entity.Name))
         {
             throw new ArgumentNullException("category name required");
         }
+          
+
 
         await _categoryRepository.UpdateAsync(entity);
         await _categoryRepository.SaveAsync();
@@ -44,25 +48,21 @@ public class CategoryService : ICategoriesServices
         return true;
     }
 
-    public async Task<bool> DeleteRange(IEnumerable<Category> entities)
+    public async Task<Category?> DetermineCategoryAsync(string categoryName)
     {
-        await _categoryRepository.DeleteRange(entities);
-        await _categoryRepository.SaveAsync();
-        return true;
-    }
+        var existingCategories = await _categoryRepository.FindAsync(x => x.Name == categoryName);
+        var existingCategory = existingCategories?.FirstOrDefault();
+        if (existingCategory == null)
+        {
+            var category = new Category
+            {
+                Name = categoryName
+            };
+            await _categoryRepository.AddAsync(category);
+            await _categoryRepository.SaveAsync();
+            return category;
+        }
 
-    public Task<Category> GetByIdAsync(int id)
-    {
-        return _categoryRepository.GetByIdAsync(id);
-    }
-
-    public Task<IEnumerable<Category>> GetAllAsync(Expression<Func<Category, bool>>? predicate, string? includeword)
-    {
-        return _categoryRepository.GetAllAsync(predicate, includeword);
-    }
-
-    public async Task SaveAsync()
-    {
-        await _categoryRepository.SaveAsync();
+        return existingCategory;
     }
 }

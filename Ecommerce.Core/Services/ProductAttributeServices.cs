@@ -7,21 +7,36 @@ namespace Ecommerce.Core.Services;
 
 public class ProductAttributeServices : IProductAttributeServices
 {
-    private readonly IGenericRepository<ProductAttribute> _productAttributeRepository;
+    private readonly IGenericRepository<ProductAttribute?> _productAttributeRepository;
 
-    public ProductAttributeServices(IGenericRepository<ProductAttribute> productAttributeRepository)
+    public ProductAttributeServices(IGenericRepository<ProductAttribute?> productAttributeRepository)
     {
         _productAttributeRepository = productAttributeRepository;
     }
 
-    public async Task AddProductAttribute(ProductAttribute entity)
+    public async Task AddProductAttribute(ProductAttribute? entity)
     {
         await _productAttributeRepository.AddAsync(entity);
     }
 
-    public async Task<bool> UpdateAsync(ProductAttribute entity)
+    public async Task<bool> UpdateAsync(ProductAttribute? entity)
     {
-        _productAttributeRepository.UpdateAsync(entity);
+        if (entity == null)
+        {
+            throw new ArgumentNullException(nameof(entity));
+        }
+
+        var existingEntity = await _productAttributeRepository.GetByIdAsync(entity.Id);
+        if (existingEntity == null)
+        {
+            return false;
+        }
+
+        existingEntity.Name = entity.Name;
+        existingEntity.ProductAttributeValues = entity.ProductAttributeValues;
+     
+
+        await _productAttributeRepository.UpdateAsync(existingEntity);
         return true;
     }
 
@@ -35,26 +50,54 @@ public class ProductAttributeServices : IProductAttributeServices
         return true;
     }
 
-    public async Task<bool> DeleteRange(IEnumerable<ProductAttribute> entities)
+    public async Task<ProductAttribute?> GetByIdAsync(int id)
     {
-        await _productAttributeRepository.DeleteRange(entities);
-        return true;
+
+      return  await _productAttributeRepository.GetByIdAsync(id);
     }
 
-    public async Task<ProductAttribute> GetByIdAsync(int id)
+    public async Task<IEnumerable<ProductAttribute?>> FindAsync(Expression<Func<ProductAttribute?, bool>?> func)
     {
-        return await _productAttributeRepository.GetByIdAsync(id);
+      return  await _productAttributeRepository.FindAsync(func);
     }
 
-    public async Task<IEnumerable<ProductAttribute>> GetAllAsync(Expression<Func<ProductAttribute, bool>>? predicate, string? includeword)
+    public async Task<ProductAttribute> GetByNameAsync(string attributeName)
     {
-        return await _productAttributeRepository.GetAllAsync(predicate, includeword);
+
+        var existingAttributes = await _productAttributeRepository.FindAsync(x => x.Name == attributeName);
+        var existingAttribute = existingAttributes?.FirstOrDefault();
+        if (existingAttribute == null)
+        {
+            throw new Exception("Attribute not found");
+        }
+
+        return existingAttribute;
     }
 
-    public async Task SaveAsync()
+    public async Task<ProductAttribute?> FindAsync1(Expression<Func<ProductAttribute?, bool>?> func)
     {
-        await _productAttributeRepository.SaveAsync();
+         
+      return  await  _productAttributeRepository.FindAsync1(func);
     }
+
+    public async Task<ProductAttribute?> DetermineAttributeAsync(string attributeName)
+    {
+        var existingAttributes = await _productAttributeRepository.FindAsync(x => x.Name == attributeName);
+        var existingAttribute = existingAttributes?.FirstOrDefault();
+        if (existingAttribute == null)
+        {
+            var attribute = new ProductAttribute
+            {
+                Name = attributeName
+            };
+            await _productAttributeRepository.AddAsync(attribute);
+            await _productAttributeRepository.SaveAsync();
+            return attribute;
+        }
+
+        return existingAttribute;
+    }
+
 
 
 }

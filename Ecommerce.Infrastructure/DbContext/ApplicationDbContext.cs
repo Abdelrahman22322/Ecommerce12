@@ -19,7 +19,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<Payment> Payments { get; set; }
     public DbSet<Tracking> Trackings { get; set; }
     public DbSet<Shipping> Shippings { get; set; }
-     
+    public DbSet<CloudinaryResult> CloudinaryResults { get; set; }
+
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Category> Categories { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Customer> Customers { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Order> Orders { get; set; }
@@ -41,11 +42,18 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Shipper> Shippers { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Wishlist> Wishlists { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.WishlistItem> WishlistItems { get; set; }
-    public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.ProductImage> ProductImages { get; set; }
+    public DbSet<ProductImage?> ProductImages { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.ProductCategory> ProductCategories { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.ProductTag> ProductTags { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Tag> Tags { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
     
+        optionsBuilder.EnableSensitiveDataLogging();
+    
+     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -248,7 +256,16 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasForeignKey(pc => pc.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
-
+        modelBuilder.Entity<Product>()
+            .HasMany(p => p.ProductImages)
+            .WithOne(pi => pi.Product)
+            .HasForeignKey(pi => pi.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+         
+        modelBuilder.Entity<Product>().HasOne(p => p.Discounts)
+            .WithOne(d => d.Product)
+            .HasForeignKey<Discount>(d => d.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
     }

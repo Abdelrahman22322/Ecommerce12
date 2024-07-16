@@ -15,14 +15,14 @@ namespace Ecommerce.Core.Services
     
 public class BrandServices : IBrandServices
     {
-        private readonly IGenericRepository<Brand> _brandRepository;
+        private readonly IGenericRepository<Brand?> _brandRepository;
 
-        public BrandServices(IGenericRepository<Brand> brandRepository)
+        public BrandServices(IGenericRepository<Brand?> brandRepository)
         {
             _brandRepository = brandRepository;
         }
 
-        public async Task AddBrand(Brand entity)
+        public async Task AddBrand(Brand? entity)
         {
             if (entity.Name == null)
             {
@@ -32,7 +32,7 @@ public class BrandServices : IBrandServices
             await _brandRepository.AddAsync(entity);
         }
 
-        public async Task<bool> UpdateAsync(Brand entity)
+        public async Task<bool> UpdateAsync(Brand? entity)
         {
 
             if (entity.Name == null)
@@ -57,27 +57,40 @@ public class BrandServices : IBrandServices
 
         public async Task<bool> DeleteRange(IEnumerable<Brand> entities)
         {
-
-            await _brandRepository.DeleteRange(entities);
-            await _brandRepository.SaveAsync();
-            return true;
+            throw new NotImplementedException();
         }
 
         public async Task<Brand> GetByIdAsync(int id)
         {
-
-            return await _brandRepository.GetByIdAsync(id);
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Brand>> GetAllAsync(Expression<Func<Brand, bool>>? predicate, string? includeword)
         {
-
-            return await _brandRepository.GetAllAsync(predicate, includeword : "product");
+            throw new NotImplementedException();
         }
 
-        public async Task SaveAsync()
+
+        public async Task<Brand?> DetermineBrandAsync(string brandName)
         {
-            await _brandRepository.SaveAsync();
+            var existingBrands = await _brandRepository.FindAsync(x => x.Name == brandName);
+            var existingBrand = existingBrands?.FirstOrDefault();
+            if (existingBrand == null)
+            {
+                var brand = new Brand
+                {
+                    Name = brandName
+                };
+                await _brandRepository.AddAsync(brand);
+                await _brandRepository.SaveAsync();
+                return brand;
+            }
+
+            return existingBrand;
         }
+
+
     }
+    
+
 }

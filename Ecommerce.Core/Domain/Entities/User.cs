@@ -22,15 +22,15 @@ namespace Ecommerce.Core.Domain.Entities
         [EmailAddress(ErrorMessage = "Please enter a valid email")]
         public string Email { get; set; }
          
-        [Required(ErrorMessage = "Please enter your password")]
-        [DataType(DataType.Password)]
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 20 characters")]
+      
+       
+        [StringLength(256)]
         public string Password { get; set; }
         
-        [Required(ErrorMessage = "Please confirm your password")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Password does not match")]
-        public string ConfirmPassword { get; set; }
+        //[Required(ErrorMessage = "Please confirm your password")]
+        //[DataType(DataType.Password)]
+        //[Compare("Password", ErrorMessage = "Password does not match")]
+        //public string ConfirmPassword { get; set; }
         
 
         public bool IsActive { get; set; }

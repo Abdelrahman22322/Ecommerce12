@@ -7,11 +7,18 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Ecommerce.Infrastructure.Repository;
 
-public class ProductRepository : GenericRepository<Product> , IProductRepository  
+public class ProductRepository :  IProductRepository  
 {
-    public ProductRepository(ApplicationDbContext context, DbSet<Product> entities) : base(context, entities)
+
+     private readonly ApplicationDbContext _context;
+    
+
+    public ProductRepository(ApplicationDbContext context)
     {
+        _context = context;
+      
     }
+
 
     public async Task<IEnumerable<Product>> GetProductsByFilterAsync(ProductFilter filter)
     {
@@ -45,12 +52,12 @@ public class ProductRepository : GenericRepository<Product> , IProductRepository
 
         if (filter.MinDiscount.HasValue)
         {
-            query = query.Where(p => p.Discount.DiscountAmount >=  filter.MinDiscount);
+            query = query.Where(p => p.Discounts.DiscountAmount >=  filter.MinDiscount);
         }
 
         if (filter.MaxDiscount.HasValue)
         {
-            query = query.Where(p => p.Discount.DiscountAmount <= filter.MaxDiscount.Value);
+            query = query.Where(p => p.Discounts.DiscountAmount <= filter.MaxDiscount.Value);
         }
 
         if (filter.MinRating.HasValue)
@@ -134,8 +141,8 @@ public class ProductRepository : GenericRepository<Product> , IProductRepository
         return await _context.Products
             .Include(p => p.Brand)
             .Include(p => p.Category)
-            .Include(p => p.Discount)
-            .Where(p => p.Discount.DiscountAmount > 0)
+            .Include(p => p.Discounts)
+            .Where(p => p.Discounts.DiscountAmount > 0)
             .ToListAsync();
     }
 

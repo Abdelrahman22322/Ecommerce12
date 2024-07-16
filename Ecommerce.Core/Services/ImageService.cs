@@ -1,7 +1,9 @@
-﻿using CloudinaryDotNet.Actions;
-using Ecommerce.Core.Domain.Entities;
+﻿using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
+using Microsoft.AspNetCore.Http;
+
+namespace Ecommerce.Core.Services;
 
 public class ImageService : IImageService
 {
@@ -9,12 +11,15 @@ public class ImageService : IImageService
 
     public ImageService(IImageRepository imageRepository)
     {
-        _imageRepository = imageRepository;
+        _imageRepository = imageRepository ?? throw new ArgumentNullException(nameof(imageRepository));
     }
 
-    public async Task<CloudinaryResult> UploadImageAsync(ImageUploadParams uploadParams)
+    public async Task<CloudinaryResult> UploadImageAsync(IFormFile uploadParams)
     {
         return await _imageRepository.UploadImageAsync(uploadParams);
+
+
+
     }
 
     public async Task DeleteImageAsync(string publicId)
@@ -22,13 +27,19 @@ public class ImageService : IImageService
         await _imageRepository.DeleteImageAsync(publicId);
     }
 
-    public async Task AddImageAsync(ProductImage image)
+    public async Task AddImageAsync(ProductImage? image)
     {
         await _imageRepository.AddImageAsync(image);
     }
 
-    public async Task<ProductImage> GetImageByIdAsync(int id)
+    public async Task<ProductImage?> GetImageByIdAsync(int id)
     {
         return await _imageRepository.GetImageByIdAsync(id);
+    }
+
+    public Task<List<ProductImage?>> GetImageByProductIdAsync(int id)
+    {
+
+        return _imageRepository.GetImageByIdProductIdAsync(id);
     }
 }
