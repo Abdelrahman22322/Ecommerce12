@@ -34,8 +34,9 @@ namespace Ecommerce.Core.Domain.Entities
         
 
         public bool IsActive { get; set; }
+        //public bool IsVerified { get; set; }
 
-        
+
         public ICollection<UserRole> UserRoles { get; set; }
         public UserProfile UserProfile { get; set; }
         public Cart Cart { get; set; }
@@ -43,6 +44,7 @@ namespace Ecommerce.Core.Domain.Entities
 
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Comment>  Comments { get; set; } 
+        public ICollection<RefreshTokenModel> RefreshTokens { get; set; }
 
 
     }

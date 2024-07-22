@@ -9,4 +9,10 @@ public interface IAuthService
     public Task<AuthModel> LoginAsync(LoginModel model);
 
     Task<string> AddRoleAsync(AddRoleDto model);
+   
+    
+        Task SendVerificationCodeAsync(string email);
+        Task<bool> VerifyEmailAsync(string email, string code);
+        Task<AuthModel> CompleteRegistrationAsync(string email, string code);
+
 }

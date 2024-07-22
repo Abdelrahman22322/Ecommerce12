@@ -959,6 +959,43 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("Ecommerce.Core.Domain.Entities.User", b =>
+                {
+                    b.OwnsMany("Ecommerce.Core.Domain.Entities.RefreshTokenModel", "RefreshTokens", b1 =>
+                        {
+                            b1.Property<int>("UserId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime>("ExpireAt")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime>("RevokedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Token")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("UserId", "Id");
+
+                            b1.ToTable("RefreshTokenModel");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("RefreshTokens");
+                });
+
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.UserProfile", b =>
                 {
                     b.HasOne("Ecommerce.Core.Domain.Entities.User", "User")

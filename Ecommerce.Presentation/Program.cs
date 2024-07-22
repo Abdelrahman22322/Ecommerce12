@@ -47,6 +47,8 @@ builder.Services.AddScoped<IDiscountService, DiscountService>();
 builder.Services.AddScoped<IUserManagerRepository, UserManagerRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 
 // Add Product Validator
@@ -85,6 +87,20 @@ builder.Services.AddAuthentication(o =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     };
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNgrok",
+        builder =>
+        {
+            builder.WithOrigins("https://a197-197-160-202-76.ngrok-free.app")
+                //  https://a197-197-160-202-76.ngrok-free.app
+                //       .AllowAnyHeader()
+                //       .AllowAnyMethod();
+                // builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
 
 // Register the Swagger generator, defining 1 or more Swagger documents
@@ -100,10 +116,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+app.UseCors("AllowNgrok");
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+
 app.Run();
+
+
+
