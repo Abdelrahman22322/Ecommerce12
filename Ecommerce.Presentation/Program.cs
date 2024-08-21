@@ -87,16 +87,14 @@ builder.Services.AddAuthentication(o =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
     };
 });
+
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowNgrok",
+    options.AddPolicy("AllowAll",
         builder =>
         {
-            builder.WithOrigins("https://a197-197-160-202-76.ngrok-free.app")
-                //  https://a197-197-160-202-76.ngrok-free.app
-                //       .AllowAnyHeader()
-                //       .AllowAnyMethod();
-                // builder.AllowAnyOrigin()
+            builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
@@ -110,22 +108,34 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+app.UseSwagger();
 if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+ app.UseSwaggerUI();
+else
+ app.UseSwaggerUI(options =>
+ {
+ options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+ options.RoutePrefix = string.Empty;
+ });
 
 
+
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-app.UseCors("AllowNgrok");
-
 app.UseAuthorization();
-
 app.MapControllers();
-
-
 app.Run();
+
+
+
+
+
 
 
 

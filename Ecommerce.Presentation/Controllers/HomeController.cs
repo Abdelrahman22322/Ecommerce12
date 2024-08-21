@@ -85,5 +85,28 @@ namespace Ecommerce.Presentation.Controllers
             var productCards = await _productService.GetProductCards();
             return Ok(productCards);
         }
+
+
+        [HttpGet("{productId}/similar")]
+        public async Task<IActionResult> GetSimilarProducts(int productId)
+        {
+            var products = await _productService.GetSimilarProductsOrRelatedAsync(productId);
+            if (products == null || !products.Any())
+            {
+                return NotFound();
+            }
+            return Ok(products);
+        }
+
+        //[HttpGet("{productId}/related")]
+        //public async Task<IActionResult> GetRelatedProducts(int productId)
+        //{
+        //    var products = await _productService.GetRelatedProductsAsync(productId);
+        //    if (products == null || !products.Any())
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(products);
+       // }
     }
 }

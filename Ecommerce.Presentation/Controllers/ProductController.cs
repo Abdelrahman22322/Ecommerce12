@@ -125,6 +125,20 @@ namespace Ecommerce.Presentation.Controllers
                 var pdfBytes = await _productService.ExportPdfAsync();
                 return File(pdfBytes, "application/pdf", "Products.pdf");
             }
+
+            [HttpGet("{productId}")]
+            public async Task<IActionResult> GetProductForUpdate(int productId)
+            {
+                try
+                {
+                    var productDto = await _productService.GetProductForUpdate(productId);
+                    return Ok(productDto);
+                }
+                catch (Exception ex)
+                {
+                    return NotFound(new { message = ex.Message });
+                }
+            }
         }
 
     }

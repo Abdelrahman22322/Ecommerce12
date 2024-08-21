@@ -37,9 +37,9 @@ public class ImageService : IImageService
         return await _imageRepository.GetImageByIdAsync(id);
     }
 
-    public Task<List<ProductImage?>> GetImageByProductIdAsync(int id)
+    public Task<IEnumerable<ImageDto>> GetImageByProductIdAsync(int id)
     {
 
-        return _imageRepository.GetImageByIdProductIdAsync(id);
+        return _imageRepository.GetImageByProductIdAsync(id);
     }
 }

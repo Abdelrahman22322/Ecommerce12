@@ -53,94 +53,7 @@ public class ProductServices : IProductService
 
 
 
-    //public async Task AddAsync(Product product)
-    //{
-    //    // Assuming _productRepository has methods for transaction management
-    //    using (var transaction = _productRepository.BeginTransaction())
-    //    {
-    //        try
-    //        {
-    //            var newProduct = new Product
-    //            {
-    //                ProductName = product.ProductName,
-    //                Ratings = , // Set default rating
-    //                Discount = product.Discount,
-    //                ProductName = product.ProductName,
-    //                Ratings = default, // Set default rating
-    //                Discount = product.Discount,
-    //                UnitPrice = product.UnitPrice,
-
-
-    //                // Add other necessary attributes here
-    //            };
-
-    //            // Determine and set the category
-    //            var category = await _categoryService.DetermineCategoryAsync(newProduct.Category.Name);
-    //            newProduct.CategoryId = category.Id;
-
-    //            // Determine and set the brand
-    //            var brand = await _brandService.DetermineBrandAsync(product.Brand.Name);
-    //            newProduct.BrandId = brand.Id;
-
-    //            // Add the product to the repository
-    //            await _productRepository.AddAsync(newProduct);
-
-    //            // Handle product images
-    //            foreach (var imageUrl in product.ProductImages.Select(x => x.ImageUrl))
-    //            {
-    //                var uploadParams = new ImageUploadParams()
-    //                {
-    //                    File = new FileDescription(imageUrl)
-    //                };
-    //                var uploadResult = await _imageService.UploadImageAsync(uploadParams);
-    //                var image = new ProductImage
-    //                {
-    //                    ImageUrl =  uploadResult.Url.ToString(),
-    //                    PublicId = uploadResult.PublicId,
-    //                    ProductId = newProduct.ProductId
-    //                };
-    //                await _productImageService.AddProductImage(image);
-    //            }
-
-    //            // Handle product tags manually
-    //            foreach (var tagName in product.ProductTags)
-    //            {
-    //                var tag = await _productRepository.FindAsync(tagName);
-    //                var productTag = new ProductTag
-    //                {
-    //                    ProductId = newProduct.ProductId,
-    //                    TagId = tag.Id
-    //                };
-    //                await _productRepository.Add(productTag);
-    //            }
-
-    //            // Handle product attributes and their values
-    //            foreach (var attribute in product.ProductAttributeValues.Select(x=>x.ProductAttribute))
-    //            {
-    //                var attributeEntity = await _productAttributeService.DetermineAttributeAsync(attribute.Key);
-    //                foreach (var value in attribute.ProductAttributeValues)
-    //                {
-    //                    var attributeValue = await _productAttributeValueService.DetermineAttributeValueAsync(attributeEntity.Id, value);
-    //                    var productAttributeValue = new ProductAttributeValue
-    //                    {
-    //                        ProductId = newProduct.ProductId,
-    //                        AttributeId = attributeEntity.Id,
-    //                        Value = attributeValue.Value
-    //                    };
-    //                    await _productAttributeService.AddProductAttribute(productAttributeValue);
-    //                }
-    //            }
-
-    //            await _productRepository.CommitTransactionAsync();
-    //        }
-    //        catch
-    //        {
-    //            await _productRepository.RollbackTransactionAsync();
-    //            throw;
-    //        }
-    //    }
-
-    //}
+    
     public async Task AddAsync(AddProductDto product)
     {
 
@@ -243,6 +156,7 @@ public class ProductServices : IProductService
                     await _productRepository1.RollbackTransactionAsync();
                     throw new Exception("Error occurred while adding product: " + ex.Message, ex);
                 }
+
             }
         
 
@@ -483,8 +397,6 @@ public class ProductServices : IProductService
 
 
 
-
-
     public async Task DeleteAsync(int productId)
     {
         using (var transaction = await _productRepository1.BeginTransactionAsync())
@@ -540,6 +452,7 @@ public class ProductServices : IProductService
                 throw new Exception("Error occurred while deleting product: " + ex.Message, ex);
             }
         }
+
     }
 
 
@@ -612,16 +525,15 @@ public class ProductServices : IProductService
     public async Task<IEnumerable<ProductDetailDTO>> GetProducts()
     {
 
-        var map = _Mapper.Map<IEnumerable<ProductDetailDTO>>(await _productRepository.GetAllAsync(predicate: null, includeword: "Category,Brand,Supplier"));
-        return map;
-
+        return await _productRepository1.GetProducts();
 
     }
 
     public async Task<IEnumerable<ProducCardtDTO>> GetProductCards()
     {
-        var map = _Mapper.Map<IEnumerable<ProducCardtDTO>>(await _productRepository.GetAllAsync(predicate: null, includeword: null));
-        return map;
+        //var map = _Mapper.Map<IEnumerable<ProducCardtDTO>>(await _productRepository.GetAllAsync(predicate: null, includeword: "Category,Brand,Supplier,ProductImage"));
+        //return map;
+        return await _productRepository1.GetProductCards();
     }
 
     public async Task<ProductDetailDTO> ArchiveProduct(int productId)
@@ -657,7 +569,64 @@ public class ProductServices : IProductService
         return _Mapper.Map<ProductDetailDTO>(product);
     }
 
-    public async Task<byte[]> ExportPdfAsync()
+  
+        public async Task<UpdateProductDto> GetProductForUpdate(int productId)
+        {
+
+            var product = await _productRepository1.GetByIdAsync(productId);
+            if (product == null)
+            {
+                throw new KeyNotFoundException("Product not found.");
+            }
+
+            var productDto = _Mapper.Map<UpdateProductDto>(product);// Use AutoMapper to update the basic data of the product
+          _Mapper.Map(productDto, product);
+
+        //// Fetch related entities in parallel
+        //    var categoryTask = _categoryService.GetByIdAsync(product.CategoryId);
+        //  // var brandTask = _brandService.GetByIdAsync(product.BrandId);
+        //var imagesTask = _imageService.GetImageByProductIdAsync(productId);
+        //    var tagsTask = _productTagService.FindAsync(x => x.ProductId == productId);
+        //    var attributesTask = _productAttributeValueService.FindAsync(x => x != null && x.ProductId == productId);
+
+        //   await Task.WhenAll(imagesTask,categoryTask, tagsTask, attributesTask);
+
+        //     var category = await categoryTask;
+        //  //var brand = await brandTask;
+        //  var images = await imagesTask;
+        //  var tags = await tagsTask;
+        //  var attributes = await attributesTask;
+
+        // Map to DTO
+
+
+        //productDto.Category = category?.Name;
+        //productDto.Brand = brand?.Name;
+        //productDto.ImageUrls = images?.Select(img => img.PublicId).ToList() ?? new List<string>();
+        //productDto.Tags = tags?.Select(tag => tag.Tag.Name).ToList() ?? new List<string>();
+        //productDto.ProductAttributes = attributes?.Select(attr => attr.ProductAttribute.Name).ToList() ?? new List<string>();
+        //productDto.ProductAttributesValues = attributes?.Select(attr => attr.Value).ToList() ?? new List<string>();
+
+        return productDto;
+        }
+
+        public async Task<IEnumerable<ProducCardtDTO>> GetRecommendedProductsAsync()
+        {
+            var map = _Mapper.Map<IEnumerable<ProducCardtDTO>>(await _productRepository1.GetRecommendedProductsAsync());
+
+        return map;
+    }
+
+        public async Task<IEnumerable<ProducCardtDTO>> GetSimilarProductsOrRelatedAsync(int productId)
+        {
+            var map = _Mapper.Map<IEnumerable<ProducCardtDTO>>(await _productRepository1.GetSimilarOrRelatedProductsAsync(productId, true));
+        return map;
+    }
+
+    
+
+
+        public async Task<byte[]> ExportPdfAsync()
     {
 
         var products = await _productRepository.GetAllAsync(predicate: null, includeword: "Category,Brand,Supplier");
@@ -682,6 +651,7 @@ public class ProductServices : IProductService
 
 
     }
+
 }
 
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Ecommerce.Core.DTO;
 using Ecommerce.Core.Domain.Entities;
+using Ecommerce.Core.Domain.RepositoryContracts;
 
 namespace Ecommerce.Core.DTO.Map
 {
@@ -77,9 +78,9 @@ namespace Ecommerce.Core.DTO.Map
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Url))
                 .ForMember(dest => dest.PublicId, opt => opt.MapFrom(src => src.PublicId));
 
-
-
-
+            // 
+            
+            CreateMap<Category, CategoryDto>().ReverseMap();
 
 
 
@@ -112,6 +113,52 @@ namespace Ecommerce.Core.DTO.Map
             CreateMap<CloudinaryResult, ProductImage>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Url))
                 .ForMember(dest => dest.PublicId, opt => opt.MapFrom(src => src.PublicId));
+
+
+            //CreateMap<Product, UpdateProductDto>()
+            //    .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            //    .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
+            //    .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+            //    //    .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.))
+            //    .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name))
+            //    .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
+            //    .ForMember(dest => dest.UnitsInStock, opt => opt.MapFrom(src => src.UnitsInStock))
+            //    .ForMember(dest => dest.ReorderLevel, opt => opt.MapFrom(src => src.ReorderLevel))
+            //    .ForMember(dest => dest.Discontinued, opt => opt.MapFrom(src => src.Discontinued))
+            //    .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.ProductCode))
+            //    .ForPath(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Supplier.CompanyName))
+            //    .ForPath(dest => dest.ContactName, opt => opt.MapFrom(src => src.Supplier.ContactName))
+            //    .ForMember(dest => dest.IsArchived, opt => opt.MapFrom(src => src.IsArchived))
+            //    .ForMember(dest => dest.Tags,
+            //        opt => opt.MapFrom(src => src.ProductTags.Select(pt => pt.Tag.Name).ToList()))
+            //    .ForMember(dest => dest.ProductAttributes,
+            //        opt => opt.MapFrom(src =>
+            //            src.ProductAttributeValues.Select(pav => pav.ProductAttribute.Name).ToList()))
+            //    .ForMember(dest => dest.ProductAttributesValues,
+            //        opt => opt.MapFrom(src => src.ProductAttributeValues.Select(pav => pav.Value).ToList()))
+            //    .ForMember(dest => dest.ImageUrls,
+            //        opt => opt.MapFrom(src => src.ProductImages.Select(pi => pi.ImageUrl).ToList()))
+            //    .ForMember(dest => dest.ProductImages, opt => opt.Ignore());
+
+                    CreateMap<Product, UpdateProductDto>()
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
+            .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+          //  .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand != null ? src.Brand.Name : null))
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
+            .ForMember(dest => dest.UnitsInStock, opt => opt.MapFrom(src => src.UnitsInStock))
+            .ForMember(dest => dest.ReorderLevel, opt => opt.MapFrom(src => src.ReorderLevel))
+            .ForMember(dest => dest.Discontinued, opt => opt.MapFrom(src => src.Discontinued))
+            .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.ProductCode))
+            .ForPath(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.CompanyName : null))
+            .ForPath(dest => dest.ContactName, opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.ContactName : null))
+            .ForMember(dest => dest.IsArchived, opt => opt.MapFrom(src => src.IsArchived))
+            .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.ProductTags != null ? src.ProductTags.Select(pt => pt.Tag.Name).ToList() : new List<string>()))
+            .ForMember(dest => dest.ProductAttributes, opt => opt.MapFrom(src => src.ProductAttributeValues != null ? src.ProductAttributeValues.Select(pav => pav.ProductAttribute.Name).ToList() : new List<string>()))
+            .ForMember(dest => dest.ProductAttributesValues, opt => opt.MapFrom(src => src.ProductAttributeValues != null ? src.ProductAttributeValues.Select(pav => pav.Value).ToList() : new List<string>()))
+            .ForMember(dest => dest.ImageUrls, opt => opt.MapFrom(src => src.ProductImages != null ? src.ProductImages.Select(pi => pi.ImageUrl).ToList() : new List<string>()))
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore());
         }
     }
 }

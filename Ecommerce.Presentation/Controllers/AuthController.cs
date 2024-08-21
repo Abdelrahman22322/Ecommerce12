@@ -1,4 +1,5 @@
-﻿using Ecommerce.Core.Domain.RepositoryContracts;
+﻿using Ecommerce.Core.Domain.Entities;
+using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -89,22 +90,34 @@ namespace Ecommerce.Presentation.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto model)
         {
-            var result = await _authService.RegisterAsync(model);
-            if (!result.IsAuthentecated)
-                return BadRequest(result.Message);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var result = await _authService.RegisterAsync(model);
+            
             return Ok(result);
         }
 
         [HttpPost("complete-registration")]
         public async Task<IActionResult> CompleteRegistration([FromBody] VerificationDto model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _authService.CompleteRegistrationAsync(model.Email, model.Code);
-            if (!result.IsAuthentecated)
+
+            if (!result.IsVerified)
+            {
                 return BadRequest(result.Message);
+            }
 
             return Ok(result);
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginModel model)

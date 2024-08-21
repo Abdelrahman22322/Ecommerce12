@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Core.Domain.Entities;
+using Ecommerce.Core.DTO;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Ecommerce.Core.Domain.RepositoryContracts;
@@ -65,19 +66,11 @@ public interface IProductRepository
     /// <returns>A collection of products.</returns>
     Task<IEnumerable<Product>> GetRecommendedProductsAsync();
 
-    /// <summary>
-    /// Retrieves the related products for the specified product.
-    /// </summary>
-    /// <param name="productId">The ID of the product.</param>
-    /// <returns>A collection of products.</returns>
-    Task<IEnumerable<Product>> GetRelatedProductsAsync(int productId);
+     Task<IEnumerable<Product>> GetSimilarOrRelatedProductsAsync(int productId, bool related);
 
-    /// <summary>
-    /// Retrieves the similar products for the specified product.
-    /// </summary>
-    /// <param name="productId">The ID of the product.</param>
-    /// <returns>A collection of products.</returns>
-    Task<IEnumerable<Product>> GetSimilarProductsAsync(int productId);
+     Task<IEnumerable<ProducCardtDTO>> GetProductCards();
+     Task<IEnumerable<ProductDetailDTO>> GetProducts();
+    Task<Product> GetByIdAsync(int id);
 
     Task<IDbContextTransaction> BeginTransactionAsync();
     Task CommitTransactionAsync();

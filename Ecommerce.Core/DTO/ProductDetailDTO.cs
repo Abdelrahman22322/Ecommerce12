@@ -15,9 +15,10 @@ public class ProductDetailDTO
     public string? Brand { get; set; }
         public string? Category { get; set; }
         public int UnitsInStock { get; set; }
-      //  public int UnitsOnOrder { get; set; }
-     //   public int ReorderLevel { get; set; }
-     public int Rating { get; set; }
+        public string? ImageUrl { get; set; }
+    //  public int UnitsOnOrder { get; set; }
+    //   public int ReorderLevel { get; set; }
+    public int Rating { get; set; }
     public bool Discontinued { get; set; }
       
      

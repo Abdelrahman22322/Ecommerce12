@@ -16,3 +16,4 @@ public interface ITagService
     Task<IEnumerable<Tag>> FindAsync(Expression<Func<Tag, bool>?> func);
     Task<Tag?> FindAsync1(Expression<Func<Tag, bool>?> func);
 }
+

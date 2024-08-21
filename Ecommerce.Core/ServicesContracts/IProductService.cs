@@ -35,6 +35,10 @@ public interface IProductService
 
     Task<ProductDetailDTO> ArchiveProduct(int productId);
     Task<ProductDetailDTO> UnArchiveProduct(int productId);
+    Task<UpdateProductDto> GetProductForUpdate(int productId);
+    Task<IEnumerable<ProducCardtDTO>> GetRecommendedProductsAsync();
+    Task<IEnumerable<ProducCardtDTO>> GetSimilarProductsOrRelatedAsync(int productId);
+  
 
     public Task<byte[]> ExportPdfAsync();
 

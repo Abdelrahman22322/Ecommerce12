@@ -10,5 +10,6 @@ public interface IImageRepository
     Task DeleteImageAsync(string publicId);
     Task AddImageAsync(ProductImage? image);
     Task<ProductImage?> GetImageByIdAsync(int id);
-    Task<List<ProductImage?>> GetImageByIdProductIdAsync(int id);
+   // Task<List<ProductImage?>> GetImageByIdProductIdAsync(int id);
+   Task<IEnumerable<ImageDto>> GetImageByProductIdAsync(int productId);
 }

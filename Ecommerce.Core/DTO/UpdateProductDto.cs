@@ -9,7 +9,7 @@ public class UpdateProductDto
     public decimal UnitPrice { get; set; }
     public string Description { get; set; }
     public string Brand { get; set; }
-    public string Category { get; set; }
+    public string? Category { get; set; }
     public int UnitsInStock { get; set; }
     //   public int UnitsOnOrder { get; set; }
     public int ReorderLevel { get; set; }

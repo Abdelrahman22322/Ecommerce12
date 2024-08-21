@@ -116,9 +116,53 @@ public class ImageRepository : IImageRepository
 
     }
 
-    public async Task<List<ProductImage?>> GetImageByIdProductIdAsync(int id)
-    {
-        return await _context.ProductImages.Where(x => x.ProductId == id).ToListAsync();
+    //public async Task<IEnumerable<ImageDto>> GetImageByProductIdAsync(int productId)
+    //{
+    //    var searchParams = new ListResourcesByTagParams
+    //    {
+    //        Tag = $"product_{productId}",
+    //        MaxResults = 30 // عدل العدد حسب الحاجة
+    //    };
 
+    //    var searchResult = await _cloudinary.ListResourcesByTagAsync(searchParams);
+
+    //    if (searchResult.StatusCode != System.Net.HttpStatusCode.OK)
+    //    {
+    //        throw new Exception("Failed to fetch images from Cloudinary.");
+    //    }
+
+    //    var images = searchResult.Resources.Select(resource => new ImageDto
+    //    {
+    //        PublicId = resource.PublicId,
+    //        Url = resource.SecureUrl.ToString()
+    //    }).ToList();
+
+    //    return images;
+    // }
+
+    public async Task<IEnumerable<ImageDto>> GetImageByProductIdAsync(int productId)
+    {
+        // Define the tag based on the product ID
+        string tag = $"product_{productId}";
+
+        // Use the ListResourcesByTagAsync method with the tag as a string
+        var searchResult = await _cloudinary.ListResourcesByTagAsync(tag);
+
+        if (searchResult.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            throw new Exception("Failed to fetch images from Cloudinary.");
+        }
+
+        var images = searchResult.Resources.Select(resource => new ImageDto
+        {
+            PublicId = resource.PublicId,
+            Url = resource.SecureUrl.ToString()
+        }).ToList();
+
+        return images;
     }
+
+
+
 }
+

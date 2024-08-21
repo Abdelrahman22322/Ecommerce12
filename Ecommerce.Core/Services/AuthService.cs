@@ -2,174 +2,160 @@
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
 using Microsoft.AspNetCore.Identity;
-using Org.BouncyCastle.Crypto;
 using System.Security.Cryptography;
 
-namespace Ecommerce.Core.Services;
-
-public class AuthService : IAuthService
+namespace Ecommerce.Core.Services
 {
-    private readonly IUserManagerRepository _userManagerRepository;
-    private readonly IEmailService _emailService;
-    private readonly Dictionary<string, string> _verificationCodes = new Dictionary<string, string>();
-
-
-    public AuthService(IUserManagerRepository authRepository, IEmailService emailService)
+    public class AuthService : IAuthService
     {
-        _userManagerRepository = authRepository;
-        _emailService = emailService;
-    }
+        private readonly IUserManagerRepository _userManagerRepository;
+        private readonly IEmailService _emailService;
+        private readonly Dictionary<string, string> _verificationCodes = new Dictionary<string, string>();
 
-
-   
-
-    public async Task<AuthModel> RegisterAsync(RegisterDto model)
-    {
-        if (await _userManagerRepository.GetUserByEmailAsync(model.Email) != null)
-            return new AuthModel { Message = "Email is already registered" };
-
-        if (await _userManagerRepository.GetUserByUsernameAsync(model.Username) != null)
-            return new AuthModel { Message = "Username already exists" };
-
-        var user = await _userManagerRepository.CreateUserAsync(model);
-
-        // إرسال كود التحقق
-        await SendVerificationCodeAsync(user.Email);
-
-        return new AuthModel
+        public AuthService(IUserManagerRepository userManagerRepository, IEmailService emailService)
         {
-            Email = user.Email,
-            IsAuthentecated = false,
-            IsVerified = false,
-            Message = "Verification code sent. Please verify your email.",
-            UserName = user.Username
-        };
-    }
-
-    public async Task<AuthModel> CompleteRegistrationAsync(string email, string code)
-    {
-        var user = await _userManagerRepository.GetUserByEmailAsync(email);
-
-        if (user == null)
-        {
-            return new AuthModel { Message = "Invalid email." };
+            _userManagerRepository = userManagerRepository;
+            _emailService = emailService;
         }
 
-        if (!await VerifyEmailAsync(email, code))
+        public async Task<AuthModel> RegisterAsync(RegisterDto model)
         {
-            return new AuthModel { Message = "Invalid verification code." };
+            var existingEmailUser = await _userManagerRepository.GetUserByEmailAsync(model.Email);
+            if (existingEmailUser != null)
+                return new AuthModel { Message = "Email is already registered" };
+
+            var existingUsernameUser = await _userManagerRepository.GetUserByUsernameAsync(model.Username);
+            if (existingUsernameUser != null)
+                return new AuthModel { Message = "Username already exists" };
+
+            var user = await _userManagerRepository.CreateUserAsync(model);
+            if (user == null)
+                return new AuthModel { Message = "User creation failed. Check password requirements and try again." };
+
+            await SendVerificationCodeAsync(model.Email);
+
+            return new AuthModel
+            {
+                Email = model.Email,
+                IsAuthentecated = false,
+                IsVerified = false,
+                Message = "Verification code sent. Please verify your email.",
+                UserName = model.Username
+            };
         }
 
-        await _userManagerRepository.AddUserToRoleAsync(user, "User");
-
-        var jwtToken = await _userManagerRepository.GenerateJwtTokenAsync(user);
-
-        return new AuthModel
+        public async Task<AuthModel> CompleteRegistrationAsync(string email, string code)
         {
-            Email = user.Email,
-            IsAuthentecated = true,
-            IsVerified = true,
-            Roles = new List<string> { "User" },
-            Token = jwtToken,
-            UserName = user.Username
-        };
+            var user = await _userManagerRepository.GetUserByEmailAsync(email);
+            if (user == null)
+                return new AuthModel { Message = "Invalid email." };
 
-    }
+            if (!await VerifyEmailAsync(email, code))
+                return new AuthModel { Message = "Invalid verification code." };
 
-    public async Task<AuthModel> LoginAsync(LoginModel model)
-
-    {
-         var authmodel = new AuthModel();
-        var user = await _userManagerRepository.GetUserByEmailAsync(model.Email);
-
-        if (user == null || !await _userManagerRepository.VerifyPasswordAsync(user, model.Password))
-            return new AuthModel { Message = "Invalid email or password" };
-
-        var jwtToken = await _userManagerRepository.GenerateJwtTokenAsync(user);
-        var roles = await _userManagerRepository.GetUserRolesAsync(user);
-
-
-        authmodel.Email = user.Email;
-        authmodel.IsAuthentecated = true;
-        authmodel.IsVerified = true;
-        authmodel.Roles = roles.ToList();
-        authmodel.Token = jwtToken;
-
-            
-
-        if (user.RefreshTokens.Any(t => t.IsActive))
-        {
-            var activeRefreshToken = user.RefreshTokens.FirstOrDefault(t => t.IsActive);
-            authmodel.RefreshToken = activeRefreshToken.Token;
-            authmodel.RefreshTokenExpireAt = activeRefreshToken.ExpireAt;
-        }
-        else
-        {
-            var refreshToken = GenerateRefreshToken();
-            authmodel.RefreshToken = refreshToken.Token;
-            authmodel.RefreshTokenExpireAt = refreshToken.ExpireAt;
-            user.RefreshTokens.Add(refreshToken);
+            user.IsVerified = true;
             await _userManagerRepository.UpdateUserAsync(user);
-        }
-        return authmodel;
-    }
+            await _userManagerRepository.AddUserToRoleAsync(user, "User");
 
-    public async Task<string> AddRoleAsync(AddRoleDto model)
-    {
-        var user = await _userManagerRepository.GetUserByIdAsync(model.UserId);
+            var jwtToken = await _userManagerRepository.GenerateJwtTokenAsync(user);
 
-        if (user == null)
-            return "Invalid user ID";
-
-        var roles = await _userManagerRepository.GetUserRolesAsync(user);
-        if (roles.Contains(model.RoleName))
-            return "User already assigned to this role";
-
-        await _userManagerRepository.AddUserToRoleAsync(user, model.RoleName);
-
-        return string.Empty;
-    }
-
-    public async Task SendVerificationCodeAsync(string email)
-    {
-        var code = new Random().Next(100000, 999999).ToString();
-
-        if (_verificationCodes.ContainsKey(email))
-        {
-            _verificationCodes[email] = code;
-        }
-        else
-        {
-            _verificationCodes.Add(email, code);
+            return new AuthModel
+            {
+                Email = user.Email,
+                IsAuthentecated = true,
+                IsVerified = true,
+                Roles = new List<string> { "User" },
+                Token = jwtToken,
+                UserName = user.Username
+            };
         }
 
-        await _emailService.SendEmailAsync(email, "Verification Code", $"Your verification code is: {code}");
-    }
-
-    public Task<bool> VerifyEmailAsync(string email, string code)
-    {
-        if (_verificationCodes.TryGetValue(email, out var savedCode))
+        public async Task<AuthModel> LoginAsync(LoginModel model)
         {
-            return Task.FromResult(savedCode == code);
+            var user = await _userManagerRepository.GetUserByEmailAsync(model.Email);
+            if (user == null || !await _userManagerRepository.VerifyPasswordAsync(user, model.Password))
+                return new AuthModel { Message = "Invalid email or password" };
+
+            var jwtToken = await _userManagerRepository.GenerateJwtTokenAsync(user);
+            var roles = await _userManagerRepository.GetUserRolesAsync(user);
+
+            var authModel = new AuthModel
+            {
+                Email = user.Email,
+                IsAuthentecated = true,
+                IsVerified = user.IsVerified,
+                Roles = roles.ToList(),
+                Token = jwtToken
+            };
+
+            if (user.RefreshTokens.Any(t => t.IsActive))
+            {
+                var activeRefreshToken = user.RefreshTokens.FirstOrDefault(t => t.IsActive);
+                authModel.RefreshToken = activeRefreshToken.Token;
+                authModel.RefreshTokenExpireAt = activeRefreshToken.ExpireAt;
+            }
+            else
+            {
+                var refreshToken = GenerateRefreshToken();
+                authModel.RefreshToken = refreshToken.Token;
+                authModel.RefreshTokenExpireAt = refreshToken.ExpireAt;
+                user.RefreshTokens.Add(refreshToken);
+                await _userManagerRepository.UpdateUserAsync(user);
+            }
+
+            return authModel;
         }
-        return Task.FromResult(false);
-    }
 
-
-    private RefreshTokenModel GenerateRefreshToken()
-    {
-        var randomNumber = new byte[32];
-        using var generator = new RNGCryptoServiceProvider();
-        generator.GetBytes(randomNumber);
-
-        return new RefreshTokenModel()
+        public async Task<string> AddRoleAsync(AddRoleDto model)
         {
-            Token = Convert.ToBase64String(randomNumber),
+            var user = await _userManagerRepository.GetUserByIdAsync(model.UserId);
+            if (user == null)
+                return "Invalid user ID";
 
-            ExpireAt = DateTime.UtcNow.AddDays(10),
+            var roles = await _userManagerRepository.GetUserRolesAsync(user);
+            if (roles.Contains(model.RoleName))
+                return "User already assigned to this role";
 
-            CreatedAt = DateTime.UtcNow,
-        };
+            await _userManagerRepository.AddUserToRoleAsync(user, model.RoleName);
+            return string.Empty;
+        }
+
+        public async Task SendVerificationCodeAsync(string email)
+        {
+            var code = new Random().Next(100000, 999999).ToString();
+            if (_verificationCodes.ContainsKey(email))
+            {
+                _verificationCodes[email] = code;
+            }
+            else
+            {
+                _verificationCodes.Add(email, code);
+            }
+
+            await _emailService.SendEmailAsync(email, "Verification Code", $"Your verification code is: {code}");
+        }
+
+        public Task<bool> VerifyEmailAsync(string email, string code)
+        {
+            if (_verificationCodes.TryGetValue(email, out var savedCode))
+            {
+                return Task.FromResult(savedCode == code);
+            }
+            return Task.FromResult(true);
+        }
+
+        private RefreshTokenModel GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var generator = new RNGCryptoServiceProvider();
+            generator.GetBytes(randomNumber);
+
+            return new RefreshTokenModel
+            {
+                Token = Convert.ToBase64String(randomNumber),
+                ExpireAt = DateTime.UtcNow.AddDays(10),
+                CreatedAt = DateTime.UtcNow,
+            };
+        }
     }
-
 }
