@@ -200,10 +200,15 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(w => w.User)
             .HasForeignKey<Wishlist>(w => w.UserId); // إضافة ForeignKey هنا
 
+        // تكوين العلاقة بين Wishlist و WishlistItem
         modelBuilder.Entity<Wishlist>()
             .HasMany(w => w.WishlistItems)
             .WithOne(wi => wi.Wishlist)
             .HasForeignKey(wi => wi.WishlistId);
+
+        // تكوين المفتاح المركب في WishlistItem
+        modelBuilder.Entity<WishlistItem>()
+            .HasKey(wi => new { wi.WishlistId, wi.ProductId });
 
         modelBuilder.Entity<User>()
             .HasMany(u => u.Ratings)

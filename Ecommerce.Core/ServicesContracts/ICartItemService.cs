@@ -10,8 +10,8 @@ public interface ICartItemService
 
 
 
-    Task<CartItemDto> UpdateCartItemAsync(UpdateCartItemDto updateCartItemDto, string token);
-    Task AddOrUpdateCartItemAsync(AddCartItemDto addCartItemDto, string token);
-    Task<CartItemDto> DeleteCartItemAsync(int productId, string token);
-    Task<IEnumerable<CartItemDto>> GetAllCartItemsAsync(string token);
+    Task<ItemDto> UpdateCartItemAsync(UpdateCartItemDto updateCartItemDto);
+    Task AddOrUpdateCartItemAsync(AddCartItemDto addCartItemDto);
+    Task<ItemDto> DeleteCartItemAsync(int productId);
+    Task<IEnumerable<ItemDto>> GetAllCartItemsAsync();
 }

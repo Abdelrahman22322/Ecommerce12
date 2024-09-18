@@ -169,7 +169,7 @@ namespace Ecommerce.Core.DTO.Map
             //    .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
             //    .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.UnitPrice));
 
-            CreateMap<CartItem, CartItemDto>()
+            CreateMap<CartItem, ItemDto>()
              //   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))
@@ -178,6 +178,15 @@ namespace Ecommerce.Core.DTO.Map
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Product.Category.Name))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.UnitPrice));
 
+
+            CreateMap<WishlistItem, ItemDto>()
+                //   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))
+                .ForMember(dest => dest.ProductImage, opt => opt.MapFrom(src => src.Product.ProductImages.FirstOrDefault().ImageUrl))
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Product.Brand.Name))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Product.Category.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.UnitPrice));
         }
     }
 }

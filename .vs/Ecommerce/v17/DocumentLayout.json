@@ -7,12 +7,88 @@
       "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.infrastructure\\repository\\usermanagerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|solutionrelative:ecommerce.infrastructure\\repository\\usermanagerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Migrations\\20240918143145_a.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Ecommerce.Infrastructure\\Migrations\\20240918143145_a.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\cartitemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\cartitemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.infrastructure\\dbcontext\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|solutionrelative:ecommerce.infrastructure\\dbcontext\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\domain\\entities\\wishlistitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\entities\\wishlistitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\wishlistitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\wishlistitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\domain\\entities\\wishlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\entities\\wishlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\wishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\wishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.infrastructure\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|solutionrelative:ecommerce.infrastructure\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\map\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\map\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\domain\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\servicescontracts\\iwishlistitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\servicescontracts\\iwishlistitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\wishlistitemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\wishlistitemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\wishlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\wishlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\cartitemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\cartitemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\servicescontracts\\iwishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\servicescontracts\\iwishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\servicescontracts\\icartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\servicescontracts\\icartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\cartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\cartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.infrastructure\\repository\\usermanagerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|solutionrelative:ecommerce.infrastructure\\repository\\usermanagerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -27,24 +103,12 @@
       "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\cartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\cartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\servicescontracts\\icartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\servicescontracts\\icartitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\map\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\map\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\updatecartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -63,28 +127,12 @@
       "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\domain\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\domain\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\brandservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\brandservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.infrastructure\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F83C9B7B-8656-410D-BF38-5F102A6381BC}|Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj|solutionrelative:ecommerce.infrastructure\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\tagservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -111,36 +159,12 @@
       "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\entities\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\wishlistitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\wishlistitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\services\\wishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\services\\wishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\domain\\entities\\wishlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\entities\\wishlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\servicescontracts\\iwishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\servicescontracts\\iwishlistservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|solutionrelative:ecommerce.presentation\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\domain\\repositorycontracts\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\domain\\repositorycontracts\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.core\\dto\\wishlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B99DB121-F943-4E2C-92CA-99D97B7203A5}|Ecommerce.Core\\Ecommerce.Core.csproj|solutionrelative:ecommerce.core\\dto\\wishlistdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9D272FDC-580F-4583-ADB6-4CF22759E13E}|Ecommerce.Presentation\\Ecommerce.Presentation.csproj|c:\\users\\asus\\source\\repos\\ecommerce\\ecommerce.presentation\\helper\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -218,7 +242,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -227,14 +251,105 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UserManagerRepository.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs*",
-              "RelativeToolTip": "Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs*",
-              "ViewState": "AQIAAIYAAAAAAAAAAAAUwKEAAAAAAAAA",
+              "Title": "20240918143145_a.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Migrations\\20240918143145_a.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Migrations\\20240918143145_a.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Migrations\\20240918143145_a.cs",
+              "RelativeToolTip": "Ecommerce.Infrastructure\\Migrations\\20240918143145_a.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T13:06:54.027Z",
+              "WhenOpened": "2024-09-18T14:31:45.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\DbContext\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\DbContext\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\DbContext\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Ecommerce.Infrastructure\\DbContext\\ApplicationDbContext.cs",
+              "ViewState": "AQIAALEAAAAAAAAAAAAAANIAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T14:30:06.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "WishlistService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\WishlistService.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\WishlistService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\WishlistService.cs",
+              "RelativeToolTip": "Ecommerce.Core\\Services\\WishlistService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAQwCIAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T13:23:22.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CartItem.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
+              "RelativeToolTip": "Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T16:35:30.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "WishlistItemController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\WishlistItemController.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\WishlistItemController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\WishlistItemController.cs",
+              "RelativeToolTip": "Ecommerce.Presentation\\Controllers\\WishlistItemController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T13:47:40.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
+              "RelativeToolTip": "Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
+              "ViewState": "AQIAAJcAAAAAAAAAAAAcwLUAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T14:42:15.304Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
+              "RelativeToolTip": "Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAIwC0AAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-09T03:51:25.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Wishlist.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
+              "RelativeToolTip": "Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAoAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T13:24:21.411Z",
               "EditorCaption": ""
             },
             {
@@ -245,40 +360,182 @@
               "RelativeDocumentMoniker": "Ecommerce.Presentation\\Program.cs",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Program.cs*",
               "RelativeToolTip": "Ecommerce.Presentation\\Program.cs*",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAAwF4AAAAJAAAA",
+              "ViewState": "AQIAACsAAAAAAAAAAADwv04AAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-08T06:50:07.171Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "Ecommerce.Presentation\\appsettings.Development.json",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.Development.json",
-              "RelativeToolTip": "Ecommerce.Presentation\\appsettings.Development.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-09T12:14:11.653Z",
+              "DocumentIndex": 5,
+              "Title": "CartItemDto.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\CartItemDto.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\CartItemDto.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\CartItemDto.cs",
+              "RelativeToolTip": "Ecommerce.Core\\DTO\\CartItemDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAwAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T14:43:57.76Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.json",
-              "RelativeDocumentMoniker": "Ecommerce.Presentation\\appsettings.json",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.json",
-              "RelativeToolTip": "Ecommerce.Presentation\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-08T06:22:30.262Z",
+              "Title": "WishlistItem.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\WishlistItem.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\WishlistItem.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\WishlistItem.cs",
+              "RelativeToolTip": "Ecommerce.Core\\Domain\\Entities\\WishlistItem.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T13:31:34.01Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
+              "Title": "WishlistItemService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\WishlistItemService.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\WishlistItemService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\WishlistItemService.cs",
+              "RelativeToolTip": "Ecommerce.Core\\Services\\WishlistItemService.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAAQwEgAAABXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T13:54:59.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IWishlistService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
+              "RelativeToolTip": "Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAAAQAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T13:25:05.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ICartItemService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
+              "RelativeToolTip": "Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T14:47:09.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IWishlistItemService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\IWishlistItemService.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\ServicesContracts\\IWishlistItemService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\IWishlistItemService.cs",
+              "RelativeToolTip": "Ecommerce.Core\\ServicesContracts\\IWishlistItemService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T13:54:59.303Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CartService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartService.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\CartService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartService.cs",
+              "RelativeToolTip": "Ecommerce.Core\\Services\\CartService.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAACMAAABcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T13:14:55.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "WishlistController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\WishlistController.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\WishlistController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\WishlistController.cs",
+              "RelativeToolTip": "Ecommerce.Presentation\\Controllers\\WishlistController.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAuwDsAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T15:22:06.032Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CartItemController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartItemController.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\CartItemController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartItemController.cs",
+              "RelativeToolTip": "Ecommerce.Presentation\\Controllers\\CartItemController.cs",
+              "ViewState": "AQIAAGYAAAAAAAAAAAAIwHAAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T15:19:27.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\RegisterDto.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\RegisterDto.cs",
+              "RelativeToolTip": "Ecommerce.Core\\DTO\\RegisterDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-18T13:35:31.329Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "WishlistDTO.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\WishlistDTO.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\WishlistDTO.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\WishlistDTO.cs",
+              "RelativeToolTip": "Ecommerce.Core\\DTO\\WishlistDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T12:59:36.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "CartItemService.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartItemService.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\CartItemService.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartItemService.cs",
+              "RelativeToolTip": "Ecommerce.Core\\Services\\CartItemService.cs",
+              "ViewState": "AQIAAIEAAAAAAAAAAAAowKgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T15:46:35.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\CartController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartController.cs",
+              "RelativeToolTip": "Ecommerce.Presentation\\Controllers\\CartController.cs",
+              "ViewState": "AQIAACYAAAAAAAAAAAAuwCsAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T15:19:17.4Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\AuthService.cs",
@@ -291,70 +548,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CartController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartController.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\CartController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartController.cs",
-              "RelativeToolTip": "Ecommerce.Presentation\\Controllers\\CartController.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAuwCsAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T15:19:17.4Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CartItemService.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartItemService.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\CartItemService.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartItemService.cs",
-              "RelativeToolTip": "Ecommerce.Core\\Services\\CartItemService.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAAwBUAAAA3AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T15:46:35.825Z",
+              "DocumentIndex": 22,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.json",
+              "RelativeDocumentMoniker": "Ecommerce.Presentation\\appsettings.json",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.json",
+              "RelativeToolTip": "Ecommerce.Presentation\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-08T06:22:30.262Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ICartItemService.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
-              "RelativeToolTip": "Ecommerce.Core\\ServicesContracts\\ICartItemService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T14:47:09.54Z",
+              "DocumentIndex": 23,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "Ecommerce.Presentation\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\appsettings.Development.json",
+              "RelativeToolTip": "Ecommerce.Presentation\\appsettings.Development.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-09T12:14:11.653Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CartItemsController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartItemsController.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\CartItemsController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\CartItemsController.cs",
-              "RelativeToolTip": "Ecommerce.Presentation\\Controllers\\CartItemsController.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAACIAAAAcAAAA",
+              "DocumentIndex": 21,
+              "Title": "UserManagerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs",
+              "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs",
+              "RelativeToolTip": "Ecommerce.Infrastructure\\Repository\\UserManagerRepository.cs",
+              "ViewState": "AQIAAIYAAAAAAAAAAAAUwKEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T15:19:27.585Z",
+              "WhenOpened": "2024-09-16T13:06:54.027Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "MappingProfile.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
-              "RelativeToolTip": "Ecommerce.Core\\DTO\\Map\\MappingProfile.cs",
-              "ViewState": "AQIAAJcAAAAAAAAAAAAcwKwAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T14:42:15.304Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 26,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\AuthController.cs",
@@ -366,32 +599,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "CartItemDto.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\CartItemDto.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\CartItemDto.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\CartItemDto.cs",
-              "RelativeToolTip": "Ecommerce.Core\\DTO\\CartItemDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T14:43:57.76Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "CartService.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartService.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\CartService.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CartService.cs",
-              "RelativeToolTip": "Ecommerce.Core\\Services\\CartService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAABcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T13:14:55.358Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 28,
               "Title": "AddCartItemDto.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\AddCartItemDto.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\AddCartItemDto.cs",
@@ -403,7 +611,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 55,
               "Title": "20240916232618_deleteidforcart.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Migrations\\20240916232618_deleteidforcart.cs",
               "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Migrations\\20240916232618_deleteidforcart.cs",
@@ -415,7 +623,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 29,
               "Title": "AddProductDTO.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\AddProductDTO.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\AddProductDTO.cs",
@@ -427,19 +635,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "CartItem.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
-              "RelativeToolTip": "Ecommerce.Core\\Domain\\Entities\\CartItem.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T16:35:30.411Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 27,
               "Title": "UpdateCartItemDto.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\UpdateCartItemDto.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\UpdateCartItemDto.cs",
@@ -451,7 +647,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 31,
               "Title": "Cart.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\Cart.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\Cart.cs",
@@ -463,19 +659,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "GenericRepository.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
-              "RelativeToolTip": "Ecommerce.Infrastructure\\Repository\\GenericRepository.cs",
-              "ViewState": "AQIAAEwAAAAAAAAAAIAwwFUAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-09T03:51:25.098Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 32,
               "Title": "BrandServices.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\BrandServices.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\BrandServices.cs",
@@ -487,7 +671,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 30,
               "Title": "CartDTO.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\CartDTO.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\CartDTO.cs",
@@ -499,7 +683,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 35,
               "Title": "ProductAttributeValueServices.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\ProductAttributeValueServices.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\ProductAttributeValueServices.cs",
@@ -511,7 +695,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 33,
               "Title": "TagService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\TagService.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\TagService.cs",
@@ -523,7 +707,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 34,
               "Title": "ProductTagService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\ProductTagService.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\ProductTagService.cs",
@@ -535,7 +719,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 36,
               "Title": "ProductAttributeServices.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\ProductAttributeServices.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\ProductAttributeServices.cs",
@@ -547,7 +731,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 37,
               "Title": "ICartService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\ICartService.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\ServicesContracts\\ICartService.cs",
@@ -559,7 +743,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 56,
               "Title": "20240916180550_addidforcart.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Migrations\\20240916180550_addidforcart.cs",
               "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Migrations\\20240916180550_addidforcart.cs",
@@ -571,7 +755,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 38,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\Product.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\Product.cs",
@@ -583,55 +767,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "WishlistItemDTO.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\WishlistItemDTO.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\WishlistItemDTO.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\WishlistItemDTO.cs",
-              "RelativeToolTip": "Ecommerce.Core\\DTO\\WishlistItemDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T14:43:14.773Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "WishlistService.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\WishlistService.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\WishlistService.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\WishlistService.cs",
-              "RelativeToolTip": "Ecommerce.Core\\Services\\WishlistService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T13:23:22.308Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "IWishlistService.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
-              "RelativeToolTip": "Ecommerce.Core\\ServicesContracts\\IWishlistService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T13:25:05.933Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "Wishlist.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
-              "RelativeToolTip": "Ecommerce.Core\\Domain\\Entities\\Wishlist.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAoAAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T13:24:21.411Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 39,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\WeatherForecastController.cs",
@@ -643,7 +779,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 57,
               "Title": "20240916152341_addcoulmnstocartandwishlist.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Migrations\\20240916152341_addcoulmnstocartandwishlist.cs",
               "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Migrations\\20240916152341_addcoulmnstocartandwishlist.cs",
@@ -655,19 +791,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "WishlistController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\WishlistController.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Presentation\\Controllers\\WishlistController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Controllers\\WishlistController.cs",
-              "RelativeToolTip": "Ecommerce.Presentation\\Controllers\\WishlistController.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAuwDsAAAALAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T15:22:06.032Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 40,
               "Title": "IGenericRepository.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\RepositoryContracts\\IGenericRepository.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\RepositoryContracts\\IGenericRepository.cs",
@@ -679,19 +803,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "WishlistDTO.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\WishlistDTO.cs",
-              "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\WishlistDTO.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\WishlistDTO.cs",
-              "RelativeToolTip": "Ecommerce.Core\\DTO\\WishlistDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-16T12:59:36.438Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 42,
               "Title": "IImageService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\ServicesContracts\\IImageService.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\ServicesContracts\\IImageService.cs",
@@ -703,7 +815,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 43,
               "Title": "ImageService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\ImageService.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\ImageService.cs",
@@ -715,7 +827,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 45,
               "Title": "ProductFilter.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\ProductFilter.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\ProductFilter.cs",
@@ -727,7 +839,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 41,
               "Title": "CloudinarySettings.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\helper\\CloudinarySettings.cs",
               "RelativeDocumentMoniker": "Ecommerce.Presentation\\helper\\CloudinarySettings.cs",
@@ -739,7 +851,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 46,
               "Title": "IImageRepository.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\RepositoryContracts\\IImageRepository.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\RepositoryContracts\\IImageRepository.cs",
@@ -751,7 +863,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 47,
               "Title": "ProductImage.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\ProductImage.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\ProductImage.cs",
@@ -763,7 +875,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 48,
               "Title": "ImageDto.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\DTO\\ImageDto.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\DTO\\ImageDto.cs",
@@ -775,7 +887,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 49,
               "Title": "CloudinaryResult.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Domain\\Entities\\CloudinaryResult.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Domain\\Entities\\CloudinaryResult.cs",
@@ -787,7 +899,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 50,
               "Title": "ImageRepository.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\ImageRepository.cs",
               "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Repository\\ImageRepository.cs",
@@ -799,7 +911,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 44,
               "Title": "ProductRepository.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Repository\\ProductRepository.cs",
               "RelativeDocumentMoniker": "Ecommerce.Infrastructure\\Repository\\ProductRepository.cs",
@@ -811,7 +923,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 51,
               "Title": "ProductServices.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\ProductServices.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\ProductServices.cs",
@@ -824,7 +936,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 52,
               "Title": "DiscountService.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\DiscountService.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\DiscountService.cs",
@@ -836,7 +948,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 53,
               "Title": "CategoryServise.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Services\\CategoryServise.cs",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Services\\CategoryServise.cs",
@@ -848,7 +960,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 54,
               "Title": "Ecommerce.Core.csproj",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Core\\Ecommerce.Core.csproj",
               "RelativeDocumentMoniker": "Ecommerce.Core\\Ecommerce.Core.csproj",

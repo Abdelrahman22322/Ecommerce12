@@ -1,8 +1,8 @@
 ﻿namespace Ecommerce.Core.Domain.RepositoryContracts;
 
-public class CartItemDto
+public class ItemDto
 {
-    public int Id { get; set; }
+   // public int Id { get; set; }
     public int ProductId { get; set; }
     public string ProductName { get; set; }
     public string ProductImage { get; set; }

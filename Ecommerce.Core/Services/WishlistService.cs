@@ -27,4 +27,9 @@ public class WishlistService : IWishlistService
         await _wishlistRepository.AddAsync(wishlist);
         await _wishlistRepository.SaveAsync();
     }
+
+    public async Task<Wishlist> GetWishlistByUserIdAsync(int userId)
+    {
+         return await _wishlistRepository.FindAsync1(w => w.UserId == userId, "WishlistItems");
+    }
 }

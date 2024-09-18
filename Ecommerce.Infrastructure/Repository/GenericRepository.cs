@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure.Repository;
 
-
 public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
     protected readonly ApplicationDbContext _context;
@@ -42,17 +41,11 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return entity;
     }
 
-    
-
     public async Task<TEntity?> DeleteAsync(TEntity? entity)
     {
-       
-         
         _entities.Remove(entity);
         await _context.SaveChangesAsync();
         return entity;
-
-       
     }
 
     public async Task<TEntity> DeleteRange(IEnumerable<TEntity> entities)
@@ -66,14 +59,14 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         await _context.SaveChangesAsync();
     }
 
-    public async Task<TEntity> GetByIdAsync(int id)
+    public async Task<TEntity?> GetByIdAsync(int id)
     {
         return await _entities.FindAsync(id);
     }
 
     public async Task<IEnumerable<TEntity?>> GetAllAsync(Expression<Func<TEntity?, bool>?>? predicate = null, string? includeword = null)
     {
-        IQueryable<TEntity?> query = _entities;
+        IQueryable<TEntity?> query = _entities.AsNoTracking();
 
         if (predicate != null)
         {
@@ -93,7 +86,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     public async Task<IEnumerable<TEntity?>> FindAsync(Expression<Func<TEntity?, bool>> predicate, string? includeword)
     {
-        IQueryable<TEntity?> query = _entities;
+        IQueryable<TEntity?> query = _entities.AsNoTracking();
 
         if (includeword is not null)
         {
@@ -108,8 +101,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     public async Task<TEntity?> FindAsync1(Expression<Func<TEntity?, bool>> predicate, string? includeword)
     {
-
-        IQueryable<TEntity?> query = _entities;
+        IQueryable<TEntity?> query = _entities.AsNoTracking();
 
         if (includeword is not null)
         {
@@ -120,18 +112,13 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         }
 
         return await query.FirstOrDefaultAsync(predicate);
-
     }
 
-
-    //public async Task<TEntity?> FindCompositeKeyAsync(params object[] keyValues)
-    //{
-    //    return await _entities.FindAsync(keyValues);
-    //}
     public async Task<TEntity?> FindCompositeKeyAsync(Expression<Func<TEntity?, bool>> predicate)
     {
-        return await _entities.FirstOrDefaultAsync(predicate);
+        return await _entities.AsNoTracking().FirstOrDefaultAsync(predicate);
     }
+
     public async Task SaveAsync()
     {
         await _context.SaveChangesAsync();
