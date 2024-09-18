@@ -5,8 +5,5 @@ namespace Ecommerce.Core.ServicesContracts;
 
 public interface IWishlistService
 {
-    Task<WishlistDTO> AddWishlistAsync(WishlistDTO wishlistDTO);
-    Task<WishlistItemDTO> AddWishlistItemAsync(WishlistItemDTO wishlistItemDTO);
-    Task<WishlistDTO> GetWishlistByUserIdAsync(int userId);
-    Task RemoveWishlistItemAsync(int wishlistItemId);
+    Task CreateWishlistForUserAsync(User user);
 }

@@ -5,8 +5,6 @@ namespace Ecommerce.Core.ServicesContracts;
 
 public interface ICartService
 {
-    Task<CartDTO> AddCartAsync(CartDTO cartDTO);
-    Task<CartItemDTO> AddCartItemAsync(CartItemDTO cartItemDTO);
-    Task<CartDTO> GetCartByUserIdAsync(int userId);
-    Task RemoveCartItemAsync(int cartItemId);
+    public  Task CreateCartForUserAsync(User user);
+    public Task<Cart> GetCartByUserIdAsync(int userId);
 }

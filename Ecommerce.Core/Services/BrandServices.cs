@@ -73,7 +73,7 @@ public class BrandServices : IBrandServices
 
         public async Task<Brand?> DetermineBrandAsync(string brandName)
         {
-            var existingBrands = await _brandRepository.FindAsync(x => x.Name == brandName);
+            var existingBrands = await _brandRepository.FindAsync(x => x.Name == brandName, null);
             var existingBrand = existingBrands?.FirstOrDefault();
             if (existingBrand == null)
             {

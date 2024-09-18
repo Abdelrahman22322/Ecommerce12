@@ -56,19 +56,19 @@ public class CategoryService : ICategoriesServices
 
     public async Task<IEnumerable<CategoryDto>> GetAllAsync()
     {
-        var categories = await _categoryRepository.GetAllAsync(null, null);
+        IEnumerable<Category> categories = await _categoryRepository.GetAllAsync(null, null);
         return _mapper.Map<IEnumerable<CategoryDto>>(categories);
     }
 
-    public async Task<IEnumerable<CategoryDto>> FindAsync(Expression<Func<Category, bool>> func)
+    public async Task<IEnumerable<CategoryDto>> FindAsync(Expression<Func<Category?, bool>> func)
     {
-        var categories = await _categoryRepository.FindAsync(func);
+        var categories = await _categoryRepository.FindAsync(func, null);
         return _mapper.Map<IEnumerable<CategoryDto>>(categories);
     }
 
     public async Task<Category?> DetermineCategoryAsync(string categoryName)
     {
-        var existingCategories = await _categoryRepository.FindAsync(x => x.Name == categoryName);
+        var existingCategories = await _categoryRepository.FindAsync(x => x.Name == categoryName, null);
         var existingCategory = existingCategories?.FirstOrDefault();
         if (existingCategory == null)
         {

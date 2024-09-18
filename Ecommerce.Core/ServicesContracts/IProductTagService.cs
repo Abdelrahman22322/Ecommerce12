@@ -14,6 +14,6 @@ public interface IProductTagService
     Task<ProductTag?> DetermineProductTagAsync(int newProductProductId, int tagEntityId);
 
 
-    Task<IEnumerable<ProductTag>> FindAsync(Expression<Func<ProductTag, bool>> func);
+    Task<IEnumerable<ProductTag>> FindAsync(Expression<Func<ProductTag?, bool>> func);
       Task<ProductTag> FindAsync1(Expression<Func<ProductTag, bool>?> predicate);
 }

@@ -7,20 +7,20 @@ namespace Ecommerce.Core.Services
 {
     public class DiscountService : IDiscountService
     {
-        private readonly IGenericRepository<Discount> _discountRepository;
+        private readonly IGenericRepository<Discount?> _discountRepository;
         private readonly IGenericRepository<Product> _productRepository; // Add a repository for products
 
-        public DiscountService(IGenericRepository<Discount> discountRepository, IGenericRepository<Product> productRepository)
+        public DiscountService(IGenericRepository<Discount?> discountRepository, IGenericRepository<Product> productRepository)
         {
             _discountRepository = discountRepository;
             _productRepository = productRepository; // Initialize the product repository
         }
 
-        public async Task<IEnumerable<Discount>> GetAllAsync()
+        public async Task<IEnumerable<Discount?>> GetAllAsync()
         {
             var discounts = await _discountRepository.GetAllAsync(null, null);
 
-            IEnumerable<Discount> allAsync = discounts.ToList();
+            IEnumerable<Discount?> allAsync = discounts.ToList();
             if (!allAsync.Any())
             {
                 return [];
@@ -67,7 +67,7 @@ namespace Ecommerce.Core.Services
             }
 
             // Validate if the product already has a discount
-            var existingDiscounts = await _discountRepository.FindAsync(d => d.ProductId == discount.ProductId);
+            var existingDiscounts = await _discountRepository.FindAsync(d => d.ProductId == discount.ProductId, null);
             if (existingDiscounts.Any())
             {
                 throw new InvalidOperationException("A discount already exists for this product.");
@@ -116,9 +116,9 @@ namespace Ecommerce.Core.Services
             await _discountRepository.SaveAsync();
         }
 
-        public async Task<IEnumerable<Discount?>> FindAsync(Expression<Func<Discount, bool>> func)
+        public async Task<IEnumerable<Discount?>> FindAsync(Expression<Func<Discount?, bool>> func)
         {
-            return await _discountRepository.FindAsync(func);
+            return await _discountRepository.FindAsync(func, null);
         }
 
         private void ValidateDiscount(DiscountDTO discount)

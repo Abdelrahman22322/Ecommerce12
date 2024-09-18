@@ -10,6 +10,6 @@ public interface IProductAttributeValueServices
     Task<bool> UpdateAsync(ProductAttributeValue? entity);
     Task<bool> DeleteAsync(int productid,int id);
 
-    Task<IEnumerable<ProductAttributeValue>?> FindAsync(Expression<Func<ProductAttributeValue?, bool>?> func);
-     Task<ProductAttributeValue?> FindAsync1(Expression<Func<ProductAttributeValue?, bool>?> predicate);
+    Task<IEnumerable<ProductAttributeValue>?> FindAsync(Expression<Func<ProductAttributeValue?, bool>> func);
+     Task<ProductAttributeValue?> FindAsync1(Expression<Func<ProductAttributeValue?, bool>> predicate);
 }

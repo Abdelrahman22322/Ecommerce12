@@ -11,7 +11,7 @@ public interface IProductAttributeServices
     Task<bool> DeleteAsync(int id);
 
     Task<ProductAttribute?> GetByIdAsync( int  id);
-    Task<IEnumerable<ProductAttribute?>> FindAsync(Expression<Func<ProductAttribute?, bool>?> func);
+    Task<IEnumerable<ProductAttribute?>> FindAsync(Expression<Func<ProductAttribute?, bool>> func);
     Task<ProductAttribute> GetByNameAsync(string attributeName);
-    Task<ProductAttribute?> FindAsync1(Expression<Func<ProductAttribute?, bool>?> func);
+    Task<ProductAttribute?> FindAsync1(Expression<Func<ProductAttribute?, bool>> func);
 }

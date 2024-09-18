@@ -159,6 +159,25 @@ namespace Ecommerce.Core.DTO.Map
             .ForMember(dest => dest.ProductAttributesValues, opt => opt.MapFrom(src => src.ProductAttributeValues != null ? src.ProductAttributeValues.Select(pav => pav.Value).ToList() : new List<string>()))
             .ForMember(dest => dest.ImageUrls, opt => opt.MapFrom(src => src.ProductImages != null ? src.ProductImages.Select(pi => pi.ImageUrl).ToList() : new List<string>()))
             .ForMember(dest => dest.ProductImages, opt => opt.Ignore());
+
+            //CreateMap<Product, CartItemDto>()
+            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProductId))
+            //    .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            //    .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
+            //    .ForMember(dest => dest.ProductImage, opt => opt.MapFrom(src => src.ProductImages.FirstOrDefault().ImageUrl))
+            //    .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name))
+            //    .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
+            //    .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.UnitPrice));
+
+            CreateMap<CartItem, CartItemDto>()
+             //   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName))
+                .ForMember(dest => dest.ProductImage, opt => opt.MapFrom(src => src.Product.ProductImages.FirstOrDefault().ImageUrl))
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Product.Brand.Name))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Product.Category.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.UnitPrice));
+
         }
     }
 }

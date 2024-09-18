@@ -4,7 +4,7 @@ namespace Ecommerce.Core.Domain.Entities;
 
 public class CartItem
 {
-   
+    
     public int CartId { get; set; }
 
     [Range(minimum:1 , maximum:10)]

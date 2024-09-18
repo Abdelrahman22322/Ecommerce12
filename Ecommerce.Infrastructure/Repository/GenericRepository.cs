@@ -11,7 +11,7 @@ namespace Ecommerce.Infrastructure.Repository;
 public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
     protected readonly ApplicationDbContext _context;
-    private readonly DbSet<TEntity> _entities;
+    private readonly DbSet<TEntity?> _entities;
 
     public GenericRepository(ApplicationDbContext context)
     {
@@ -19,7 +19,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _entities = context.Set<TEntity>();
     }
 
-    public async Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity? entity)
     {
         await _entities.AddAsync(entity);
     }
@@ -29,13 +29,13 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         throw new NotImplementedException();
     }
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+    public async Task AddRangeAsync(IEnumerable<TEntity?> entities)
     {
         await _entities.AddRangeAsync(entities);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<TEntity> UpdateAsync(TEntity entity)
+    public async Task<TEntity?> UpdateAsync(TEntity? entity)
     {
         _entities.Update(entity);
         await _context.SaveChangesAsync();
@@ -44,7 +44,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
     
 
-    public async Task<TEntity> DeleteAsync(TEntity entity)
+    public async Task<TEntity?> DeleteAsync(TEntity? entity)
     {
        
          
@@ -60,7 +60,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         throw new NotImplementedException();
     }
 
-    public async Task DeleteRangeAsync(IEnumerable<TEntity> entities)
+    public async Task DeleteRangeAsync(IEnumerable<TEntity?> entities)
     {
         _entities.RemoveRange(entities);
         await _context.SaveChangesAsync();
@@ -71,9 +71,9 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return await _entities.FindAsync(id);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null, string? includeword = null)
+    public async Task<IEnumerable<TEntity?>> GetAllAsync(Expression<Func<TEntity?, bool>?>? predicate = null, string? includeword = null)
     {
-        IQueryable<TEntity> query = _entities;
+        IQueryable<TEntity?> query = _entities;
 
         if (predicate != null)
         {
@@ -91,14 +91,36 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return await query.ToListAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+    public async Task<IEnumerable<TEntity?>> FindAsync(Expression<Func<TEntity?, bool>> predicate, string? includeword)
     {
-        return await _entities.Where(predicate).ToListAsync();
+        IQueryable<TEntity?> query = _entities;
+
+        if (includeword is not null)
+        {
+            foreach (var item in includeword.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(item);
+            }
+        }
+
+        return await query.Where(predicate).ToListAsync();
     }
 
-    public async Task<TEntity?> FindAsync1(Expression<Func<TEntity, bool>> predicate)
+    public async Task<TEntity?> FindAsync1(Expression<Func<TEntity?, bool>> predicate, string? includeword)
     {
-        return await _entities.FirstOrDefaultAsync(predicate);
+
+        IQueryable<TEntity?> query = _entities;
+
+        if (includeword is not null)
+        {
+            foreach (var item in includeword.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(item);
+            }
+        }
+
+        return await query.FirstOrDefaultAsync(predicate);
+
     }
 
 
@@ -106,7 +128,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     //{
     //    return await _entities.FindAsync(keyValues);
     //}
-    public async Task<TEntity?> FindCompositeKeyAsync(Expression<Func<TEntity, bool>> predicate)
+    public async Task<TEntity?> FindCompositeKeyAsync(Expression<Func<TEntity?, bool>> predicate)
     {
         return await _entities.FirstOrDefaultAsync(predicate);
     }

@@ -61,7 +61,7 @@ public class ProductAttributeValueServices : IProductAttributeValueServices
     {
 
 
-        var entity = await _productAttributeValueRepository.FindAsync1(x => x.ProductAttributeId == productid && x.Id == id);
+        var entity = await _productAttributeValueRepository.FindAsync1(x => x.ProductAttributeId == productid && x.Id == id, null);
         if (entity == null)
             return false;
 
@@ -71,20 +71,20 @@ public class ProductAttributeValueServices : IProductAttributeValueServices
         return true;
     }
 
-    public async Task<IEnumerable<ProductAttributeValue>?> FindAsync(Expression<Func<ProductAttributeValue?, bool>?> func )
+    public async Task<IEnumerable<ProductAttributeValue>?> FindAsync(Expression<Func<ProductAttributeValue?, bool>> func )
     {
 
-        return await _productAttributeValueRepository.FindAsync(func);
+        return await _productAttributeValueRepository.FindAsync(func, null);
     }
 
-    public async Task<ProductAttributeValue?> FindAsync1(Expression<Func<ProductAttributeValue?, bool>?> predicate)
+    public async Task<ProductAttributeValue?> FindAsync1(Expression<Func<ProductAttributeValue?, bool>> predicate)
     {
-       return await _productAttributeValueRepository.FindAsync1(predicate);
+       return await _productAttributeValueRepository.FindAsync1(predicate, null);
     }
 
     public async Task<ProductAttributeValue?> DetermineAttributeValueAsync(int attributeId, string value)
     {
-        var existingAttributeValues = await _productAttributeValueRepository.FindAsync(x => x.Id == attributeId && x.Value== value);
+        var existingAttributeValues = await _productAttributeValueRepository.FindAsync(x => x.Id == attributeId && x.Value== value, null);
         var existingAttributeValue = existingAttributeValues?.FirstOrDefault();
         if (existingAttributeValue == null)
         {

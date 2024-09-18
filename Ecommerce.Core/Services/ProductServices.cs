@@ -629,7 +629,7 @@ public class ProductServices : IProductService
         public async Task<byte[]> ExportPdfAsync()
     {
 
-        var products = await _productRepository.GetAllAsync(predicate: null, includeword: "Category,Brand,Supplier");
+        IEnumerable<Product> products = await _productRepository.GetAllAsync(predicate: null, includeword: "Category,Brand,Supplier");
         var map = _Mapper.Map<IEnumerable<ProductDetailDTO>>(products);
         var productslist = map.ToList();
 

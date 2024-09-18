@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.RepositoryContracts;
+using Ecommerce.Core.ServicesContracts;
 using Ecommerce.Infrastructure.DbContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Ecommerce.Infrastructure.Repository
 {
@@ -14,11 +16,15 @@ namespace Ecommerce.Infrastructure.Repository
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly ICartService _cartService;
+        private readonly IWishlistService _wishlistService;
 
-        public UserManagerRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
+        public UserManagerRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, ICartService cartService, IWishlistService wishlistService)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            _cartService = cartService;
+            _wishlistService = wishlistService;
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
@@ -62,6 +68,12 @@ namespace Ecommerce.Infrastructure.Repository
 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+
+                // Create a cart for the new user using CartService
+                await _cartService.CreateCartForUserAsync(user);
+
+                // Create a wishlist for the new user using WishlistService
+                await _wishlistService.CreateWishlistForUserAsync(user);
 
                 await transaction.CommitAsync();
                 return user;
@@ -118,25 +130,39 @@ namespace Ecommerce.Infrastructure.Repository
 
         public async Task<IEnumerable<string>> GetUserRolesAsync(User user)
         {
-            return _context.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.Role.Name);
+            var roles = await _context.UserRoles
+                .Where(ur => ur.UserId == user.Id)
+                .Select(ur => ur.Role.Name)
+                .ToListAsync();
+
+            return roles ?? new List<string>();
         }
 
         public async Task<string> GenerateJwtTokenAsync(User user)
         {
-            var claims = new[]
+            var userRoles = await GetUserRolesAsync(user);
+
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
+              //  new Claim(ClaimTypes.Role, "user") ,// تأكد من استخدام ClaimTypes.Role
+               // new Claim("role","user") ,
                 new Claim("uid", user.Id.ToString())
             };
+
+            // Add role claims
+            claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
+           // claims.AddRange(userRoles.Select(userRole => new Claim("role", userRole)));
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("5UUXQCaePfqAWdTJ3yG9+txiWBYwH/VQiQGQiVURJWg="));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: "http://localhost:5190",
-                audience: "http://localhost:5190",
+                audience: "AAA",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds
@@ -144,6 +170,7 @@ namespace Ecommerce.Infrastructure.Repository
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
         public async Task<bool> VerifyPasswordAsync(User user, string password)
         {
@@ -158,7 +185,6 @@ namespace Ecommerce.Infrastructure.Repository
 
         private bool IsPasswordComplex(string password)
         {
-
             if (password.Length < 8)
                 return false;
             if (!password.Any(char.IsUpper))

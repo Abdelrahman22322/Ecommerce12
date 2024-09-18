@@ -16,7 +16,7 @@ public class TagService : ITagService
 
     public async Task<Tag?> DetermineTagAsync(string tagName)
     {
-        var existingTags = await _tagRepository.FindAsync(x => x.Name == tagName);
+        var existingTags = await _tagRepository.FindAsync(x => x.Name == tagName, null);
         var existingTag = existingTags?.FirstOrDefault();
         if (existingTag != null)
         {
@@ -62,13 +62,13 @@ public class TagService : ITagService
 
     public async Task<IEnumerable<Tag>> FindAsync(Expression<Func<Tag, bool>?> func)
     {
-       return await _tagRepository.FindAsync(func);
+       return await _tagRepository.FindAsync(func, null);
     }
 
     public async Task<Tag?> FindAsync1(Expression<Func<Tag, bool>?> func)
     {
 
-        return await _tagRepository.FindAsync1(func);
+        return await _tagRepository.FindAsync1(func, null);
     }
 
     public async Task AddAsync(Tag? tag)

@@ -32,7 +32,7 @@ public class ProductTagService : IProductTagService
             throw new ArgumentNullException(nameof(productTag));
         }
 
-        var existingProductTag = await _productTagRepository.FindAsync(x => x.ProductId == productTag.ProductId && x.TagId == productTag.TagId);
+        var existingProductTag = await _productTagRepository.FindAsync(x => x.ProductId == productTag.ProductId && x.TagId == productTag.TagId, null);
         var existingProductTag1 = existingProductTag?.FirstOrDefault();
 
         if (existingProductTag1 != null)
@@ -71,7 +71,7 @@ public class ProductTagService : IProductTagService
 
     public async Task<ProductTag?> DetermineProductTagAsync(int productId, int tagId)
     {
-        var existingProductTag = await _productTagRepository.FindAsync(x => x.ProductId == productId && x.TagId == tagId);
+        var existingProductTag = await _productTagRepository.FindAsync(x => x.ProductId == productId && x.TagId == tagId, null);
         var existingProductTag1 = existingProductTag?.FirstOrDefault();
 
         if (existingProductTag1 != null)
@@ -91,10 +91,10 @@ public class ProductTagService : IProductTagService
         return newProductTag;
     }
 
-    public async Task<IEnumerable<ProductTag>> FindAsync(Expression<Func<ProductTag, bool>> func)
+    public async Task<IEnumerable<ProductTag>> FindAsync(Expression<Func<ProductTag?, bool>> func)
     {
 
-        var productTag = await _productTagRepository.FindAsync(func);
+        var productTag = await _productTagRepository.FindAsync(func, null);
         if (productTag == null)
         {
             throw new Exception("ProductTag not found.");
@@ -107,6 +107,6 @@ public class ProductTagService : IProductTagService
     public async Task<ProductTag> FindAsync1(Expression<Func<ProductTag, bool>?> predicate)
     {
 
-         return await _productTagRepository.FindAsync1(predicate);
+         return await _productTagRepository.FindAsync1(predicate, null);
     }
 }
