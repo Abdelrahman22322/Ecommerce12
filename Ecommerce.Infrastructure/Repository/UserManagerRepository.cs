@@ -1,4 +1,5 @@
-﻿using Ecommerce.Core.Domain.Entities;
+﻿using AutoMapper;
+using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
 using Ecommerce.Infrastructure.DbContext;
@@ -18,13 +19,17 @@ namespace Ecommerce.Infrastructure.Repository
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ICartService _cartService;
         private readonly IWishlistService _wishlistService;
+        private readonly IUserProfileService _userProfileService;
+        private readonly IMapper _mapper;
 
-        public UserManagerRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, ICartService cartService, IWishlistService wishlistService)
+        public UserManagerRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, ICartService cartService, IWishlistService wishlistService, IUserProfileService userProfileService, IMapper mapper)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _cartService = cartService;
             _wishlistService = wishlistService;
+            _userProfileService = userProfileService;
+            _mapper = mapper;
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
@@ -42,12 +47,67 @@ namespace Ecommerce.Infrastructure.Repository
             return await _context.Users.FindAsync(userId);
         }
 
+        //public async Task<User> CreateUserAsync(RegisterDto registerDto)
+        //{
+        //    using var transaction = await _context.Database.BeginTransactionAsync();
+
+        //    try
+        //    {
+        //        var existingEmailUser = await GetUserByEmailAsync(registerDto.Email);
+        //        if (existingEmailUser != null)
+        //            throw new Exception("Email is already registered.");
+
+        //        var existingUsernameUser = await GetUserByUsernameAsync(registerDto.Username);
+        //        if (existingUsernameUser != null)
+        //            throw new Exception("Username already exists.");
+
+        //        if (!IsPasswordComplex(registerDto.Password))
+        //            throw new Exception("Password does not meet complexity requirements.");
+
+        //        var user = new User
+        //        {
+        //            Username = registerDto.Username,
+        //            Email = registerDto.Email,
+        //            Password = _passwordHasher.HashPassword(null, registerDto.Password)
+        //        };
+
+        //        _context.Users.Add(user);
+        //        await _context.SaveChangesAsync();
+
+        //        // Create a cart for the new user using CartService
+        //        await _cartService.CreateCartForUserAsync(user);
+
+        //        // Create a wishlist for the new user using WishlistService
+        //        await _wishlistService.CreateWishlistForUserAsync(user);
+
+        //        //// Create a user profile for the new user using UserProfileService
+        //        var userProfileDto = new UserProfileDto(); 
+        //        //{
+        //        //   // Id = user.Id,
+        //        //    Email = user.Email
+        //        //};
+        //        await _userProfileService.AddUserProfileAsync(userProfileDto);
+
+        //        await transaction.CommitAsync();
+        //        return user;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        await transaction.RollbackAsync();
+        //        throw;
+        //    }
+        //}
+
         public async Task<User> CreateUserAsync(RegisterDto registerDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
+                // Ensure email is provided
+                if (string.IsNullOrEmpty(registerDto.Email))
+                    throw new Exception("Email is required.");
+
                 var existingEmailUser = await GetUserByEmailAsync(registerDto.Email);
                 if (existingEmailUser != null)
                     throw new Exception("Email is already registered.");
@@ -66,6 +126,10 @@ namespace Ecommerce.Infrastructure.Repository
                     Password = _passwordHasher.HashPassword(null, registerDto.Password)
                 };
 
+                // Ensure that email is not null
+                if (string.IsNullOrEmpty(user.Email))
+                    throw new Exception("User email is not set.");
+
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
 
@@ -74,6 +138,14 @@ namespace Ecommerce.Infrastructure.Repository
 
                 // Create a wishlist for the new user using WishlistService
                 await _wishlistService.CreateWishlistForUserAsync(user);
+
+                // Create a user profile for the new user using UserProfileService
+               // var userProfileDto = new UserProfileDto();
+
+                //{
+                //    Email = user.Email
+                //};
+                await _userProfileService.CreateUserProfileForUserAsync(user);
 
                 await transaction.CommitAsync();
                 return user;
@@ -84,6 +156,7 @@ namespace Ecommerce.Infrastructure.Repository
                 throw;
             }
         }
+
 
         public async Task<User> UpdateUserAsync(User user)
         {
@@ -147,15 +220,11 @@ namespace Ecommerce.Infrastructure.Repository
                 new Claim(JwtRegisteredClaimNames.Sub, user.Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-              //  new Claim(ClaimTypes.Role, "user") ,// تأكد من استخدام ClaimTypes.Role
-               // new Claim("role","user") ,
                 new Claim("uid", user.Id.ToString())
             };
 
             // Add role claims
             claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
-           // claims.AddRange(userRoles.Select(userRole => new Claim("role", userRole)));
-
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("5UUXQCaePfqAWdTJ3yG9+txiWBYwH/VQiQGQiVURJWg="));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -170,7 +239,6 @@ namespace Ecommerce.Infrastructure.Repository
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
 
         public async Task<bool> VerifyPasswordAsync(User user, string password)
         {

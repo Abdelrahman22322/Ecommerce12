@@ -187,6 +187,21 @@ namespace Ecommerce.Core.DTO.Map
                 .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Product.Brand.Name))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Product.Category.Name))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.UnitPrice));
+
+
+
+                  CreateMap<UserProfile, UpdateUserProfileDto>().ReverseMap();
+                  CreateMap<UserProfileDto, UserProfile>();
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.OrderStatus.Status))
+                .ReverseMap();
+            CreateMap<OrderStatus, OrderStatusDto>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDto>().ReverseMap();
+
+
+
+            CreateMap<Shipper, ShipperDto>().ReverseMap();
+            CreateMap<Shipping, ShippingDto>().ReverseMap();
         }
     }
 }

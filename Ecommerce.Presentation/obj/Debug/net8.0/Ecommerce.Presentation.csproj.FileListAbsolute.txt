@@ -177,3 +177,4 @@ C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Presentation\bin\Debug\net8.0\Bou
 C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Presentation\bin\Debug\net8.0\MailKit.dll
 C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Presentation\bin\Debug\net8.0\MimeKit.dll
 C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Presentation\bin\Debug\net8.0\System.Formats.Asn1.dll
+C:\Users\ASUS\source\repos\Ecommerce\Ecommerce.Presentation\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll

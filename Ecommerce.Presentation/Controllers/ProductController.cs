@@ -1,4 +1,6 @@
-﻿using Ecommerce.Core.Domain.Entities;
+﻿using AutoMapper;
+using Ecommerce.Core.Domain.Entities;
+using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.DTO;
 using Ecommerce.Core.ServicesContracts;
 using FluentValidation;
@@ -143,5 +145,6 @@ namespace Ecommerce.Presentation.Controllers
 
     }
 }
+
 
 
