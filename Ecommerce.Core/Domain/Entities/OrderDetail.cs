@@ -5,11 +5,12 @@ namespace Ecommerce.Core.Domain.Entities;
 
 public class OrderDetail
 {
+    public int Id { get; set; }
     public int OrderId { get; set; }
     public Order Order { get; set; }
 
-    public int ProductId { get; set; }
-    public Product Product { get; set; }
+    //public int ProductId { get; set; }
+    //public Product Product { get; set; }
 
     [Column(TypeName = "decimal(18, 2)")]
     public decimal Price { get; set; }
@@ -30,4 +31,8 @@ public class OrderDetail
 
     public int? DiscountId { get; set; }
     public Discount Discount { get; set; }
+
+    // Add UserProfile reference if needed
+    //public int UserProfileId { get; set; }
+    //public UserProfile UserProfile { get; set; }
 }

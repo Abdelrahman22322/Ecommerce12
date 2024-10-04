@@ -2,7 +2,7 @@
 
 public enum OrderState
 {
-
+    Paid,
     Pending,
     Processing,
     Shipped,

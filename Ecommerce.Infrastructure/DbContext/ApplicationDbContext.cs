@@ -154,8 +154,8 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<CartItem>()
      .HasKey(ci => new { ci.CartId, ci.ProductId });
 
-        modelBuilder.Entity<OrderDetail>()
-            .HasKey(od => new { od.OrderId, od.ProductId });
+        //modelBuilder.Entity<OrderDetail>()
+        //    .HasKey(od => new { od.OrderId, od.ProductId });
 
         modelBuilder.Entity<ProductCategory>()
             .HasKey(pc => new { pc.ProductId, pc.CategoryId });
@@ -175,15 +175,17 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(o => o.Payment)
             .HasForeignKey(o => o.PaymentId);
 
-        modelBuilder.Entity<Shipper>()
-            .HasMany(s => s.ShippingMethods)
-            .WithOne(sm => sm.Shipper)
-            .HasForeignKey(sm => sm.ShipperId);
+        //modelBuilder.Entity<Shipper>()
+        //    .HasMany(s => s.ShippingMethods)
+        //    .WithOne(sm => sm.Shipper)
+        //    .HasForeignKey(sm => sm.ShipperId);
 
         modelBuilder.Entity<Shipping>()
             .HasMany(sm => sm.Orders)
-            .WithOne(o => o.ShippingMethod)
-            .HasForeignKey(o => o.ShippingMethodId);
+            .WithOne(o => o.Shipping)
+            .HasForeignKey(o => o.ShippingId);
+        //.WithOne(o => o.ShippingMethod)
+        //.HasForeignKey(o => o.ShippingMethodId);
 
         modelBuilder.Entity<User>()
             .HasOne(u => u.Cart)

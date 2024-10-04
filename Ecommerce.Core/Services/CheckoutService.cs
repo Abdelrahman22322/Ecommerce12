@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
+using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
 
@@ -14,7 +15,7 @@ public class CheckoutService : ICheckoutService
         _mapper = mapper;
     }
 
-    public async Task CheckoutAsync(CheckoutDto checkoutDto)
+    public async Task CheckoutAsync(CheckoutDto checkoutDto ,int userid)
     {
         if (checkoutDto == null)
         {
@@ -22,7 +23,7 @@ public class CheckoutService : ICheckoutService
         }
 
         // Fetch the existing user profile
-        var existingUserProfile = await _userProfileService.GetUserProfileByIdAsync(checkoutDto.Id);
+        var existingUserProfile = await _userProfileService.GetUserProfileByUserIdAsync(userid);
         if (existingUserProfile == null)
         {
             throw new KeyNotFoundException("User profile not found.");
@@ -39,6 +40,11 @@ public class CheckoutService : ICheckoutService
         // ...
 
         // Update user profile with provided data
-        await _userProfileService.UpdateUserProfileDuringCheckoutAsync(checkoutDto);
+        await _userProfileService.UpdateUserProfileDuringCheckoutAsync(checkoutDto, userid);
+    }
+
+    public async Task<UserProfile> GetUserProfileByIdAsync(int userId)
+    {
+        return await _userProfileService.GetUserProfileByUserIdAsync(userId);
     }
 }

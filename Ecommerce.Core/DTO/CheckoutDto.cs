@@ -4,7 +4,7 @@ namespace Ecommerce.Core.Domain.RepositoryContracts;
 
 public class CheckoutDto
 {
-    public int Id { get; set; }
+   // public int Id { get; set; }
 
     [Required]
     [StringLength(50, ErrorMessage = "First Name cannot be longer than 50 characters.")]

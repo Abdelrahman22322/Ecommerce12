@@ -75,9 +75,9 @@ public class UserProfileService : IUserProfileService
         return _mapper.Map<UpdateUserProfileDto>(userProfile);
     }
 
-    public async Task UpdateUserProfileDuringCheckoutAsync(CheckoutDto checkoutDto)
+    public async Task UpdateUserProfileDuringCheckoutAsync(CheckoutDto checkoutDto,int userId)
     {
-        var userProfile = await _userProfileRepository.GetByIdAsync(checkoutDto.Id);
+        var userProfile = await _userProfileRepository.FindAsync1(x => x.UserId == userId, null);
         if (userProfile == null)
         {
             throw new KeyNotFoundException("User profile not found.");
@@ -93,5 +93,10 @@ public class UserProfileService : IUserProfileService
     {
         var validationContext = new ValidationContext(dto);
         Validator.ValidateObject(dto, validationContext, validateAllProperties: true);
+    }
+
+    public async Task<UserProfile> GetUserProfileByUserIdAsync(int userId)
+    {
+        return await _userProfileRepository.FindAsync1(x=> x.UserId == userId,null);
     }
 }

@@ -1718,6 +1718,23 @@
           }
         }
       },
+      "Stripe.net/45.14.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "System.Configuration.ConfigurationManager": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.6.2": {
         "type": "package",
         "dependencies": {
@@ -2001,7 +2018,7 @@
           "System.Security.Permissions": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Configuration.ConfigurationManager.dll": {
             "related": ".xml"
           }
         },
@@ -3125,7 +3142,7 @@
           "System.Windows.Extensions": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Security.Permissions.dll": {
             "related": ".xml"
           }
         },
@@ -3335,7 +3352,7 @@
           "System.Drawing.Common": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net6.0/System.Windows.Extensions.dll": {
             "related": ".xml"
           }
         },
@@ -3499,6 +3516,7 @@
           "Moq": "4.20.70",
           "Newtonsoft.Json": "13.0.3",
           "PDFsharp": "6.1.1",
+          "Stripe.net": "45.14.0",
           "System.IdentityModel.Tokens.Jwt": "7.6.3",
           "dotenv.net": "3.2.0"
         },
@@ -3529,6 +3547,7 @@
           "Moq": "4.20.70",
           "Newtonsoft.Json": "13.0.3",
           "PDFsharp": "6.1.1",
+          "Stripe.net": "45.14.0",
           "System.IdentityModel.Tokens.Jwt": "7.6.3",
           "System.Linq.Dynamic.Core": "1.4.3",
           "dotenv.net": "3.2.0"
@@ -6315,6 +6334,30 @@
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.nuspec",
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
+      ]
+    },
+    "Stripe.net/45.14.0": {
+      "sha512": "/Z7RrvZV3v7eTOZgxThWn1RJ6bVtL/m7ncRcXcheF7w8/lFHsL+DAxgaEPktq+M/dChCfkvcghrUYOrkc0BVQg==",
+      "type": "package",
+      "path": "stripe.net/45.14.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "icon.png",
+        "lib/net461/Stripe.net.dll",
+        "lib/net461/Stripe.net.xml",
+        "lib/net5.0/Stripe.net.dll",
+        "lib/net5.0/Stripe.net.xml",
+        "lib/net6.0/Stripe.net.dll",
+        "lib/net6.0/Stripe.net.xml",
+        "lib/netcoreapp3.1/Stripe.net.dll",
+        "lib/netcoreapp3.1/Stripe.net.xml",
+        "lib/netstandard2.0/Stripe.net.dll",
+        "lib/netstandard2.0/Stripe.net.xml",
+        "stripe.net.45.14.0.nupkg.sha512",
+        "stripe.net.nuspec"
       ]
     },
     "Swashbuckle.AspNetCore/6.6.2": {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/n38yxkLPPICxSEP2YmP71+VA26uKycwRZvLjfzh4sQyF/oidGHbntcsWFR2Gvee2jaOnzyG90emQRf5L4zNmA==",
+  "dgSpecHash": "R3kxvsZua2KjpyTXjiV2FOna2Z1R152eiWINpzCJy68L85u/HOfN+AmZSuuJVm8KjB0Q8ZwGclehdIskKnrGdw==",
   "success": true,
   "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Ecommerce.Presentation.csproj",
   "expectedPackageFiles": [
@@ -98,6 +98,7 @@
     "C:\\Users\\ASUS\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\stripe.net\\45.14.0\\stripe.net.45.14.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",

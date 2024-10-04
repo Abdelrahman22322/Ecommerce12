@@ -1,9 +1,12 @@
-﻿using Ecommerce.Core.Domain.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using Ecommerce.Core.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce.Core.Domain.Entities;
 
 public class Shipping
 {
+    
     public int Id { get; set; }
     public ShippingMethod Method { get; set; }
     public int ShipperId { get; set; }

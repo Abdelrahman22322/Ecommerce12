@@ -10,5 +10,7 @@ public interface IUserProfileService
     public Task CreateUserProfileForUserAsync(User user);
     Task<TDto> UpdateUserProfileAsync<TDto>(TDto userProfileDto) where TDto : class;
     Task<UpdateUserProfileDto> GetUserProfileByIdAsync(int id);
-    Task UpdateUserProfileDuringCheckoutAsync(CheckoutDto checkoutDto);
+    Task UpdateUserProfileDuringCheckoutAsync(CheckoutDto checkoutDto, int userId);
+
+    public  Task<UserProfile> GetUserProfileByUserIdAsync(int userId);
 }

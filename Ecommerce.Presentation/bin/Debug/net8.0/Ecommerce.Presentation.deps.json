@@ -1073,6 +1073,18 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
+      "Stripe.net/45.14.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "runtime": {
+          "lib/net6.0/Stripe.net.dll": {
+            "assemblyVersion": "45.14.0.0",
+            "fileVersion": "45.14.0.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.6.2": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -1988,6 +2000,7 @@
           "Moq": "4.20.70",
           "Newtonsoft.Json": "13.0.3",
           "PDFsharp": "6.1.1",
+          "Stripe.net": "45.14.0",
           "System.IdentityModel.Tokens.Jwt": "7.6.3",
           "dotenv.net": "3.2.0"
         },
@@ -2013,6 +2026,7 @@
           "Moq": "4.20.70",
           "Newtonsoft.Json": "13.0.3",
           "PDFsharp": "6.1.1",
+          "Stripe.net": "45.14.0",
           "System.IdentityModel.Tokens.Jwt": "7.6.3",
           "System.Linq.Dynamic.Core": "1.4.3",
           "dotenv.net": "3.2.0"
@@ -2686,6 +2700,13 @@
       "sha512": "sha512-leXiwfiIkW7Gmn7cgnNcdtNAU70SjmKW3jxGj1iKHOvdn0zRWsgv/l2OJUO5zdGdiv2VRFnAsxxhDgMzofPdWg==",
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.2",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512"
+    },
+    "Stripe.net/45.14.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/Z7RrvZV3v7eTOZgxThWn1RJ6bVtL/m7ncRcXcheF7w8/lFHsL+DAxgaEPktq+M/dChCfkvcghrUYOrkc0BVQg==",
+      "path": "stripe.net/45.14.0",
+      "hashPath": "stripe.net.45.14.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.6.2": {
       "type": "package",

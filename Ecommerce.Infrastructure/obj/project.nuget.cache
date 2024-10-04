@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "WbFSnQe5vTJw4ZaGjtHJSMLQcaWgIjwko27X553tzfsioExlrKAiTjf9suaClXm4AwRRz+fkr4lhFR+tKnrShg==",
+  "dgSpecHash": "RpDwMRHeEeWC9KTIuB0NyfQVB+FaSNeq51erawOqGJ1vZOxAs7IvrvashcZg2oBVpQ2CDLNdBzmdIYO/OLR+GQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Infrastructure\\Ecommerce.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -81,6 +81,7 @@
     "C:\\Users\\ASUS\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\stripe.net\\45.14.0\\stripe.net.45.14.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",

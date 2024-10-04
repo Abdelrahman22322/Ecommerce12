@@ -5,7 +5,7 @@ namespace Ecommerce.Core.ServicesContracts;
 
 public interface IOrderService
 {
-    Task<OrderDto> CreateOrderAsync(int userId);
+    Task<OrderDto> CreateOrderAsync(OrderCreateDto orderCreateDto);
     Task<OrderDto> GetOrderByIdAsync(int orderId);
     Task<IEnumerable<OrderDto>> GetAllOrdersAsync();
     Task UpdateOrderAsync(OrderDto orderDto);

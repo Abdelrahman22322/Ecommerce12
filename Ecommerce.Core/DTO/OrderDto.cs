@@ -13,5 +13,6 @@ public class OrderDto
     public decimal ShippingCost { get; set; }
     public string TrackingNumber { get; set; }
     public int ShippingMethodId { get; set; }
+    public string CheckoutUrl { get; set; }
     public List<OrderDetailDto> OrderDetails { get; set; }
 }

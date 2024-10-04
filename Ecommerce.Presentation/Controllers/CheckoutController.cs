@@ -18,7 +18,7 @@ public class CheckoutController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Checkout([FromBody] CheckoutDto checkoutDto)
+    public async Task<IActionResult> Checkout([FromBody] CheckoutDto checkoutDto ,int userId)
     {
         if (!ModelState.IsValid)
         {
@@ -27,7 +27,7 @@ public class CheckoutController : ControllerBase
 
         try
         {
-            await _checkoutService.CheckoutAsync(checkoutDto);
+            await _checkoutService.CheckoutAsync(checkoutDto, userId);
             return Ok(new { message = "Checkout completed successfully." });
         }
         catch (ValidationException ex)

@@ -15,13 +15,16 @@ public class Order
 
     public decimal TotalAmount { get; set; }
     public decimal ShippingCost { get; set; }
-    public string TrackingNumber { get; set; }
+    public string TrackingNumber { get; set; } = new Guid().ToString();
 
-   
-    public int ShippingMethodId { get; set; }
-    public Shipping ShippingMethod { get; set; }
+
+    //public int ShippingMethodId { get; set; }
+    //public string ShippingMethod { get; set; }
+    public int ShippingId { get; set; }
+    public Shipping Shipping { get; set; }
 
     public ICollection<OrderDetail> OrderDetails { get; set; }
+
     public ICollection<Tracking> Trackings { get; set; }
 
     

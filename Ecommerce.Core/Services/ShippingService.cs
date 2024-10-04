@@ -1,5 +1,4 @@
-﻿// ShippingService.cs
-using AutoMapper;
+﻿using AutoMapper;
 using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.Enums;
 using Ecommerce.Core.Domain.RepositoryContracts;
@@ -10,21 +9,33 @@ using System.Threading.Tasks;
 public class ShippingService : IShippingService
 {
     private readonly IGenericRepository<Shipping> _shippingRepository;
+    private readonly Dictionary<ShippingMethod, decimal> _shippingCosts;
+    private readonly HashSet<ShippingMethod> _disabledMethods;
     private readonly IMapper _mapper;
 
     public ShippingService(IGenericRepository<Shipping> shippingRepository, IMapper mapper)
     {
         _shippingRepository = shippingRepository;
         _mapper = mapper;
+        _shippingCosts = new Dictionary<ShippingMethod, decimal>
+        {
+            { ShippingMethod.Standard, 10m },
+            { ShippingMethod.Express, 20m },
+            { ShippingMethod.Overnight, 30m }
+        };
+        _disabledMethods = new HashSet<ShippingMethod>();
     }
 
     public async Task<ShippingDto> CreateShippingAsync(ShippingDto shippingDto)
-    {
+    {  
         var shipping = _mapper.Map<Shipping>(shippingDto);
+       
         await _shippingRepository.AddAsync(shipping);
         await _shippingRepository.SaveAsync();
         return _mapper.Map<ShippingDto>(shipping);
     }
+    
+
 
     public async Task<ShippingDto> GetShippingByIdAsync(int shippingId)
     {
@@ -89,5 +100,42 @@ public class ShippingService : IShippingService
             return shipping.Status;
         }
         throw new KeyNotFoundException("Shipping not found with the provided tracking code.");
+    }
+
+    public void AssignShippingCost(ShippingMethod method, decimal cost)
+    {
+        if (_shippingCosts.ContainsKey(method))
+        {
+            _shippingCosts[method] = cost;
+        }
+        else
+        {
+            _shippingCosts.Add(method, cost);
+        }
+    }
+
+    public decimal GetShippingPrice(ShippingMethod method)
+    {
+        if (_disabledMethods.Contains(method))
+        {
+            throw new InvalidOperationException($"Shipping method {method} is disabled.");
+        }
+
+        return _shippingCosts.TryGetValue(method, out var cost) ? cost : throw new ArgumentOutOfRangeException(nameof(method), method, null);
+    }
+
+    public void DisableShippingMethod(ShippingMethod method)
+    {
+        _disabledMethods.Add(method);
+    }
+
+    public void EnableShippingMethod(ShippingMethod method)
+    {
+        _disabledMethods.Remove(method);
+    }
+
+    public Task<bool> IsValidShippingMethodAsync(ShippingMethod method)
+    {
+        return Task.FromResult(Enum.IsDefined(typeof(ShippingMethod), method));
     }
 }

@@ -222,10 +222,13 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ShipperId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ShippingCost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ShippingMethodId")
+                    b.Property<int>("ShippingId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalAmount")
@@ -246,18 +249,20 @@ namespace Ecommerce.Infrastructure.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.HasIndex("ShippingMethodId");
+                    b.HasIndex("ShipperId");
+
+                    b.HasIndex("ShippingId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.OrderDetail", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(18, 2)");
@@ -265,8 +270,14 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Property<int?>("DiscountId")
                         .HasColumnType("int");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -274,9 +285,11 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("OrderId", "ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("DiscountId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
@@ -524,13 +537,24 @@ namespace Ecommerce.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AssignedOrdersCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.HasKey("Id");
 
@@ -856,9 +880,13 @@ namespace Ecommerce.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecommerce.Core.Domain.Entities.Shipping", "ShippingMethod")
+                    b.HasOne("Ecommerce.Core.Domain.Entities.Shipper", null)
                         .WithMany("Orders")
-                        .HasForeignKey("ShippingMethodId")
+                        .HasForeignKey("ShipperId");
+
+                    b.HasOne("Ecommerce.Core.Domain.Entities.Shipping", "Shipping")
+                        .WithMany("Orders")
+                        .HasForeignKey("ShippingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -866,7 +894,7 @@ namespace Ecommerce.Infrastructure.Migrations
 
                     b.Navigation("Payment");
 
-                    b.Navigation("ShippingMethod");
+                    b.Navigation("Shipping");
                 });
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.OrderDetail", b =>
@@ -881,17 +909,13 @@ namespace Ecommerce.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecommerce.Core.Domain.Entities.Product", "Product")
+                    b.HasOne("Ecommerce.Core.Domain.Entities.Product", null)
                         .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("Discount");
 
                     b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Product", b =>
@@ -1011,7 +1035,7 @@ namespace Ecommerce.Infrastructure.Migrations
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Shipping", b =>
                 {
                     b.HasOne("Ecommerce.Core.Domain.Entities.Shipper", "Shipper")
-                        .WithMany("ShippingMethods")
+                        .WithMany()
                         .HasForeignKey("ShipperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1200,7 +1224,7 @@ namespace Ecommerce.Infrastructure.Migrations
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Shipper", b =>
                 {
-                    b.Navigation("ShippingMethods");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Shipping", b =>
