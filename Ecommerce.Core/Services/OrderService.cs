@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Guid = System.Guid;
+using Shipping = Ecommerce.Core.Domain.Entities.Shipping;
 
 public class OrderService : IOrderService
 {
@@ -35,7 +36,10 @@ public class OrderService : IOrderService
         IShippingService shippingService,
         IShipperService shipperService,
         IDiscountService discountService,
-        IMapper mapper, ICheckoutService checkoutService, IConfiguration configuration, IPaymentService paymentService)
+        IMapper mapper,
+        ICheckoutService checkoutService,
+        IConfiguration configuration,
+        IPaymentService paymentService)
     {
         _orderRepository = orderRepository;
         _orderStatusRepository = orderStatusRepository;
@@ -51,194 +55,103 @@ public class OrderService : IOrderService
         StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
     }
 
-    private async Task<string> CreateStripeCheckoutSessionAsync(Order order)
-    {
-        if (order.OrderDetails == null)
-        {
-            throw new ArgumentNullException(nameof(order.OrderDetails), "Order details cannot be null.");
-        }
-
-        var options = new SessionCreateOptions
-        {
-            LineItems = order.OrderDetails.Select(od => new SessionLineItemOptions
-            {
-                PriceData = new SessionLineItemPriceDataOptions
-                {
-                    UnitAmount = (long)(od.Price * 100), // Stripe expects the amount in cents
-                    Currency = "usd",
-                    ProductData = new SessionLineItemPriceDataProductDataOptions
-                    {
-                        Name = od.OrderId.ToString(),
-                    },
-                },
-                Quantity = od.Quantity,
-            }).ToList(),
-            Mode = "payment",
-            SuccessUrl = "http://localhost:5190/success",
-            CancelUrl = "http://localhost:5190/cancel",
-        };
-
-        var service = new SessionService();
-        Session session = await service.CreateAsync(options);
-
-        return session.Url;
-    }
-
-    private async Task<decimal> GetPriceAsync(int productId)
-    {
-        var product = await _productRepository.GetByIdAsync(productId);
-        return product.UnitPrice;
-    }
-
-
-
-
-    //public async Task<OrderDto> CreateOrderAsync(OrderCreateDto orderCreateDto)
-    //{
-    //    // Fetch user profile data
-    //    var userProfile = await _checkoutService.GetUserProfileByIdAsync(orderCreateDto.UserId);
-    //    if (userProfile == null)
-    //    {
-    //        throw new KeyNotFoundException("User profile not found.");
-    //    }
-
-    //    var cart = await _cartService.GetCartByUserIdAsync(orderCreateDto.UserId);
-    //    var orderDetails = new List<OrderDetail>();
-
-    //    foreach (var cartItem in cart.CartItems)
-    //    {
-    //        if (cartItem == null) continue; // Ensure cartItem is not null
-
-    //        var price = await GetPriceAsync(cartItem.ProductId);
-    //        var discount = await _discountService.FindAsync(d =>
-    //            d.ProductId == cartItem.ProductId && d.StartDate <= DateTime.Now && d.EndDate >= DateTime.Now);
-    //        var discountAmount = discount?.FirstOrDefault()?.DiscountAmount ?? 0;
-
-    //        var product = await _productRepository.GetByIdAsync(cartItem.ProductId); // Fetch the product
-
-    //        var orderDetail = _mapper.Map<OrderDetail>(cartItem); // Use AutoMapper
-    //      //  orderDetail.Product = product; // Assign the product
-    //        orderDetail.UnitPrice = price;
-    //        orderDetail.DiscountAmount = discountAmount;
-    //        orderDetail.Price = (price - discountAmount) * cartItem.Quantity;
-
-    //        orderDetails.Add(orderDetail);
-    //    }
-
-    //    var shippingPrice = _shippingService.GetShippingPrice(orderCreateDto.ShippingMethod);
-
-    //    // Ensure the default order status exists
-    //    var defaultOrderStatus = await _orderStatusRepository.GetByIdAsync((int)OrderState.Pending); // Assuming Pending is the default status
-    //    if (defaultOrderStatus == null)
-    //    {
-    //        defaultOrderStatus = new OrderStatus { Status = OrderState.Pending };
-    //        await _orderStatusRepository.AddAsync(defaultOrderStatus);
-    //        await _orderStatusRepository.SaveAsync();
-    //    }
-
-    //    // Ensure the default payment method exists
-    //    var defaultPayment = await _paymentService.GetDefaultPaymentAsync(); // Use PaymentService
-
-    //    // Ensure the chosen shipping method is valid
-    //    if (!await _shippingService.IsValidShippingMethodAsync(orderCreateDto.ShippingMethod))
-    //    {
-    //        throw new ArgumentException("Invalid shipping method.");
-    //    }
-
-    //    // Create the shipping entry first
-    //    var shipper = await _shipperService.AssignOrderToLeastAssignedShipper(); // Assuming a method to get default shipper
-    //    var trackingCode = Guid.NewGuid().ToString();
-
-    //    var shippingDto = _mapper.Map<ShippingDto>(userProfile);
-    //    shippingDto.ShippingMethod = orderCreateDto.ShippingMethod;
-    //    shippingDto.Cost = shippingPrice;
-    //    shippingDto.TrackingCode = trackingCode;
-    //    shippingDto.ShippingStatus = ShippingStatus.Pending;
-    //    shippingDto.Price = shippingPrice;
-    //    shippingDto.TrackingNumber = trackingCode;
-    //    shippingDto.ShipperId = shipper.Id;
-
-    //    var createdShipping = await _shippingService.CreateShippingAsync(shippingDto);
-
-    //    var order = _mapper.Map<Order>(orderCreateDto); // Use AutoMapper
-    //    order.OrderStatusId = defaultOrderStatus.Id; // Use the default order status ID
-    //    order.PaymentId = defaultPayment.Id; // Use the default payment ID
-    //    order.CreatedAt = DateTime.Now;
-    //    order.UpdatedAt = DateTime.Now;
-    //    order.ShippingCost = shippingPrice;
-    //    order.TrackingNumber = trackingCode;
-    //   // order.ShippingMethodId = createdShipping.Id; // Set the created shipping ID
-    //    order.OrderDetails = orderDetails;
-
-    //    order.TotalAmount = order.CalculateTotal() + shippingPrice;
-
-    //    await _orderRepository.AddAsync(order);
-    //    await _orderRepository.SaveAsync();
-
-    //    // Update the shipping entry with the correct order ID
-    //    createdShipping.OrderId = order.Id;
-    //  //  await _shippingService.UpdateShippingStatusAsync(createdShipping.Id, createdShipping.ShippingStatus);
-
-    //    var checkoutUrl = await CreateStripeCheckoutSessionAsync(order);
-
-    //    var orderDto = _mapper.Map<OrderDto>(order);
-    //    orderDto.CheckoutUrl = checkoutUrl; // Add checkout URL to the DTO
-
-    //    return orderDto;
-    //}
     public async Task<OrderDto> CreateOrderAsync(OrderCreateDto orderCreateDto)
     {
-      
         var userProfile = await _checkoutService.GetUserProfileByIdAsync(orderCreateDto.UserId)
                         ?? throw new KeyNotFoundException("User profile not found.");
 
-      
         var cart = await _cartService.GetCartByUserIdAsync(orderCreateDto.UserId)
                         ?? throw new InvalidOperationException("Cart is empty or not found.");
 
-      
         var orderDetails = await PrepareOrderDetails(cart);
 
-       
         var shippingPrice = _shippingService.GetShippingPrice(orderCreateDto.ShippingMethod);
+        var totalAmount = orderDetails.Sum(od => od.Price) + shippingPrice;
 
-      
-        var defaultOrderStatus = await EnsureDefaultOrderStatusAsync();
+        var checkoutUrl = await CreateStripeCheckoutSessionAsync(orderDetails, totalAmount);
 
-      
-        if (!await _shippingService.IsValidShippingMethodAsync(orderCreateDto.ShippingMethod))
-            throw new ArgumentException("Invalid shipping method.");
+        return new OrderDto
+        {
+            CheckoutUrl = checkoutUrl,
+            TotalAmount = totalAmount
+        };
+    }
 
-      
-        var shippingDto = await PrepareShipping(userProfile, orderCreateDto, shippingPrice);
-        var createdShipping = await _shippingService.CreateShippingAsync(shippingDto);
+    public async Task<OrderDto> CompleteOrderByChargeIdAsync(string chargeId)
+    {
+        var service = new ChargeService();
+        var charge = await service.GetAsync(chargeId);
 
+        if (charge.Status != "succeeded")
+        {
+            throw new InvalidOperationException("Payment not completed.");
+        }
 
-        var order = await CreateOrder(orderCreateDto, defaultOrderStatus.Id, shippingPrice, orderDetails);
+        var orderCreateDto = GetOrderCreateDtoFromCharge(charge); // Implement this method to extract order details from the charge
+        var userProfile = await _checkoutService.GetUserProfileByIdAsync(orderCreateDto.UserId)
+                          ?? throw new KeyNotFoundException("User profile not found.");
 
-        
-        order.ShippingId = createdShipping.Id;
+        var cart = await _cartService.GetCartByUserIdAsync(orderCreateDto.UserId)
+                   ?? throw new InvalidOperationException("Cart is empty or not found.");
 
-       
-        order.TotalAmount = order.CalculateTotal() + shippingPrice;
+        var orderDetails = await PrepareOrderDetails(cart);
 
-      
+        var shippingPrice = _shippingService.GetShippingPrice(orderCreateDto.ShippingMethod);
+        var orderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0;
+        var order = await CreateOrder(orderCreateDto, orderStatusId, shippingPrice, orderDetails);
+
+        var shipping = await CreateShippingAsync(userProfile, orderCreateDto, shippingPrice);
+
         await _orderRepository.AddAsync(order);
         await _orderRepository.SaveAsync();
 
-        
-        createdShipping.OrderId = order.Id;
+        await _shippingService.CreateShippingAsync(_mapper.Map<ShippingDto>(shipping));
 
-       
-        var checkoutUrl = await CreateStripeCheckoutSessionAsync(order);
-
-        
-        var orderDto = _mapper.Map<OrderDto>(order);
-        orderDto.CheckoutUrl = checkoutUrl;
-
-        return orderDto;
+        return _mapper.Map<OrderDto>(order);
     }
 
+    private OrderCreateDto GetOrderCreateDtoFromCharge(Charge charge)
+    {
+        // Implement this method to extract order details from the charge
+        // This is a placeholder implementation
+        return new OrderCreateDto
+        {
+            UserId = int.Parse(charge.Metadata["user_id"]),
+            ShippingMethod = ShippingMethod.Standard,
+            // Add other necessary properties
+        };
+    }
+
+
+
+    private async Task<Order> CreateOrder(OrderCreateDto orderCreateDto, int orderStatusId, decimal shippingCost, List<OrderDetail> orderDetails)
+    {
+        var order = _mapper.Map<Order>(orderCreateDto);
+        order.OrderStatusId = orderStatusId;
+        order.PaymentId = (await _paymentService.GetDefaultPaymentAsync()).Id;
+        order.CreatedAt = DateTime.Now;
+        order.UpdatedAt = DateTime.Now;
+        order.ShippingCost = shippingCost;
+        order.OrderDetails = orderDetails;
+
+        return order;
+    }
+
+    private async Task<Shipping> CreateShippingAsync(UserProfile userProfile, OrderCreateDto orderCreateDto, decimal shippingPrice)
+    {
+        var shipper = await _shipperService.AssignOrderToLeastAssignedShipper();
+        var trackingCode = Guid.NewGuid().ToString();
+
+        var shipping = _mapper.Map<Shipping>(userProfile);
+        shipping.Method = orderCreateDto.ShippingMethod;
+        shipping.Price = shippingPrice;
+        shipping.Status = ShippingStatus.Pending;
+        shipping.Price = shippingPrice;
+        shipping.TrackingNumber = trackingCode;
+        shipping.ShipperId = shipper.Id;
+
+        return shipping;
+    }
 
     private async Task<List<OrderDetail>> PrepareOrderDetails(Cart cart)
     {
@@ -270,50 +183,33 @@ public class OrderService : IOrderService
         return discount?.FirstOrDefault()?.DiscountAmount ?? 0;
     }
 
-    private async Task<OrderStatus> EnsureDefaultOrderStatusAsync()
+    private async Task<string> CreateStripeCheckoutSessionAsync(List<OrderDetail> orderDetails, decimal totalAmount)
     {
-        var defaultOrderStatus = await _orderStatusRepository.GetByIdAsync((int)OrderState.Pending);
-
-        if (defaultOrderStatus == null)
+        var options = new SessionCreateOptions
         {
-            defaultOrderStatus = new OrderStatus { Status = OrderState.Pending };
-            await _orderStatusRepository.AddAsync(defaultOrderStatus);
-            await _orderStatusRepository.SaveAsync();
-        }
+            LineItems = orderDetails.Select(od => new SessionLineItemOptions
+            {
+                PriceData = new SessionLineItemPriceDataOptions
+                {
+                    UnitAmount = (long)(od.Price * 100), // Stripe expects the amount in cents
+                    Currency = "usd",
+                    ProductData = new SessionLineItemPriceDataProductDataOptions
+                    {
+                        Name = od.OrderId.ToString(),
+                    },
+                },
+                Quantity = od.Quantity,
+            }).ToList(),
+            Mode = "payment",
+            SuccessUrl = "http://localhost:5190/success",
+            CancelUrl = "http://localhost:5190/cancel",
+        };
 
-        return defaultOrderStatus;
+        var service = new SessionService();
+        Session session = await service.CreateAsync(options);
+
+        return session.Url;
     }
-
-    private async Task<Order> CreateOrder(OrderCreateDto orderCreateDto, int orderStatusId, decimal shippingCost,  List<OrderDetail> orderDetails)
-    {
-        var order = _mapper.Map<Order>(orderCreateDto);
-        order.OrderStatusId = orderStatusId;
-        order.PaymentId = (await _paymentService.GetDefaultPaymentAsync()).Id;
-        order.CreatedAt = DateTime.Now;
-        order.UpdatedAt = DateTime.Now;
-        order.ShippingCost = shippingCost;
-      //  order.ShippingId = shippingId;
-        order.OrderDetails = orderDetails;
-
-        return order;
-    }
-    private async Task<ShippingDto> PrepareShipping(UserProfile userProfile, OrderCreateDto orderCreateDto, decimal shippingPrice)
-    {
-        var shipper = await _shipperService.AssignOrderToLeastAssignedShipper();
-        var trackingCode = Guid.NewGuid().ToString();
-
-        var shippingDto = _mapper.Map<ShippingDto>(userProfile);
-        shippingDto.ShippingMethod = orderCreateDto.ShippingMethod;
-        shippingDto.Cost = shippingPrice;
-    //    shippingDto.TrackingCode = trackingCode = new Guid().ToString();
-        shippingDto.ShippingStatus = ShippingStatus.Pending;
-        shippingDto.Price = shippingPrice;
-        shippingDto.TrackingNumber = trackingCode ;
-        shippingDto.ShipperId = shipper.Id;
-
-        return shippingDto;
-    }
-
 
     public async Task UpdateOrderStatusAsync(int orderId, OrderState newStatus)
     {
@@ -372,4 +268,14 @@ public class OrderService : IOrderService
             await _orderRepository.UpdateAsync(order);
         }
     }
+
+   
+
+    private async Task<decimal> GetPriceAsync(int productId)
+    {
+        var product = await _productRepository.GetByIdAsync(productId);
+        return product.UnitPrice;
+    }
+
+   
 }
