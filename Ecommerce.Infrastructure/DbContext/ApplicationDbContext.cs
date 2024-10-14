@@ -43,9 +43,12 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Wishlist> Wishlists { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.WishlistItem> WishlistItems { get; set; }
     public DbSet<ProductImage?> ProductImages { get; set; }
+    public DbSet<ShippingMethod?> ShippingCost  { get; set; }
+    public DbSet<ShippingState?> ShippingState { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.ProductCategory> ProductCategories { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.ProductTag> ProductTags { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Tag> Tags { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -163,7 +166,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<ProductTag>()
             .HasKey(pt => new { pt.ProductId, pt.TagId });
 
-        // إعداد العلاقات الخاصة بالجداول
+       
 
         modelBuilder.Entity<OrderStatus>()
             .HasMany(os => os.Orders)
@@ -190,7 +193,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<User>()
             .HasOne(u => u.Cart)
             .WithOne(c => c.User)
-            .HasForeignKey<Cart>(c => c.UserId); // إضافة ForeignKey هنا
+            .HasForeignKey<Cart>(c => c.UserId); 
 
         modelBuilder.Entity<Cart>()
             .HasMany(c => c.CartItems)
@@ -200,15 +203,15 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<User>()
             .HasOne(u => u.Wishlist)
             .WithOne(w => w.User)
-            .HasForeignKey<Wishlist>(w => w.UserId); // إضافة ForeignKey هنا
+            .HasForeignKey<Wishlist>(w => w.UserId); 
 
-        // تكوين العلاقة بين Wishlist و WishlistItem
+ 
         modelBuilder.Entity<Wishlist>()
             .HasMany(w => w.WishlistItems)
             .WithOne(wi => wi.Wishlist)
             .HasForeignKey(wi => wi.WishlistId);
 
-        // تكوين المفتاح المركب في WishlistItem
+        
         modelBuilder.Entity<WishlistItem>()
             .HasKey(wi => new { wi.WishlistId, wi.ProductId });
 
@@ -250,7 +253,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(up => up.User)
             .HasForeignKey<UserProfile>(up => up.UserId);
 
-        // تعديل العلاقات للتعامل مع القيود المتعلقة بـ ON DELETE
+   
         modelBuilder.Entity<ProductCategory>()
             .HasOne(pc => pc.Product)
             .WithMany(p => p.ProductCategories)
@@ -268,11 +271,31 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .WithOne(pi => pi.Product)
             .HasForeignKey(pi => pi.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
-         
-        modelBuilder.Entity<Product>().HasOne(p => p.Discounts)
-            .WithOne(d => d.Product)
-            .HasForeignKey<Discount>(d => d.ProductId)
-            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Discount)
+            .WithMany(d => d.Products)
+            .HasForeignKey(p => p.DiscountId)
+           .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Order>()
+            .HasOne(x=> x.User)
+            .WithMany(x => x.Orders)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+    
+        modelBuilder.Entity<Shipping>()
+            .HasOne(s => s.ShippingCost)
+            .WithMany(sc => sc.Shippings)
+            .HasForeignKey(s => s.ShippingCostId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        
+        modelBuilder.Entity<Shipping>()
+            .HasOne(s => s.ShippingState)
+            .WithMany(ss => ss.Shippings)
+            .HasForeignKey(s => s.ShippingStateId)
+            .OnDelete(DeleteBehavior.Restrict);
 
 
     }

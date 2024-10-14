@@ -24,7 +24,8 @@ public class AddProductDto
     // public List<string> ProductImageUrls { get; set; }
     public List<IFormFile> ProductImages { get; set; }
     public List<string> ImageUrls { get; set; }
-  //   public int Rating { get; set; }
+    public string DiscountName { get; set; }
+    //   public int Rating { get; set; }
     public int  DiscountAmount { get; set; }
     public DateTime DiscountStartDate { get; set; } = DateTime.Now;
     public DateTime DiscountEndDate { get; set; } 

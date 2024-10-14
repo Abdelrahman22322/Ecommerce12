@@ -123,4 +123,9 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     {
         await _context.SaveChangesAsync();
     }
+    // New Attach method
+    public void Attach(TEntity entity)
+    {
+        _entities.Attach(entity);
+    }
 }

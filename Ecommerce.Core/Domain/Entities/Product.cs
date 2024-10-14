@@ -43,6 +43,10 @@ public class Product
     public Supplier Supplier { get; set; }
     public Category Category { get; set; }
     public Brand Brand { get; set; }
+
+    public int? DiscountId { get; set; }
+    public Discount? Discount { get; set; }
+
     public ICollection<ProductAttributeValue> ProductAttributeValues { get; set; }
     public ICollection<CartItem> CartItems { get; set; }
     public ICollection<OrderDetail> OrderDetails { get; set; }
@@ -52,6 +56,6 @@ public class Product
     public ICollection<ProductImage> ProductImages { get; set; }
     public ICollection<ProductCategory> ProductCategories { get; set; }
     public ICollection<ProductTag> ProductTags { get; set; }
-    public  Discount Discounts { get; set; }
+    
 
 }

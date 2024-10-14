@@ -7,32 +7,21 @@ namespace Ecommerce.Core.Services
 {
     public class DiscountService : IDiscountService
     {
-        private readonly IGenericRepository<Discount?> _discountRepository;
-        private readonly IGenericRepository<Product> _productRepository; // Add a repository for products
+        private readonly IGenericRepository<Discount> _discountRepository;
+        private readonly IGenericRepository<Product> _productRepository;
 
-        public DiscountService(IGenericRepository<Discount?> discountRepository, IGenericRepository<Product> productRepository)
+        public DiscountService(
+            IGenericRepository<Discount> discountRepository,
+            IGenericRepository<Product> productRepository)
         {
             _discountRepository = discountRepository;
-            _productRepository = productRepository; // Initialize the product repository
+            _productRepository = productRepository;
         }
 
         public async Task<IEnumerable<Discount?>> GetAllAsync()
         {
             var discounts = await _discountRepository.GetAllAsync(null, null);
-
-            IEnumerable<Discount?> allAsync = discounts.ToList();
-            if (!allAsync.Any())
-            {
-                return [];
-            }
-
-            return allAsync;
-            //return discounts.Select(discount => new DiscountDTO
-            //{
-            //    DiscountAmount = discount.DiscountAmount,
-            //    StartDate = discount.StartDate,
-            //    EndDate = discount.EndDate
-            //}).ToList();
+            return discounts.ToList();
         }
 
         public async Task<DiscountDTO> GetByIdAsync(int id)
@@ -45,45 +34,43 @@ namespace Ecommerce.Core.Services
 
             return new DiscountDTO()
             {
-
                 DiscountAmount = discount.DiscountAmount,
                 StartDate = discount.StartDate,
                 EndDate = discount.EndDate,
-                ProductId = discount.ProductId
-
+                ProductIds = discount.Products.Select(p => p.ProductId).ToList()
             };
-
         }
 
         public async Task AddAsync(DiscountDTO discount)
         {
             ValidateDiscount(discount);
 
-            // Check if the product exists
-            var product = await _productRepository.GetByIdAsync(discount.ProductId);
-            if (product == null)
+            var products = await _productRepository.FindAsync(p => discount.ProductIds != null && discount.ProductIds.Contains(p.ProductId), null);
+            if (!products.Any())
             {
-                throw new InvalidOperationException("Product does not exist.");
-            }
-
-            // Validate if the product already has a discount
-            var existingDiscounts = await _discountRepository.FindAsync(d => d.ProductId == discount.ProductId, null);
-            if (existingDiscounts.Any())
-            {
-                throw new InvalidOperationException("A discount already exists for this product.");
+                throw new InvalidOperationException("One or more products do not exist.");
             }
 
             var newDiscount = new Discount
             {
                 DiscountAmount = discount.DiscountAmount,
+                DiscountName = discount.DiscountName,
                 StartDate = discount.StartDate,
                 EndDate = discount.EndDate,
-                ProductId = discount.ProductId
+                Products = new List<Product>()
             };
+
+            foreach (var product in products)
+            {
+                // Attach the existing product to the context
+                _productRepository.Attach(product);
+                newDiscount.Products.Add(product);
+            }
 
             await _discountRepository.AddAsync(newDiscount);
             await _discountRepository.SaveAsync();
         }
+
 
         public async Task UpdateAsync(int id, DiscountDTO discount)
         {
@@ -95,14 +82,28 @@ namespace Ecommerce.Core.Services
                 throw new Exception("Discount not found.");
             }
 
-            // Manually update properties
+            var products = await _productRepository.FindAsync(p => discount.ProductIds != null && discount.ProductIds.Contains(p.ProductId), null);
+            if (!products.Any())
+            {
+                throw new InvalidOperationException("One or more products do not exist.");
+            }
+
             existingDiscount.DiscountAmount = discount.DiscountAmount;
             existingDiscount.StartDate = discount.StartDate;
             existingDiscount.EndDate = discount.EndDate;
+            existingDiscount.Products.Clear();
+
+            foreach (var product in products)
+            {
+                // Attach the existing product to the context
+                _productRepository.Attach(product);
+                existingDiscount.Products.Add(product);
+            }
 
             await _discountRepository.UpdateAsync(existingDiscount);
             await _discountRepository.SaveAsync();
         }
+
 
         public async Task DeleteAsync(int id)
         {
@@ -121,21 +122,55 @@ namespace Ecommerce.Core.Services
             return await _discountRepository.FindAsync(func, null);
         }
 
+        public async Task RemoveProductFromDiscountAsync(int discountId, int productId)
+        {
+            var discount = await _discountRepository.GetByIdAsync(discountId);
+            if (discount == null)
+            {
+                throw new Exception("Discount not found.");
+            }
+
+            var productToRemove = discount.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (productToRemove != null)
+            {
+                discount.Products.Remove(productToRemove);
+                await _discountRepository.UpdateAsync(discount);
+                await _discountRepository.SaveAsync();
+            }
+            else
+            {
+                throw new Exception("Product not found in discount.");
+            }
+        }
+
         private void ValidateDiscount(DiscountDTO discount)
         {
+            if (discount == null)
+            {
+                throw new ArgumentNullException(nameof(discount), "Discount cannot be null.");
+            }
+
             if (discount.DiscountAmount <= 0)
             {
-                throw new ArgumentException("Discount amount must be greater than zero.");
+                throw new ArgumentException("Discount amount must be greater than zero.", nameof(discount.DiscountAmount));
             }
 
             if (discount.StartDate >= discount.EndDate)
             {
-                throw new ArgumentException("Start date must be earlier than end date.");
+                throw new ArgumentException("Start date must be earlier than end date.", nameof(discount.StartDate));
             }
 
-            if (discount.ProductId <= 0)
+            if (discount.ProductIds == null || !discount.ProductIds.Any())
             {
-                throw new ArgumentException("Invalid product ID.");
+                throw new ArgumentException("At least one product ID must be provided.", nameof(discount.ProductIds));
+            }
+
+            foreach (var productId in discount.ProductIds)
+            {
+                if (productId <= 0)
+                {
+                    throw new ArgumentException($"Invalid product ID: {productId}", nameof(discount.ProductIds));
+                }
             }
         }
     }

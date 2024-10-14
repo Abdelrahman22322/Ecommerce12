@@ -69,6 +69,18 @@
               "target": "Package",
               "version": "[11.9.2, )"
             },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.14, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.14, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.14, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[4.7.1.1, )"
@@ -202,6 +214,18 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.9.2, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.14, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.14, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.14, )"
             },
             "MailKit": {
               "target": "Package",
@@ -356,6 +380,18 @@
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
               "version": "[11.9.2, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.14, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.14, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.14, )"
             },
             "MailKit": {
               "target": "Package",

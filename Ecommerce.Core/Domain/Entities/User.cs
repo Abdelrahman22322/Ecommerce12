@@ -41,6 +41,7 @@ namespace Ecommerce.Core.Domain.Entities
         public UserProfile UserProfile { get; set; }
         public Cart Cart { get; set; }
         public Wishlist Wishlist { get; set; }
+        public ICollection<Order> Orders { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
         public ICollection<Comment>  Comments { get; set; } 

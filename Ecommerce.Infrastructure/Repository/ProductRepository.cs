@@ -49,12 +49,12 @@ namespace Ecommerce.Infrastructure.Repository
 
             if (filter.MinDiscount.HasValue)
             {
-                query = query.Where(p => p.Discounts.DiscountAmount >= filter.MinDiscount);
+                query = query.Where(p => p.Discount.DiscountAmount >= filter.MinDiscount);
             }
 
             if (filter.MaxDiscount.HasValue)
             {
-                query = query.Where(p => p.Discounts.DiscountAmount <= filter.MaxDiscount.Value);
+                query = query.Where(p => p.Discount.DiscountAmount <= filter.MaxDiscount.Value);
             }
 
             if (filter.MinRating.HasValue)
@@ -127,8 +127,8 @@ namespace Ecommerce.Infrastructure.Repository
                 .Include(p => p.Brand)
                 .Include(p => p.ProductImages)
                 .Include(p => p.Category)
-                .Include(p => p.Discounts)
-                .Where(p => p.Discounts.DiscountAmount > 0)
+                .Include(p => p.Discount)
+                .Where(p => p.Discount.DiscountAmount > 0)
                 .AsNoTracking()
                 .ToListAsync();
         }

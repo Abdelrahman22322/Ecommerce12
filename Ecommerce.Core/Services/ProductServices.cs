@@ -434,12 +434,16 @@ public class ProductServices : IProductService
                     await _productTagService.DeleteAsync(productTag.ProductId, productTag.TagId);
                 }
 
-                // Delete associated discount
-                var discounts = await _discountService.FindAsync(d => d.ProductId == productId);
-                foreach (var discount in discounts)
+                // Assuming you are trying to find the discount for a specific product
+                var discount = (await _discountService.FindAsync(d => d.Products.Any(p => p.ProductId == productId))).FirstOrDefault();
+
+                if (discount != null)
                 {
-                    await _discountService.DeleteAsync(discount.DiscountId);
+                    await _discountService.RemoveProductFromDiscountAsync(discount.DiscountId, productId);
                 }
+
+                // await _discountService.DeleteAsync(discount.)
+
 
                 // Delete the product
                 await _productRepository.DeleteAsync(existingProduct);

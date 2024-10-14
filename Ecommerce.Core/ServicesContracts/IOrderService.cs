@@ -12,5 +12,6 @@ public interface IOrderService
     Task DeleteOrderAsync(int orderId);
     Task<IEnumerable<OrderDto>> GetOrdersByStatusAsync(OrderState status);
     Task ChangeOrderStatusAsync(int orderId, OrderState newStatus);
-    Task<OrderDto> CompleteOrderByChargeIdAsync(string chargeId);
+    //Task<OrderDto> CompleteOrderByChargeIdAsync(string chargeId);
+    Task CompleteOrderAsync(int orderId);
 }

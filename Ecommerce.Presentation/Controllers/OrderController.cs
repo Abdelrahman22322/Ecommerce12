@@ -33,28 +33,6 @@ public class OrderController : ControllerBase
         }
     }
 
-    //[HttpPost("complete")]
-    //public async Task<IActionResult> CompleteOrder([FromBody] string sessionId)
-    //{
-    //    try
-    //    {
-    //        var result = await _orderService.CompleteOrderAsync(sessionId);
-    //        return Ok(result);
-    //    }
-    //    catch (InvalidOperationException ex)
-    //    {
-    //        return BadRequest(new { Message = ex.Message });
-    //    }
-    //    catch (KeyNotFoundException ex)
-    //    {
-    //        return NotFound(new { Message = ex.Message });
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        return StatusCode(500, new { Message = "An error occurred while completing the order.", Details = ex.Message });
-    //    }
-    //}
-
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOrderById(int id)
     {

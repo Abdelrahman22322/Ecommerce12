@@ -185,19 +185,17 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("DiscountName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("DiscountId");
-
-                    b.HasIndex("ProductId")
-                        .IsUnique();
 
                     b.ToTable("Discount");
                 });
@@ -222,6 +220,10 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("ShipperId")
                         .HasColumnType("int");
 
@@ -241,6 +243,9 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -252,6 +257,8 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.HasIndex("ShipperId");
 
                     b.HasIndex("ShippingId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -349,6 +356,9 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Property<bool>("Discontinued")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsArchived")
                         .HasColumnType("bit");
 
@@ -380,6 +390,8 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("DiscountId");
 
                     b.HasIndex("SupplierId");
 
@@ -851,17 +863,6 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Discount", b =>
-                {
-                    b.HasOne("Ecommerce.Core.Domain.Entities.Product", "Product")
-                        .WithOne("Discounts")
-                        .HasForeignKey("Ecommerce.Core.Domain.Entities.Discount", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Order", b =>
                 {
                     b.HasOne("Ecommerce.Core.Domain.Entities.Customer", null)
@@ -890,11 +891,19 @@ namespace Ecommerce.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ecommerce.Core.Domain.Entities.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("OrderStatus");
 
                     b.Navigation("Payment");
 
                     b.Navigation("Shipping");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.OrderDetail", b =>
@@ -932,6 +941,11 @@ namespace Ecommerce.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ecommerce.Core.Domain.Entities.Discount", "Discount")
+                        .WithMany("Products")
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Ecommerce.Core.Domain.Entities.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierId")
@@ -941,6 +955,8 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Discount");
 
                     b.Navigation("Supplier");
                 });
@@ -1171,6 +1187,11 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Discount", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -1193,9 +1214,6 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Navigation("CartItems");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Discounts")
-                        .IsRequired();
 
                     b.Navigation("OrderDetails");
 
@@ -1248,6 +1266,8 @@ namespace Ecommerce.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Comments");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Ratings");
 

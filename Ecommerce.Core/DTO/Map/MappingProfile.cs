@@ -19,8 +19,8 @@ namespace Ecommerce.Core.DTO.Map
         {
             CreateMap<Product, ProducCardtDTO>()
                 .ForMember(dest => dest.Discount,
-                    opt => opt.MapFrom(src => src.Discounts
-                    ))
+                    opt => opt.MapFrom(src =>  src.Discount.DiscountAmount))
+                    
                 .ForMember(dest => dest.Rate,
                     opt => opt.MapFrom(src => src.Ratings.Count > 0
                         ? src.Ratings.Average(r => r.Value)
@@ -42,37 +42,60 @@ namespace Ecommerce.Core.DTO.Map
                     : 0))
                 .ForMember(dest => dest.Discontinued, opt => opt.MapFrom(src => src.Discontinued));
 
+            //CreateMap<AddProductDto, Product>()
+            //    .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Category { Name = src.Category }))
+            //    .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => new Brand { Name = src.Brand }))
+            //    .ForMember(dest => dest.Discounts,
+            //        opt => opt.MapFrom(src => new Discount
+            //        {  
+            //            DiscountAmount = src.DiscountAmount,
+            //            StartDate = src.DiscountStartDate,
+            //            EndDate = src.DiscountEndDate
+            //        }))
+            //    .ForMember(dest => dest.ProductTags,
+            //        opt => opt.MapFrom(src => src.Tags.Select(t => new ProductTag
+            //        {
+            //            Tag = new Tag { Name = t }
+            //        }).ToList()))
+            //    .ForMember(dest => dest.ProductAttributeValues,
+            //        opt => opt.MapFrom(src => src.ProductAttributes.Select((pa, index) => new ProductAttributeValue
+            //        {
+
+            //            ProductAttribute = new ProductAttribute { Name = pa },
+            //            Value = src.ProductAttributesValues[index]
+            //
+            // }).ToList()))
+            //    //.ForMember(dest => dest.ProductImages,
+            //    //    opt => opt.MapFrom(src => src.ProductImageUrls.Select(pi => new ProductImage
+            //    //    {
+            //    //        ImageUrl = pi
+            //    //    }).ToList()))
+            //    .ForPath(dest => dest.Supplier.CompanyName,
+            //        opt => opt.MapFrom(src => src.CompanyName))
+            //    .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            //    .ForPath(dest => dest.Supplier.ContactName,
+            //        opt => opt.MapFrom(src => src.ContactName));
+
             CreateMap<AddProductDto, Product>()
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Category { Name = src.Category }))
-                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => new Brand { Name = src.Brand }))
-                .ForMember(dest => dest.Discounts,
+                .ForMember(dest => dest.Discount,
                     opt => opt.MapFrom(src => new Discount
                     {
+                        DiscountName = src.DiscountName,
                         DiscountAmount = src.DiscountAmount,
                         StartDate = src.DiscountStartDate,
                         EndDate = src.DiscountEndDate
                     }))
-                .ForMember(dest => dest.ProductTags,
-                    opt => opt.MapFrom(src => src.Tags.Select(t => new ProductTag
-                    {
-                        Tag = new Tag { Name = t }
-                    }).ToList()))
-                .ForMember(dest => dest.ProductAttributeValues,
-                    opt => opt.MapFrom(src => src.ProductAttributes.Select((pa, index) => new ProductAttributeValue
-                    {
-                        ProductAttribute = new ProductAttribute { Name = pa },
-                        Value = src.ProductAttributesValues[index]
-                    }).ToList()))
-                //.ForMember(dest => dest.ProductImages,
-                //    opt => opt.MapFrom(src => src.ProductImageUrls.Select(pi => new ProductImage
-                //    {
-                //        ImageUrl = pi
-                //    }).ToList()))
+                // لن نستخدم مابينج للـ Category و Brand
+                .ForMember(dest => dest.ProductTags, opt => opt.Ignore())
+                .ForMember(dest => dest.ProductAttributeValues, opt => opt.Ignore())
                 .ForPath(dest => dest.Supplier.CompanyName,
                     opt => opt.MapFrom(src => src.CompanyName))
                 .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
                 .ForPath(dest => dest.Supplier.ContactName,
-                    opt => opt.MapFrom(src => src.ContactName));
+                    opt => opt.MapFrom(src => src.ContactName))
+                .ForMember(dest => dest.Category, opt => opt.Ignore()) // Ignore Category
+                .ForMember(dest => dest.Brand, opt => opt.Ignore());
+
 
             CreateMap<CloudinaryResult, ProductImage>()
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Url))

@@ -64,27 +64,33 @@ namespace Ecommerce.Api.Controllers
         //}
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateUserProfile(int id, [FromBody] JsonPatchDocument<UpdateUserProfileDto> patchDoc)
+        public async Task<IActionResult> UpdateUserProfile(int id, [FromForm] UpdateUserProfileDto updateUserProfileDto)
         {
-            if (patchDoc == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { message = "Invalid patch document." });
+                return BadRequest(ModelState);
             }
 
             try
             {
                 var userProfileDto = await _userProfileService.GetUserProfileByIdAsync(id);
-                patchDoc.ApplyTo(userProfileDto, (error) =>
+
+                var properties = typeof(UpdateUserProfileDto).GetProperties();
+                foreach (var property in properties)
                 {
-                    throw new InvalidOperationException($"Error applying patch: {error.ErrorMessage}");
-                });
+                    var newValue = property.GetValue(updateUserProfileDto);
+                    if (newValue != null)
+                    {
+                        var userProfileProperty = userProfileDto.GetType().GetProperty(property.Name);
+                        if (userProfileProperty != null)
+                        {
+                            userProfileProperty.SetValue(userProfileDto, newValue);
+                        }
+                    }
+                }
 
                 var updatedUserProfile = await _userProfileService.UpdateUserProfileAsync(userProfileDto);
                 return Ok(updatedUserProfile);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { message = ex.Message });
             }
             catch (KeyNotFoundException ex)
             {

@@ -13,4 +13,5 @@ public interface IDiscountService
     Task DeleteAsync(int id);
 
     Task<IEnumerable<Discount?>> FindAsync(Expression<Func<Discount?, bool>> func);
+    Task RemoveProductFromDiscountAsync(int discountId, int productId);
 }

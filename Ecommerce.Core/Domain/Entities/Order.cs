@@ -3,19 +3,22 @@
 public class Order
 {
     public int Id { get; set; }
-    
+    public int UserId { get; set; }
+    public User User { get; set; }
+
+
     public int OrderStatusId { get; set; }
     public OrderStatus OrderStatus { get; set; }
 
     public int PaymentId { get; set; }
     public Payment Payment { get; set; }
-
+    public string PaymentStatus { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
     public decimal TotalAmount { get; set; }
     public decimal ShippingCost { get; set; }
-    public string TrackingNumber { get; set; } = new Guid().ToString();
+    public string TrackingNumber { get; set; } 
 
 
     //public int ShippingMethodId { get; set; }

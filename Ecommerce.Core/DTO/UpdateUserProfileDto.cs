@@ -16,6 +16,7 @@ public class UpdateUserProfileDto
     public string StreetAddress { get; set; }
 
     [StringLength(50, ErrorMessage = "City cannot be longer than 50 characters.")]
+
     public string City { get; set; }
 
     [StringLength(50, ErrorMessage = "Country cannot be longer than 50 characters.")]

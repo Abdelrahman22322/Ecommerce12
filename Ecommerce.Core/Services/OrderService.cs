@@ -55,39 +55,9 @@ public class OrderService : IOrderService
         StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
     }
 
+
     public async Task<OrderDto> CreateOrderAsync(OrderCreateDto orderCreateDto)
     {
-        var userProfile = await _checkoutService.GetUserProfileByIdAsync(orderCreateDto.UserId)
-                        ?? throw new KeyNotFoundException("User profile not found.");
-
-        var cart = await _cartService.GetCartByUserIdAsync(orderCreateDto.UserId)
-                        ?? throw new InvalidOperationException("Cart is empty or not found.");
-
-        var orderDetails = await PrepareOrderDetails(cart);
-
-        var shippingPrice = _shippingService.GetShippingPrice(orderCreateDto.ShippingMethod);
-        var totalAmount = orderDetails.Sum(od => od.Price) + shippingPrice;
-
-        var checkoutUrl = await CreateStripeCheckoutSessionAsync(orderDetails, totalAmount);
-
-        return new OrderDto
-        {
-            CheckoutUrl = checkoutUrl,
-            TotalAmount = totalAmount
-        };
-    }
-
-    public async Task<OrderDto> CompleteOrderByChargeIdAsync(string chargeId)
-    {
-        var service = new ChargeService();
-        var charge = await service.GetAsync(chargeId);
-
-        if (charge.Status != "succeeded")
-        {
-            throw new InvalidOperationException("Payment not completed.");
-        }
-
-        var orderCreateDto = GetOrderCreateDtoFromCharge(charge); // Implement this method to extract order details from the charge
         var userProfile = await _checkoutService.GetUserProfileByIdAsync(orderCreateDto.UserId)
                           ?? throw new KeyNotFoundException("User profile not found.");
 
@@ -97,17 +67,123 @@ public class OrderService : IOrderService
         var orderDetails = await PrepareOrderDetails(cart);
 
         var shippingPrice = _shippingService.GetShippingPrice(orderCreateDto.ShippingMethod);
-        var orderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0;
-        var order = await CreateOrder(orderCreateDto, orderStatusId, shippingPrice, orderDetails);
+        var totalAmount = orderDetails.Sum(od => od.Price) + shippingPrice;
 
-        var shipping = await CreateShippingAsync(userProfile, orderCreateDto, shippingPrice);
+        // Fetch or create a Shipper record
+        var shipper = await _shipperService.AssignOrderToLeastAssignedShipper();
+        if (shipper == null)
+        {
+            throw new Exception("No shippers available.");
+        }
+
+        // Create a Shipping record
+        var shipping = new Shipping
+        {
+            Method = orderCreateDto.ShippingMethod,
+            Price = shippingPrice,
+            Status = ShippingStatus.Pending,
+            TrackingNumber = Guid.NewGuid().ToString(),
+            ShipperId = shipper.Id // Ensure ShipperId is set correctly
+        };
+
+        // Save the Shipping record and get its Id
+        var shippingDto = _mapper.Map<ShippingDto>(shipping);
+        var createdShipping = await _shippingService.CreateShippingAsync(shippingDto);
+        shipping.Id = createdShipping.Id; // Ensure the Id is set after creation
+
+        // Create a pending order
+        var order = new Order
+        {
+            UserId = orderCreateDto.UserId,
+            OrderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0,
+            CreatedAt = DateTime.Now,
+            UpdatedAt = DateTime.Now,
+            ShippingCost = shippingPrice,
+            OrderDetails = orderDetails,
+            TotalAmount = totalAmount,
+            PaymentStatus = "pending", // Set initial payment status to pending
+            ShippingId = shipping.Id, // Ensure ShippingId is set correctly
+            PaymentId = (await _paymentService.GetDefaultPaymentAsync()).Id
+        };
 
         await _orderRepository.AddAsync(order);
         await _orderRepository.SaveAsync();
 
-        await _shippingService.CreateShippingAsync(_mapper.Map<ShippingDto>(shipping));
+        var checkoutUrl = await CreateStripeCheckoutSessionAsync(orderDetails, totalAmount, order.Id);
 
-        return _mapper.Map<OrderDto>(order);
+        return new OrderDto
+        {
+            CheckoutUrl = checkoutUrl,
+            TotalAmount = totalAmount,
+            Id = order.Id
+        };
+    }
+
+
+
+
+
+    private async Task<string> CreateStripeCheckoutSessionAsync(List<OrderDetail> orderDetails, decimal totalAmount, int orderId)
+    {
+        var options = new SessionCreateOptions
+        {
+            LineItems = orderDetails.Select(od => new SessionLineItemOptions
+            {
+                PriceData = new SessionLineItemPriceDataOptions
+                {
+                    UnitAmount = (long)(od.Price * 100), // Stripe expects the amount in cents
+                    Currency = "usd",
+                    ProductData = new SessionLineItemPriceDataProductDataOptions
+                    {
+                        Name = od.OrderId.ToString(),
+                    },
+                },
+                Quantity = od.Quantity,
+            }).ToList(),
+            Mode = "payment",
+            SuccessUrl = $"http://localhost:5190/success?orderId={orderId}",
+            CancelUrl = "http://localhost:5190/cancel",
+        };
+
+        var service = new SessionService();
+        Session session = await service.CreateAsync(options);
+
+        return session.Url;
+    }
+
+    public async Task CompleteOrderAsync(int orderId)
+    {
+        var order = await _orderRepository.GetByIdAsync(orderId)
+                    ?? throw new KeyNotFoundException("Order not found.");
+
+        if (order.PaymentStatus != "succeeded")
+        {
+            throw new InvalidOperationException("Payment not completed.");
+        }
+
+        var userProfile = await _checkoutService.GetUserProfileByIdAsync(order.UserId)
+                          ?? throw new KeyNotFoundException("User profile not found.");
+
+        var cart = await _cartService.GetCartByUserIdAsync(order.UserId)
+                   ?? throw new InvalidOperationException("Cart is empty or not found.");
+
+        var orderDetails = await PrepareOrderDetails(cart);
+
+        var shippingPrice = _shippingService.GetShippingPrice(order.Shipping.Method);
+        var orderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0;
+
+        order.OrderStatusId = orderStatusId;
+        order.UpdatedAt = DateTime.Now;
+        order.ShippingCost = shippingPrice;
+        order.OrderDetails = orderDetails;
+
+        var orderCreateDto = _mapper.Map<OrderCreateDto>(order);
+        var shipping = await CreateShippingAsync(userProfile, orderCreateDto, shippingPrice);
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.SaveAsync();
+
+        await _shippingService.CreateShippingAsync(_mapper.Map<ShippingDto>(shipping));
     }
 
     private OrderCreateDto GetOrderCreateDtoFromCharge(Charge charge)
@@ -175,13 +251,15 @@ public class OrderService : IOrderService
         return orderDetails;
     }
 
+
     private async Task<decimal> GetDiscountAmountAsync(int productId)
     {
         var discount = await _discountService.FindAsync(d =>
-            d.ProductId == productId && d.StartDate <= DateTime.Now && d.EndDate >= DateTime.Now);
+            d.Products.Any(x=> x.ProductId == productId));
 
         return discount?.FirstOrDefault()?.DiscountAmount ?? 0;
     }
+
 
     private async Task<string> CreateStripeCheckoutSessionAsync(List<OrderDetail> orderDetails, decimal totalAmount)
     {
@@ -191,7 +269,7 @@ public class OrderService : IOrderService
             {
                 PriceData = new SessionLineItemPriceDataOptions
                 {
-                    UnitAmount = (long)(od.Price * 100), // Stripe expects the amount in cents
+                    UnitAmount = (long)(od.SubTotal * 100), // Stripe expects the amount in cents (total amount in cents)
                     Currency = "usd",
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {

@@ -51,14 +51,16 @@ public class ShipperService : IShipperService
     }
 
     
+    
     public async Task<ShipperDto> AssignOrderToLeastAssignedShipper()
     {
         var shippers = await _shipperRepository.GetAllAsync(includeword: "Orders");
-        var leastAssignedShipper = shippers.OrderBy(s => s.Orders.Count).FirstOrDefault();
+        var leastAssignedShipper = shippers.OrderBy(s => s.Orders?.Count ?? 0).FirstOrDefault();
         if (leastAssignedShipper == null)
         {
             throw new Exception("No shippers available.");
         }
         return _mapper.Map<ShipperDto>(leastAssignedShipper);
     }
+
 }

@@ -81,5 +81,7 @@ public interface IGenericRepository<TEntity> where TEntity : class
     public Task<TEntity?> FindAsync1(Expression<Func<TEntity?, bool>> predicate, string? includeword);
     //  public Task<TEntity?> FindCompositeKeyAsync(params object[] keyValues);
     Task<TEntity?> FindCompositeKeyAsync(Expression<Func<TEntity?, bool>> predicate);
-    
+    void Attach(TEntity entity);
+
+
 }
