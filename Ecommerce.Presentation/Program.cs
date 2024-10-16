@@ -34,58 +34,61 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Add console logging
 
-////Add Generic Repository
-//builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+//Add Generic Repository
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-//// Add specific repositories
-//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+// Add specific repositories
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-//// Add services
-//builder.Services.AddScoped<IProductService, ProductServices>();
-//builder.Services.AddScoped<IBrandServices, BrandServices>();
-//builder.Services.AddScoped<ICategoriesServices, CategoryService>();
-//builder.Services.AddScoped<ITagService, TagService>();
-//builder.Services.AddScoped<IProductAttributeServices, ProductAttributeServices>();
-//builder.Services.AddScoped<IProductAttributeValueServices, ProductAttributeValueServices>();
-//builder.Services.AddScoped<IImageRepository, ImageRepository>();
-//builder.Services.AddScoped<IImageService, ImageService>();
-//builder.Services.AddScoped<IProductTagService, ProductTagService>();
-//builder.Services.AddScoped<IDiscountService, DiscountService>();
-//builder.Services.AddScoped<IUserManagerRepository, UserManagerRepository>();
-//builder.Services.AddScoped<IAuthService, AuthService>();
-//builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-//builder.Services.AddScoped<IEmailService, EmailService>();
-//builder.Services.AddScoped<ICartService, CartService>();
-//builder.Services.AddScoped<ICartItemService, CartItemService>();
-//builder.Services.AddScoped<IWishlistService, WishlistService>();
-//builder.Services.AddScoped<IWishlistItemService, WishlistItemService>();
-//builder.Services.AddScoped<IUserProfileService, UserProfileService>();
-//builder.Services.AddScoped<ICheckoutService, CheckoutService>();
-//builder.Services.AddScoped<IOrderService, OrderService>();
-//builder.Services.AddScoped<IShippingService, ShippingService>();
-//builder.Services.AddScoped<IShipperService, ShipperService>();
-//builder.Services.AddScoped<IPaymentService, PaymentService>();
-//builder.Services.AddScoped<IRatingService, RatingService>();
+// Add services
+builder.Services.AddScoped<IProductService, ProductServices>();
+builder.Services.AddScoped<IBrandServices, BrandServices>();
+builder.Services.AddScoped<ICategoriesServices, CategoryService>();
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<IProductAttributeServices, ProductAttributeServices>();
+builder.Services.AddScoped<IProductAttributeValueServices, ProductAttributeValueServices>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IProductTagService, ProductTagService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<IUserManagerRepository, UserManagerRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
+builder.Services.AddScoped<IWishlistItemService, WishlistItemService>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IShippingService, ShippingService>();
+builder.Services.AddScoped<IShipperService, ShipperService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+builder.Services.AddScoped<IShippingMethodService, ShippingMethodService >();
+builder.Services.AddScoped<IShippingStateService, ShippingStateService>();
 
-//builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpContextAccessor();
 
-//builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
-//// Add Product Validator
-//builder.Services.AddScoped<IValidator<AddProductDto>, ProductValidator>();
-//builder.Services.AddScoped<IValidator<UpdateProductDto>, ProductValidator1>();
+// Add Product Validator
+builder.Services.AddScoped<IValidator<AddProductDto>, ProductValidator>();
+builder.Services.AddScoped<IValidator<UpdateProductDto>, ProductValidator1>();
 
-//// Add Cloudinary configuration
-//builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
-//builder.Services.AddSingleton(provider =>
-//{
-//    var config = provider.GetService<IOptions<CloudinarySettings>>()?.Value;
-//    if (config == null)
-//    {
-//        throw new InvalidOperationException("Cloudinary settings are not configured properly.");
-//    }
-//    return new Cloudinary(new Account(config.CloudName, config.ApiKey, config.ApiSecret));
-//});
+// Add Cloudinary configuration
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddSingleton(provider =>
+{
+    var config = provider.GetService<IOptions<CloudinarySettings>>()?.Value;
+    if (config == null)
+    {
+        throw new InvalidOperationException("Cloudinary settings are not configured properly.");
+    }
+    return new Cloudinary(new Account(config.CloudName, config.ApiKey, config.ApiSecret));
+});
+
 
 builder.Services.AddAuthentication(o =>
 {

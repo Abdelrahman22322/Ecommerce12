@@ -18,6 +18,7 @@ public class OrderService : IOrderService
     private readonly IGenericRepository<Order> _orderRepository;
     private readonly IGenericRepository<OrderStatus> _orderStatusRepository;
     private readonly IGenericRepository<OrderDetail> _orderDetailRepository;
+    private readonly IGenericRepository<ShippingState> _shippingStateRepository;
     private readonly IProductRepository _productRepository;
     private readonly ICartService _cartService;
     private readonly IShippingService _shippingService;
@@ -26,6 +27,9 @@ public class OrderService : IOrderService
     private readonly IMapper _mapper;
     private readonly ICheckoutService _checkoutService;
     private readonly IPaymentService _paymentService;
+    private readonly IShippingMethodService _shippingMethodService;
+    private readonly IShippingStateService _shippingStateService;
+    
 
     public OrderService(
         IGenericRepository<Order> orderRepository,
@@ -39,7 +43,9 @@ public class OrderService : IOrderService
         IMapper mapper,
         ICheckoutService checkoutService,
         IConfiguration configuration,
-        IPaymentService paymentService)
+        IPaymentService paymentService,
+        IShippingMethodService shippingMethodService,
+        IShippingStateService shippingStateService, IGenericRepository<ShippingState> shippingStateRepository)
     {
         _orderRepository = orderRepository;
         _orderStatusRepository = orderStatusRepository;
@@ -52,106 +58,153 @@ public class OrderService : IOrderService
         _mapper = mapper;
         _checkoutService = checkoutService;
         _paymentService = paymentService;
+        _shippingMethodService = shippingMethodService;
+        _shippingStateService = shippingStateService;
+        _shippingStateRepository = shippingStateRepository;
         StripeConfiguration.ApiKey = configuration["Stripe:SecretKey"];
     }
 
 
     public async Task<OrderDto> CreateOrderAsync(OrderCreateDto orderCreateDto)
     {
-        var userProfile = await _checkoutService.GetUserProfileByIdAsync(orderCreateDto.UserId)
-                          ?? throw new KeyNotFoundException("User profile not found.");
-
-        var cart = await _cartService.GetCartByUserIdAsync(orderCreateDto.UserId)
-                   ?? throw new InvalidOperationException("Cart is empty or not found.");
-
-        var orderDetails = await PrepareOrderDetails(cart);
-
-        var shippingPrice = _shippingService.GetShippingPrice(orderCreateDto.ShippingMethod);
-        var totalAmount = orderDetails.Sum(od => od.Price) + shippingPrice;
-
-        // Fetch or create a Shipper record
-        var shipper = await _shipperService.AssignOrderToLeastAssignedShipper();
-        if (shipper == null)
+        try
         {
-            throw new Exception("No shippers available.");
+            var userProfile = await _checkoutService.GetUserProfileByIdAsync(orderCreateDto.UserId)
+                              ?? throw new KeyNotFoundException("User profile not found.");
+
+            var cart = await _cartService.GetCartByUserIdAsync(orderCreateDto.UserId)
+                       ?? throw new InvalidOperationException("Cart is empty or not found.");
+
+            var orderDetails = await PrepareOrderDetails(cart);
+
+            var shippingMethod = await _shippingMethodService.GetShippingMethodByIdAsync(orderCreateDto.ShippingMethodId)
+                                ?? throw new KeyNotFoundException("Shipping method not found.");
+
+            var shippingPrice = shippingMethod.Cost;
+            var totalAmount = orderDetails.Sum(od => od.Price) + shippingPrice;
+
+            var shipper = await _shipperService.AssignOrderToLeastAssignedShipper();
+            if (shipper == null)
+            {
+                throw new Exception("No shippers available.");
+            }
+
+            // Create and save the ShippingState entity
+            var shippingState = new ShippingState { Status = ShippingStatus.Pending };
+            await _shippingStateRepository.AddAsync(shippingState);
+            await _shippingStateRepository.SaveAsync();
+
+            // Generate a new GUID for the tracking number
+            var trackingNumber = Guid.NewGuid().ToString();
+
+            var shipping = new Shipping
+            {
+                ShippingMethodId = shippingMethod.Id,
+                ShippingCost = shippingPrice,
+                ShippingStateId = shippingState.Id, // Set the foreign key
+                TrackingNumber = trackingNumber,
+                ShipperId = shipper.Id
+            };
+
+            var shippingDto = _mapper.Map<ShippingDto>(shipping);
+            var createdShipping = await _shippingService.CreateShippingAsync(shippingDto);
+            shipping.Id = createdShipping.Id;
+
+            var order = new Order
+            {
+                UserId = orderCreateDto.UserId,
+                OrderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                ShippingCost = shippingPrice,
+                OrderDetails = orderDetails,
+                TotalAmount = totalAmount,
+                PaymentStatus = "pending",
+                ShippingId = shipping.Id,
+                PaymentId = (await _paymentService.GetDefaultPaymentAsync()).Id,
+                TrackingNumber = trackingNumber // Set the TrackingNumber
+            };
+
+            await _orderRepository.AddAsync(order);
+            await _orderRepository.SaveAsync();
+
+            var checkoutUrl = await CreateStripeCheckoutSessionAsync(orderDetails, totalAmount, shippingPrice, order.Id);
+
+            return new OrderDto
+            {
+                CheckoutUrl = checkoutUrl,
+                TotalAmount = totalAmount,
+                Id = order.Id
+            };
         }
-
-        // Create a Shipping record
-        var shipping = new Shipping
+        catch (Exception ex)
         {
-            Method = orderCreateDto.ShippingMethod,
-            Price = shippingPrice,
-            Status = ShippingStatus.Pending,
-            TrackingNumber = Guid.NewGuid().ToString(),
-            ShipperId = shipper.Id // Ensure ShipperId is set correctly
-        };
-
-        // Save the Shipping record and get its Id
-        var shippingDto = _mapper.Map<ShippingDto>(shipping);
-        var createdShipping = await _shippingService.CreateShippingAsync(shippingDto);
-        shipping.Id = createdShipping.Id; // Ensure the Id is set after creation
-
-        // Create a pending order
-        var order = new Order
-        {
-            UserId = orderCreateDto.UserId,
-            OrderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0,
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
-            ShippingCost = shippingPrice,
-            OrderDetails = orderDetails,
-            TotalAmount = totalAmount,
-            PaymentStatus = "pending", // Set initial payment status to pending
-            ShippingId = shipping.Id, // Ensure ShippingId is set correctly
-            PaymentId = (await _paymentService.GetDefaultPaymentAsync()).Id
-        };
-
-        await _orderRepository.AddAsync(order);
-        await _orderRepository.SaveAsync();
-
-        var checkoutUrl = await CreateStripeCheckoutSessionAsync(orderDetails, totalAmount, order.Id);
-
-        return new OrderDto
-        {
-            CheckoutUrl = checkoutUrl,
-            TotalAmount = totalAmount,
-            Id = order.Id
-        };
+            // Log the exception details
+            //_logger.LogError(ex, "An error occurred while creating the order.");
+            //if (ex.InnerException != null)
+            //{
+            //    _logger.LogError(ex.InnerException, "Inner exception details.");
+            //}
+            throw new Exception("An error occurred while creating the order. Please try again later.", ex.InnerException);
+        }
     }
 
 
-
-
-
-    private async Task<string> CreateStripeCheckoutSessionAsync(List<OrderDetail> orderDetails, decimal totalAmount, int orderId)
+    private async Task<string> CreateStripeCheckoutSessionAsync(List<OrderDetail> orderDetails, decimal totalAmount, decimal shippingCost, int orderId)
     {
-        var options = new SessionCreateOptions
+        try
         {
-            LineItems = orderDetails.Select(od => new SessionLineItemOptions
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                LineItems = orderDetails.Select(od => new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmount = (long)(od.Price * 100), // Stripe expects the amount in cents
+                        Currency = "usd",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = od.OrderId.ToString(),
+                        },
+                    },
+                    Quantity = od.Quantity,
+                }).ToList(),
+                Mode = "payment",
+                SuccessUrl = $"http://localhost:5190/success?orderId={orderId}",
+                CancelUrl = "http://localhost:5190/cancel",
+            };
+
+            // Add shipping cost as a separate line item
+            options.LineItems.Add(new SessionLineItemOptions
             {
                 PriceData = new SessionLineItemPriceDataOptions
                 {
-                    UnitAmount = (long)(od.Price * 100), // Stripe expects the amount in cents
                     Currency = "usd",
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {
-                        Name = od.OrderId.ToString(),
+                        Name = "Shipping Cost",
                     },
+                    UnitAmount = (long)(shippingCost * 100), // Stripe expects the amount in cents
                 },
-                Quantity = od.Quantity,
-            }).ToList(),
-            Mode = "payment",
-            SuccessUrl = $"http://localhost:5190/success?orderId={orderId}",
-            CancelUrl = "http://localhost:5190/cancel",
-        };
+                Quantity = 1,
+            });
 
-        var service = new SessionService();
-        Session session = await service.CreateAsync(options);
+            var service = new SessionService();
+            Session session = await service.CreateAsync(options);
 
-        return session.Url;
+            return session.Url;
+        }
+        catch (StripeException ex)
+        {
+            // Log the exception details
+            //_logger.LogError(ex, "Stripe error occurred: {Message}", ex.Message);
+            throw new Exception("An error occurred while creating the Stripe checkout session. Please try again later.", ex);
+        }
     }
 
-    public async Task CompleteOrderAsync(int orderId)
+
+    public async Task<string> CompleteOrderAsync(int orderId)
     {
         var order = await _orderRepository.GetByIdAsync(orderId)
                     ?? throw new KeyNotFoundException("Order not found.");
@@ -169,7 +222,7 @@ public class OrderService : IOrderService
 
         var orderDetails = await PrepareOrderDetails(cart);
 
-        var shippingPrice = _shippingService.GetShippingPrice(order.Shipping.Method);
+        var shippingPrice = await _shippingMethodService.GetShippingPriceAsync(order.Shipping.ShippingMethodId);
         var orderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0;
 
         order.OrderStatusId = orderStatusId;
@@ -184,7 +237,10 @@ public class OrderService : IOrderService
         await _orderRepository.SaveAsync();
 
         await _shippingService.CreateShippingAsync(_mapper.Map<ShippingDto>(shipping));
+
+        return shipping.TrackingNumber;
     }
+
 
     private OrderCreateDto GetOrderCreateDtoFromCharge(Charge charge)
     {
@@ -193,11 +249,10 @@ public class OrderService : IOrderService
         return new OrderCreateDto
         {
             UserId = int.Parse(charge.Metadata["user_id"]),
-            ShippingMethod = ShippingMethod.Standard,
+            ShippingMethodId = int.Parse(charge.Metadata["shipping_method_id"]),
             // Add other necessary properties
         };
     }
-
 
 
     private async Task<Order> CreateOrder(OrderCreateDto orderCreateDto, int orderStatusId, decimal shippingCost, List<OrderDetail> orderDetails)
@@ -219,10 +274,9 @@ public class OrderService : IOrderService
         var trackingCode = Guid.NewGuid().ToString();
 
         var shipping = _mapper.Map<Shipping>(userProfile);
-        shipping.Method = orderCreateDto.ShippingMethod;
-        shipping.Price = shippingPrice;
-        shipping.Status = ShippingStatus.Pending;
-        shipping.Price = shippingPrice;
+     //   shipping.Method = (ShippingMethod)orderCreateDto.ShippingMethodId;
+        shipping.ShippingMethod.Cost = shippingPrice;
+        shipping.ShippingState = new ShippingState { Status = ShippingStatus.Pending };
         shipping.TrackingNumber = trackingCode;
         shipping.ShipperId = shipper.Id;
 
@@ -251,42 +305,12 @@ public class OrderService : IOrderService
         return orderDetails;
     }
 
-
     private async Task<decimal> GetDiscountAmountAsync(int productId)
     {
         var discount = await _discountService.FindAsync(d =>
-            d.Products.Any(x=> x.ProductId == productId));
+            d.Products.Any(x => x.ProductId == productId));
 
         return discount?.FirstOrDefault()?.DiscountAmount ?? 0;
-    }
-
-
-    private async Task<string> CreateStripeCheckoutSessionAsync(List<OrderDetail> orderDetails, decimal totalAmount)
-    {
-        var options = new SessionCreateOptions
-        {
-            LineItems = orderDetails.Select(od => new SessionLineItemOptions
-            {
-                PriceData = new SessionLineItemPriceDataOptions
-                {
-                    UnitAmount = (long)(od.SubTotal * 100), // Stripe expects the amount in cents (total amount in cents)
-                    Currency = "usd",
-                    ProductData = new SessionLineItemPriceDataProductDataOptions
-                    {
-                        Name = od.OrderId.ToString(),
-                    },
-                },
-                Quantity = od.Quantity,
-            }).ToList(),
-            Mode = "payment",
-            SuccessUrl = "http://localhost:5190/success",
-            CancelUrl = "http://localhost:5190/cancel",
-        };
-
-        var service = new SessionService();
-        Session session = await service.CreateAsync(options);
-
-        return session.Url;
     }
 
     public async Task UpdateOrderStatusAsync(int orderId, OrderState newStatus)
@@ -347,13 +371,9 @@ public class OrderService : IOrderService
         }
     }
 
-   
-
     private async Task<decimal> GetPriceAsync(int productId)
     {
         var product = await _productRepository.GetByIdAsync(productId);
         return product.UnitPrice;
     }
-
-   
 }

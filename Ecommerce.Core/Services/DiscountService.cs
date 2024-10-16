@@ -2,6 +2,7 @@
 using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
+using Hangfire;
 
 namespace Ecommerce.Core.Services
 {
@@ -62,15 +63,15 @@ namespace Ecommerce.Core.Services
 
             foreach (var product in products)
             {
-                // Attach the existing product to the context
                 _productRepository.Attach(product);
                 newDiscount.Products.Add(product);
             }
 
             await _discountRepository.AddAsync(newDiscount);
             await _discountRepository.SaveAsync();
-        }
 
+            ScheduleDiscountDeletion(newDiscount);
+        }
 
         public async Task UpdateAsync(int id, DiscountDTO discount)
         {
@@ -95,7 +96,6 @@ namespace Ecommerce.Core.Services
 
             foreach (var product in products)
             {
-                // Attach the existing product to the context
                 _productRepository.Attach(product);
                 existingDiscount.Products.Add(product);
             }
@@ -103,7 +103,6 @@ namespace Ecommerce.Core.Services
             await _discountRepository.UpdateAsync(existingDiscount);
             await _discountRepository.SaveAsync();
         }
-
 
         public async Task DeleteAsync(int id)
         {
@@ -142,6 +141,84 @@ namespace Ecommerce.Core.Services
                 throw new Exception("Product not found in discount.");
             }
         }
+
+        public async Task AddDiscountByBrandAsync(string brand, DiscountDTO discount)
+        {
+            ValidateDiscount(discount);
+
+            var products = await _productRepository.FindAsync(p => p.Brand.Name == brand, null);
+            if (!products.Any())
+            {
+                throw new InvalidOperationException("No products found for the specified brand.");
+            }
+
+            var newDiscount = new Discount
+            {
+                DiscountAmount = discount.DiscountAmount,
+                DiscountName = discount.DiscountName,
+                StartDate = discount.StartDate,
+                EndDate = discount.EndDate,
+                Products = new List<Product>()
+            };
+
+            foreach (var product in products)
+            {
+                _productRepository.Attach(product);
+                newDiscount.Products.Add(product);
+            }
+
+            await _discountRepository.AddAsync(newDiscount);
+            await _discountRepository.SaveAsync();
+
+            ScheduleDiscountDeletion(newDiscount);
+        }
+
+        public async Task AddDiscountByCategoryAsync(string category, DiscountDTO discount)
+        {
+            ValidateDiscount(discount);
+
+            var products = await _productRepository.FindAsync(p => p.ProductCategories.Any(pc => pc.Category.Name == category), null);
+            if (!products.Any())
+            {
+                throw new InvalidOperationException("No products found for the specified category.");
+            }
+
+            var newDiscount = new Discount
+            {
+                DiscountAmount = discount.DiscountAmount,
+                DiscountName = discount.DiscountName,
+                StartDate = discount.StartDate,
+                EndDate = discount.EndDate,
+                Products = new List<Product>()
+            };
+
+            foreach (var product in products)
+            {
+                _productRepository.Attach(product);
+                newDiscount.Products.Add(product);
+            }
+
+            await _discountRepository.AddAsync(newDiscount);
+            await _discountRepository.SaveAsync();
+
+            ScheduleDiscountDeletion(newDiscount);
+        }
+
+        private void ScheduleDiscountDeletion(Discount discount)
+        {
+            BackgroundJob.Schedule(() => DeleteDiscountAfterEndDate(discount.DiscountId), discount.EndDate);
+        }
+
+        public async Task DeleteDiscountAfterEndDate(int discountId)
+        {
+            var discount = await _discountRepository.GetByIdAsync(discountId);
+            if (discount != null && discount.EndDate <= DateTime.UtcNow)
+            {
+                await _discountRepository.DeleteAsync(discount);
+                await _discountRepository.SaveAsync();
+            }
+        }
+
 
         private void ValidateDiscount(DiscountDTO discount)
         {

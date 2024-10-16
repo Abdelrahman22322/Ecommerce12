@@ -5,7 +5,7 @@ using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ShippingMethod = Ecommerce.Core.Domain.Enums.ShippingMethod;
+using ShippingMethod = Ecommerce.Core.Domain.Entities.ShippingMethod;
 
 public class ShippingService : IShippingService
 {
@@ -42,13 +42,13 @@ public class ShippingService : IShippingService
 
     public async Task<IEnumerable<ShippingDto>> GetShippingsByStatusAsync(ShippingStatus status)
     {
-        var shippings = await _shippingRepository.FindAsync1(s => s.Status == status, null);
+        var shippings = await _shippingRepository.FindAsync(s => s.ShippingState.Status == status,includeword:null);
         return _mapper.Map<IEnumerable<ShippingDto>>(shippings);
     }
 
     public async Task<ShippingDto> GetShippingByTrackingCodeAsync(string trackingCode)
     {
-        var shipping = await _shippingRepository.FindAsync1(s => s.TrackingNumber == trackingCode, null);
+        var shipping = await _shippingRepository.FindAsync(s => s.TrackingNumber == trackingCode, includeword: null);
         return _mapper.Map<ShippingDto>(shipping);
     }
 
@@ -57,19 +57,13 @@ public class ShippingService : IShippingService
         var shipping = await _shippingRepository.GetByIdAsync(shippingId);
         if (shipping != null)
         {
-            shipping.Status = newStatus;
-            await _shippingRepository.UpdateAsync(shipping);
+            var shippingState = await _shippingStateService.GetShippingStateByIdAsync(shipping.ShippingStateId);
+            if (shippingState != null)
+            {
+                shippingState.Status = newStatus;
+                await _shippingStateService.UpdateShippingStateAsync(_mapper.Map<ShippingStateDto>(shippingState));
+            }
         }
-    }
-
-    public async Task AssignShippingMethodAsync(int shippingId, ShippingMethod method, decimal cost)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task AssignShippingToOrderAsync(int orderId, int shipperId, ShippingMethod method, decimal cost, string trackingCode)
-    {
-        throw new NotImplementedException();
     }
 
     public async Task AssignShippingMethodAsync(int shippingId, int methodId)
@@ -80,8 +74,8 @@ public class ShippingService : IShippingService
             var method = await _shippingMethodService.GetShippingMethodByIdAsync(methodId);
             if (method != null)
             {
-                shipping.Method = (ShippingMethod)method.Id;
-                shipping.Price = method.Cost;
+              //  shipping.Method = (Ecommerce.Core.Domain.Entities.ShippingMethod)method.Id;
+                shipping.ShippingMethod.Cost = method.Cost;
                 await _shippingRepository.UpdateAsync(shipping);
             }
         }
@@ -96,10 +90,10 @@ public class ShippingService : IShippingService
             {
                 Orders = new List<Order> { new Order { Id = orderId } },
                 ShipperId = shipperId,
-                Method = (ShippingMethod)method.Id,
-                Price = method.Cost,
+             //   Method = (ShippingMethod)method.Id,
+                ShippingMethod = new ShippingMethod { Cost = method.Cost },
                 TrackingNumber = trackingCode,
-                Status = ShippingStatus.Pending
+                ShippingState = new ShippingState { Status = ShippingStatus.Pending }
             };
 
             await _shippingRepository.AddAsync(shipping);
@@ -109,42 +103,11 @@ public class ShippingService : IShippingService
 
     public async Task<ShippingStatus> GetShippingStatusByTrackingCodeAsync(string trackingCode)
     {
-        var shipping = await _shippingRepository.FindAsync1(s => s.TrackingNumber == trackingCode, null);
+        var shipping = await _shippingRepository.FindAsync1(s => s.TrackingNumber == trackingCode, includeword: null);
         if (shipping != null)
         {
-            return shipping.Status;
+            return shipping.ShippingState.Status;
         }
         throw new KeyNotFoundException("Shipping not found with the provided tracking code.");
-    }
-
-    public void AssignShippingCost(ShippingMethod method, decimal cost)
-    {
-        throw new NotImplementedException();
-    }
-
-    public decimal GetShippingPrice(ShippingMethod method)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DisableShippingMethod(ShippingMethod method)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void EnableShippingMethod(ShippingMethod method)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<bool> IsValidShippingMethodAsync(ShippingMethod method)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<bool> IsValidShippingMethodAsync(int methodId)
-    {
-        var method = await _shippingMethodService.GetShippingMethodByIdAsync(methodId);
-        return method != null;
     }
 }

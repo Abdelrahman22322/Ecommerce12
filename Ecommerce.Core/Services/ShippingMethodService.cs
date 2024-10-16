@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class ShippingMethodService : IShippingMethodService
 {
@@ -51,24 +53,20 @@ public class ShippingMethodService : IShippingMethodService
 
     public async Task<IEnumerable<ShippingMethodDto>> GetShippingMethodsByCostRangeAsync(decimal minCost, decimal maxCost)
     {
-        throw new NotImplementedException();
+        var entities = await _repository.FindAsync(sm => sm.Cost >= minCost && sm.Cost <= maxCost,includeword:null);
+        return _mapper.Map<IEnumerable<ShippingMethodDto>>(entities);
     }
 
     public async Task<ShippingMethodDto> GetCheapestShippingMethodAsync()
     {
-        throw new NotImplementedException();
+        var entity = (await _repository.GetAllAsync()).OrderBy(sm => sm.Cost).FirstOrDefault();
+        return _mapper.Map<ShippingMethodDto>(entity);
     }
 
-    //// Business methods
-    //public async Task<IEnumerable<ShippingMethodDto>> GetShippingMethodsByCostRangeAsync(decimal minCost, decimal maxCost)
-    //{
-    //    var entities = await _repository.FindAsync(sm => sm.Cost >= minCost && sm.Cost <= maxCost);
-    //    return _mapper.Map<IEnumerable<ShippingMethodDto>>(entities);
-    //}
+    public async Task<decimal> GetShippingPriceAsync(int shippingMethodId)
+    {
 
-    //public async Task<ShippingMethodDto> GetCheapestShippingMethodAsync()
-    //{
-    //    var entity = (await _repository.GetAllAsync()).OrderBy(sm => sm.Cost).FirstOrDefault();
-    //    return _mapper.Map<ShippingMethodDto>(entity);
-    //}
+        var entity = await _repository.GetByIdAsync(shippingMethodId);
+        return entity.Cost;
+    }
 }

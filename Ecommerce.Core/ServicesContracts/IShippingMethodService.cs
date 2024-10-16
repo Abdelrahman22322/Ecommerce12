@@ -13,4 +13,5 @@ public interface IShippingMethodService
     // Business methods
     Task<IEnumerable<ShippingMethodDto>> GetShippingMethodsByCostRangeAsync(decimal minCost, decimal maxCost);
     Task<ShippingMethodDto> GetCheapestShippingMethodAsync();
+    Task<decimal> GetShippingPriceAsync(int shippingMethodId);
 }

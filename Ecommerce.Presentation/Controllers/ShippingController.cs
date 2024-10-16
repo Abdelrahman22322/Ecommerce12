@@ -97,40 +97,40 @@ public class ShippingController : ControllerBase
     }
 
     [HttpPut("{id}/method")]
-    public async Task<IActionResult> AssignShippingMethod(int id, [FromBody] ShippingMethod method, decimal cost)
-    {
-        try
-        {
-            await _shippingService.AssignShippingMethodAsync(id, method, cost);
-            return NoContent();
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { Message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Message = "An error occurred while assigning the shipping method.", Details = ex.Message });
-        }
-    }
+    //public async Task<IActionResult> AssignShippingMethod(int id, [FromBody] string method, decimal cost)
+    //{
+    //    try
+    //    {
+    //        await _shippingService.AssignShippingMethodAsync(id, method, cost);
+    //        return NoContent();
+    //    }
+    //    catch (KeyNotFoundException ex)
+    //    {
+    //        return NotFound(new { Message = ex.Message });
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, new { Message = "An error occurred while assigning the shipping method.", Details = ex.Message });
+    //    }
+    //}
 
-    [HttpPost("assign")]
-    public async Task<IActionResult> AssignShippingToOrder(int orderId, int shipperId, [FromBody] ShippingMethod method, decimal cost, string trackingCode)
-    {
-        try
-        {
-            await _shippingService.AssignShippingToOrderAsync(orderId, shipperId, method, cost, trackingCode);
-            return NoContent();
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { Message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Message = "An error occurred while assigning the shipping to the order.", Details = ex.Message });
-        }
-    }
+    //[HttpPost("assign")]
+    //public async Task<IActionResult> AssignShippingToOrder(int orderId, int shipperId, [FromBody] ShippingMethod method, decimal cost, string trackingCode)
+    //{
+    //    try
+    //    {
+    //        await _shippingService.AssignShippingToOrderAsync(orderId, shipperId, method, cost, trackingCode);
+    //        return NoContent();
+    //    }
+    //    catch (KeyNotFoundException ex)
+    //    {
+    //        return NotFound(new { Message = ex.Message });
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, new { Message = "An error occurred while assigning the shipping to the order.", Details = ex.Message });
+    //    }
+    //}
 
     [HttpGet("tracking/{trackingCode}/status")]
     public async Task<IActionResult> GetShippingStatusByTrackingCode(string trackingCode)
@@ -150,59 +150,59 @@ public class ShippingController : ControllerBase
         }
     }
 
-    [HttpPut("cost")]
-    public IActionResult AssignShippingCost([FromBody] ShippingMethod method, decimal cost)
-    {
-        try
-        {
-            _shippingService.AssignShippingCost(method, cost);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Message = "An error occurred while assigning the shipping cost.", Details = ex.Message });
-        }
-    }
+    //[HttpPut("cost")]
+    //public IActionResult AssignShippingCost([FromBody] ShippingMethod method, decimal cost)
+    //{
+    //    try
+    //    {
+    //        _shippingService.AssignShippingCost(method, cost);
+    //        return NoContent();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, new { Message = "An error occurred while assigning the shipping cost.", Details = ex.Message });
+    //    }
+    //}
 
-    [HttpGet("price/{method}")]
-    public IActionResult GetShippingPrice(ShippingMethod method)
-    {
-        try
-        {
-            var result = _shippingService.GetShippingPrice(method);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Message = "An error occurred while retrieving the shipping price.", Details = ex.Message });
-        }
-    }
+    //[HttpGet("price/{method}")]
+    //public IActionResult GetShippingPrice(ShippingMethod method)
+    //{
+    //    try
+    //    {
+    //        var result = _shippingService.GetShippingPrice(method);
+    //        return Ok(result);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, new { Message = "An error occurred while retrieving the shipping price.", Details = ex.Message });
+    //    }
+    //}
 
-    [HttpPut("disable/{method}")]
-    public IActionResult DisableShippingMethod(ShippingMethod method)
-    {
-        try
-        {
-            _shippingService.DisableShippingMethod(method);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Message = "An error occurred while disabling the shipping method.", Details = ex.Message });
-        }
-    }
+    //[HttpPut("disable/{method}")]
+    //public IActionResult DisableShippingMethod(ShippingMethod method)
+    //{
+    //    try
+    //    {
+    //        _shippingService.DisableShippingMethod(method);
+    //        return NoContent();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, new { Message = "An error occurred while disabling the shipping method.", Details = ex.Message });
+    //    }
+    //}
 
-    [HttpPut("enable/{method}")]
-    public IActionResult EnableShippingMethod(ShippingMethod method)
-    {
-        try
-        {
-            _shippingService.EnableShippingMethod(method);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Message = "An error occurred while enabling the shipping method.", Details = ex.Message });
-        }
-    }
+    //[HttpPut("enable/{method}")]
+    //public IActionResult EnableShippingMethod(ShippingMethod method)
+    //{
+    //    try
+    //    {
+    //        _shippingService.EnableShippingMethod(method);
+    //        return NoContent();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(500, new { Message = "An error occurred while enabling the shipping method.", Details = ex.Message });
+    //    }
+    //}
 }

@@ -285,9 +285,9 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .OnDelete(DeleteBehavior.Restrict);
     
         modelBuilder.Entity<Shipping>()
-            .HasOne(s => s.ShippingCost)
+            .HasOne(s => s.ShippingMethod)
             .WithMany(sc => sc.Shippings)
-            .HasForeignKey(s => s.ShippingCostId)
+            .HasForeignKey(s => s.ShippingMethodId)
             .OnDelete(DeleteBehavior.Restrict);
 
         

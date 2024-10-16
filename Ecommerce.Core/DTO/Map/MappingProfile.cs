@@ -249,8 +249,8 @@ namespace Ecommerce.Core.DTO.Map
             CreateMap<CheckoutDto, UpdateUserProfileDto>();
             CreateMap<CheckoutDto, UserProfile>();
 
-            CreateMap<ShippingDto, Shipping>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore()); // Ignore the Id property
+            //CreateMap<ShippingDto, Shipping>()
+            //    .ForMember(dest => dest.Id, opt => opt.Ignore()); // Ignore the Id property
 
             CreateMap<ItemDto, OrderDetail>();
             //  .ForMember(dest => dest.Product, opt => opt.Ignore()); // Ignore navigation property if necessar
@@ -267,17 +267,32 @@ namespace Ecommerce.Core.DTO.Map
             //    .ForMember(dest => dest., opt => opt.Ignore());
             CreateMap<OrderCreateDto, Order>();
 
-            CreateMap<CheckoutDto, ShippingDto>()
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.StreetAddress + ", " + src.City))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
-                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber));
+            //CreateMap<CheckoutDto, ShippingDto>()
+            //    .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.StreetAddress + ", " + src.City))
+            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+            //    .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber));
 
-            CreateMap<UserProfile, ShippingDto>()
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.StreetAddress + ", " + src.City))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
-                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber));
+            //CreateMap<UserProfile, ShippingDto>()
+            //    .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.StreetAddress + ", " + src.City))
+            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName))
+            //    .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber));
 
+            CreateMap<Shipping, ShippingDto>()
+                .ForMember(dest => dest.ShippingMethodId, opt => opt.MapFrom(src => src.ShippingMethodId))
+                .ForMember(dest => dest.ShippingStateId, opt => opt.MapFrom(src => src.ShippingStateId))
+                .ForMember(dest => dest.ShipperId, opt => opt.MapFrom(src => src.ShipperId))
+                .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.TrackingNumber));
+                //.ForMember(dest => dest., opt => opt.MapFrom(src => src.ShippingDate))
+                //.ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
 
+                CreateMap<ShippingDto, Shipping>()
+                    .ForMember(dest => dest.Id, opt => opt.Ignore())
+                    .ForMember(dest => dest.ShippingMethodId, opt => opt.MapFrom(src => src.ShippingMethodId))
+                    .ForMember(dest => dest.ShippingStateId, opt => opt.MapFrom(src => src.ShippingStateId))
+                    .ForMember(dest => dest.ShipperId, opt => opt.MapFrom(src => src.ShipperId))
+                    .ForMember(dest => dest.TrackingNumber, opt => opt.MapFrom(src => src.TrackingNumber));
+                //.ForMember(dest => dest.ShippingDate, opt => opt.MapFrom(src => src.ShippingDate))
+                //.ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders));
 
 
             CreateMap<Comment, CommentDto>().ReverseMap();
@@ -286,6 +301,11 @@ namespace Ecommerce.Core.DTO.Map
             CreateMap<UpdateCommentDto, Comment>();
 
             CreateMap<Rating, RatingDto>().ReverseMap();
+            CreateMap<ShippingMethodDto, ShippingMethod>();
+            CreateMap<ShippingMethod, ShippingMethodDto>();
+            CreateMap<ShipperDto, Shipper>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore()); // Ignore Id property
+            CreateMap<Shipper, ShipperDto>();
 
 
         }

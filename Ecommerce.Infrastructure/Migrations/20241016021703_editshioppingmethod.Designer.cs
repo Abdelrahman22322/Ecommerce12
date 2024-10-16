@@ -4,6 +4,7 @@ using Ecommerce.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241016021703_editshioppingmethod")]
+    partial class editshioppingmethod
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -581,17 +584,17 @@ namespace Ecommerce.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("MethodId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ShipperId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("ShippingCost")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("ShippingCostId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ShippingDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ShippingMethodId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ShippingStateId")
                         .HasColumnType("int");
@@ -602,9 +605,11 @@ namespace Ecommerce.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MethodId");
+
                     b.HasIndex("ShipperId");
 
-                    b.HasIndex("ShippingMethodId");
+                    b.HasIndex("ShippingCostId");
 
                     b.HasIndex("ShippingStateId");
 
@@ -621,10 +626,6 @@ namespace Ecommerce.Infrastructure.Migrations
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Method")
                         .IsRequired()
@@ -1097,15 +1098,21 @@ namespace Ecommerce.Infrastructure.Migrations
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Shipping", b =>
                 {
+                    b.HasOne("Ecommerce.Core.Domain.Entities.ShippingMethod", "Method")
+                        .WithMany()
+                        .HasForeignKey("MethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Ecommerce.Core.Domain.Entities.Shipper", "Shipper")
                         .WithMany()
                         .HasForeignKey("ShipperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecommerce.Core.Domain.Entities.ShippingMethod", "ShippingMethod")
+                    b.HasOne("Ecommerce.Core.Domain.Entities.ShippingMethod", "ShippingCost")
                         .WithMany("Shippings")
-                        .HasForeignKey("ShippingMethodId")
+                        .HasForeignKey("ShippingCostId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1115,9 +1122,11 @@ namespace Ecommerce.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Method");
+
                     b.Navigation("Shipper");
 
-                    b.Navigation("ShippingMethod");
+                    b.Navigation("ShippingCost");
 
                     b.Navigation("ShippingState");
                 });
