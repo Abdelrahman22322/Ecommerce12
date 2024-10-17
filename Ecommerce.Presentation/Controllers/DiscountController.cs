@@ -2,6 +2,7 @@
 using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.ServicesContracts;
 using System.Linq.Expressions;
+using System.Net;
 using Ecommerce.Core.Domain.RepositoryContracts;
 
 namespace Ecommerce.Api.Controllers
@@ -85,7 +86,7 @@ namespace Ecommerce.Api.Controllers
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ex.InnerException);
             }
         }
 
@@ -96,5 +97,58 @@ namespace Ecommerce.Api.Controllers
         //    var discounts = await _discountService.FindAsync(func);
         //    return Ok(discounts);
         //}
+        // POST: api/Discount/AddByCategory
+        [HttpPost("AddByCategory")]
+        public async Task<IActionResult> AddDiscountByCategory([FromBody] DiscountByCategoryRequest request)
+        {
+            if (request == null || string.IsNullOrEmpty(request.Category) || request.Discount == null)
+            {
+                return BadRequest("Invalid request data.");
+            }
+
+            try
+            {
+                await _discountService.AddDiscountByCategoryAsync(request.Category, request.Discount);
+                return StatusCode((int)HttpStatusCode.Created, "Discount added successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"Error adding discount: {ex.Message}");
+            }
+        }
+
+        // POST: api/Discount/AddByBrand
+        [HttpPost("AddByBrand")]
+        public async Task<IActionResult> AddDiscountByBrand([FromBody] DiscountByBrandRequest request)
+        {
+            if (request == null || string.IsNullOrEmpty(request.Brand) || request.Discount == null)
+            {
+                return BadRequest("Invalid request data.");
+            }
+
+            try
+            {
+                await _discountService.AddDiscountByBrandAsync(request.Brand, request.Discount);
+                return StatusCode((int)HttpStatusCode.Created, "Discount added successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"Error adding discount: {ex.Message}");
+            }
+        }
+    }
+
+    public class DiscountByCategoryRequest
+    {
+        public string Category { get; set; }
+        public DiscountByDTO Discount { get; set; }
+    }
+
+    public class DiscountByBrandRequest
+    {
+        public string Brand { get; set; }
+        public DiscountByDTO Discount { get; set; }
     }
 }

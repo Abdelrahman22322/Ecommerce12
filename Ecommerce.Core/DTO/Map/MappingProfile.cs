@@ -308,6 +308,15 @@ namespace Ecommerce.Core.DTO.Map
             CreateMap<Shipper, ShipperDto>();
 
 
+            CreateMap<Brand, BrandDto>();
+            CreateMap<CreateBrandDto, Brand>();
+            CreateMap<UpdateBrandDto, Brand>();
+
+
+            CreateMap<CreateCategoryDto, Category>();
+            CreateMap<UpdateCategoryDto, Category>();
+            CreateMap<Category, CategoryDto>();
+
         }
     }
 }

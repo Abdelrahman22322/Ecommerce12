@@ -141,6 +141,28 @@ namespace Ecommerce.Presentation.Controllers
                     return NotFound(new { message = ex.Message });
                 }
             }
+
+
+            [HttpGet("category/{categoryId}")]
+            public async Task<IActionResult> GetProductCardsByCategory(int categoryId)
+            {
+                var products = await _productService.GetProductCardsByCategoryAsync(categoryId);
+                return Ok(products);
+            }
+
+            [HttpGet("brand/{brandId}")]
+            public async Task<IActionResult> GetProductCardsByBrand(int brandId)
+            {
+                var products = await _productService.GetProductCardsByBrandAsync(brandId);
+                return Ok(products);
+            }
+
+            [HttpGet("discount/{discountId}")]
+            public async Task<IActionResult> GetProductCardsByDiscountId(int discountId)
+            {
+                var products = await _productService.GetProductCardsByDiscountIdAsync(discountId);
+                return Ok(products);
+            }
         }
 
     }

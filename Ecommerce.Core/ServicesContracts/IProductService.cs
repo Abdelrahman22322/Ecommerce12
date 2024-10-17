@@ -38,8 +38,11 @@ public interface IProductService
     Task<UpdateProductDto> GetProductForUpdate(int productId);
     Task<IEnumerable<ProducCardtDTO>> GetRecommendedProductsAsync();
     Task<IEnumerable<ProducCardtDTO>> GetSimilarProductsOrRelatedAsync(int productId);
-  
 
+
+    Task<IEnumerable<ProducCardtDTO>> GetProductCardsByCategoryAsync(int categoryId);
+    Task<IEnumerable<ProducCardtDTO>> GetProductCardsByBrandAsync(int brandId);
+    Task<IEnumerable<ProducCardtDTO>> GetProductCardsByDiscountIdAsync(int discountId);
     public Task<byte[]> ExportPdfAsync();
 
 }

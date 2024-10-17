@@ -19,7 +19,6 @@ public class ProductServices : IProductService
     private readonly ITagService _tagService;
     private readonly IProductTagService _productTagService;
     private readonly  IProductRepository _productRepository1;
-
     private readonly IImageService _productImageService;
     private readonly IProductAttributeServices _productAttributeService;
     private readonly IProductAttributeValueServices _productAttributeValueService;
@@ -654,6 +653,26 @@ public class ProductServices : IProductService
 
 
 
+        }
+
+
+
+        public async Task<IEnumerable<ProducCardtDTO>> GetProductCardsByCategoryAsync(int categoryId)
+        {
+            var products = await _productRepository.GetAllAsync(p => p.CategoryId == categoryId, includeword: "ProductImages");
+            return _Mapper.Map<IEnumerable<ProducCardtDTO>>(products);
+        }
+
+        public async Task<IEnumerable<ProducCardtDTO>> GetProductCardsByBrandAsync(int brandId)
+        {
+            var products = await _productRepository.GetAllAsync(p => p.BrandId == brandId , includeword: "ProductImages");
+            return _Mapper.Map<IEnumerable<ProducCardtDTO>>(products);
+        }
+
+        public async Task<IEnumerable<ProducCardtDTO>> GetProductCardsByDiscountIdAsync(int discountId)
+        {
+            var products = await _productRepository.GetAllAsync(p => p.DiscountId == discountId, includeword: "ProductImages");
+            return _Mapper.Map<IEnumerable<ProducCardtDTO>>(products);
         }
 
 }

@@ -1,69 +1,90 @@
-﻿using Ecommerce.Core.Domain.Entities;
-using Ecommerce.Core.Domain.RepositoryContracts;
+﻿using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Ecommerce.Presentation.Controllers
+namespace Ecommerce.Api.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoriesServices _categoryService;
+        private readonly ICategoriesServices _categoryServices;
 
-        public CategoryController(ICategoriesServices categoryService)
+        public CategoryController(ICategoriesServices categoryServices)
         {
-            _categoryService = categoryService;
+            _categoryServices = categoryServices;
         }
 
-        // POST: api/Category
-        [HttpPost("Add")]
-        public async Task<IActionResult> AddCategory([FromBody] CategoryDto category)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] CreateCategoryDto dto)
         {
-            if (category == null || string.IsNullOrEmpty(category.Name))
+            try
             {
-                return BadRequest("Category name is required.");
+                await _categoryServices.AddCategory(dto);
+                return Ok(new { Message = "Category created successfully" });
             }
-
-            await _categoryService.AddCategory(category);
-            return Ok(category);
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
 
-        // GET: api/Category
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetCategories()
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm] UpdateCategoryDto dto)
         {
-            var categories = await _categoryService.GetAllAsync();
+            try
+            {
+                await _categoryServices.UpdateAsync(dto);
+                return Ok(new { Message = "Category updated successfully" });
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Error = ex.Message });
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _categoryServices.DeleteAsync(id);
+                return Ok(new { Message = "Category deleted successfully" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var category = await _categoryServices.GetByIdAsync(id);
+                return Ok(category);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var categories = await _categoryServices.GetAllAsync();
             return Ok(categories);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategoryById(int id)
-        {
-            var category = await _categoryService.GetByIdAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return Ok(category);
-        }
 
-        // PUT: api/Category/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryDto? category)
-        {
-            if (category == null  || string.IsNullOrEmpty(category.Name))
-            {
-                return BadRequest("Invalid category data.");
-            }
-
-            var existingCategory = await _categoryService.GetByIdAsync(id);
-            if (existingCategory == null)
-            {
-                return NotFound();
-            }
-
-            await _categoryService.UpdateAsync(category);
-            return Ok(category);
-        }
 
 
     }

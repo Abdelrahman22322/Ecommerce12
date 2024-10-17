@@ -276,7 +276,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
             .HasOne(p => p.Discount)
             .WithMany(d => d.Products)
             .HasForeignKey(p => p.DiscountId)
-           .OnDelete(DeleteBehavior.Restrict);
+           .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Order>()
             .HasOne(x=> x.User)

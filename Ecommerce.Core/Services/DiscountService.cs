@@ -21,7 +21,7 @@ namespace Ecommerce.Core.Services
 
         public async Task<IEnumerable<Discount?>> GetAllAsync()
         {
-            var discounts = await _discountRepository.GetAllAsync(null, null);
+            var discounts = await _discountRepository.GetAllAsync(null, "Products");
             return discounts.ToList();
         }
 
@@ -106,15 +106,25 @@ namespace Ecommerce.Core.Services
 
         public async Task DeleteAsync(int id)
         {
-            var discount = await _discountRepository.GetByIdAsync(id);
-            if (discount == null)
+            try
             {
-                throw new Exception("Discount not found.");
-            }
+                var discount = await _discountRepository.GetByIdAsync(id);
+                if (discount == null)
+                {
+                    throw new Exception("Discount not found.");
+                }
 
-            await _discountRepository.DeleteAsync(discount);
-            await _discountRepository.SaveAsync();
+                await _discountRepository.DeleteAsync(discount);
+                await _discountRepository.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception and rethrow it
+                // Ensure that the exception message is user-friendly
+                throw new Exception("An error occurred while deleting the discount.", ex);
+            }
         }
+
 
         public async Task<IEnumerable<Discount?>> FindAsync(Expression<Func<Discount?, bool>> func)
         {
@@ -142,11 +152,11 @@ namespace Ecommerce.Core.Services
             }
         }
 
-        public async Task AddDiscountByBrandAsync(string brand, DiscountDTO discount)
+        public async Task AddDiscountByBrandAsync(string brand, DiscountByDTO discount)
         {
-            ValidateDiscount(discount);
+          //  ValidateDiscount(discount);
 
-            var products = await _productRepository.FindAsync(p => p.Brand.Name == brand, null);
+            var products = await _productRepository.FindAsync(p => p.Brand.Name.ToLower() == brand.ToLower(), null);
             if (!products.Any())
             {
                 throw new InvalidOperationException("No products found for the specified brand.");
@@ -173,11 +183,11 @@ namespace Ecommerce.Core.Services
             ScheduleDiscountDeletion(newDiscount);
         }
 
-        public async Task AddDiscountByCategoryAsync(string category, DiscountDTO discount)
+        public async Task AddDiscountByCategoryAsync(string category, DiscountByDTO discount)
         {
-            ValidateDiscount(discount);
+          //  ValidateDiscount(discount);
 
-            var products = await _productRepository.FindAsync(p => p.ProductCategories.Any(pc => pc.Category.Name == category), null);
+            var products = await _productRepository.FindAsync(p => p.ProductCategories.Any(pc => pc.Category.Name.ToLower() == category.ToLower()), null);
             if (!products.Any())
             {
                 throw new InvalidOperationException("No products found for the specified category.");
@@ -219,8 +229,28 @@ namespace Ecommerce.Core.Services
             }
         }
 
+        public async Task<IEnumerable<Discount?>> GetDiscountsByBrandAsync(string brandName)
+        {
+            var lowerBrandName = brandName.ToLower();
+            var discounts = await _discountRepository.FindAsync(d => d.Products.Any(p => p.Brand.Name.ToLower() == lowerBrandName), null);
+            return discounts.ToList();
+        }
 
-        private void ValidateDiscount(DiscountDTO discount)
+        public async Task<IEnumerable<Discount?>> GetDiscountsByCategoryAsync(string category)
+        {
+            var lowerCategory = category.ToLower();
+            var discounts = await _discountRepository.FindAsync(d => d.Products.Any(p => p.ProductCategories.Any(pc => pc.Category.Name.ToLower() == lowerCategory)), null);
+            return discounts.ToList();
+        }
+
+        public async Task<IEnumerable<Discount?>> GetDiscountsByNameAsync(string discountName)
+        {
+            var lowerDiscountName = discountName.ToLower();
+            var discounts = await _discountRepository.FindAsync(d => d.DiscountName.ToLower().Contains(lowerDiscountName), null);
+            return discounts.ToList();
+        }
+
+        private void ValidateDiscount<T>( T discount) where T : DiscountDTO 
         {
             if (discount == null)
             {
@@ -242,13 +272,24 @@ namespace Ecommerce.Core.Services
                 throw new ArgumentException("At least one product ID must be provided.", nameof(discount.ProductIds));
             }
 
-            foreach (var productId in discount.ProductIds)
+            if (discount.StartDate < DateTime.Now)
             {
-                if (productId <= 0)
-                {
-                    throw new ArgumentException($"Invalid product ID: {productId}", nameof(discount.ProductIds));
-                }
+                throw new ArgumentException("Start date must not be in the past.", nameof(discount.StartDate));
             }
+
+            //if (typeof(T) == typeof(DiscountDTO))
+            //{
+
+            //    foreach (var productId in discount.ProductIds)
+            //    {
+            //        if (productId <= 0)
+            //        {
+            //            throw new ArgumentException($"Invalid product ID: {productId}", nameof(discount.ProductIds));
+            //        }
+            //    }
+            //}
+
         }
+        
     }
 }

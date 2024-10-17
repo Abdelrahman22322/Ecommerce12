@@ -14,6 +14,8 @@ using Ecommerce.Infrastructure.Repository;
 using Ecommerce.Presentation.helper;
 using Ecommerce.Services;
 using FluentValidation;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.JsonPatch;
@@ -39,6 +41,24 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 // Add specific repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
+// Add Hangfire services
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
+
+builder.Services.AddHangfireServer();
+
 
 // Add services
 builder.Services.AddScoped<IProductService, ProductServices>();
@@ -68,6 +88,7 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IShippingMethodService, ShippingMethodService >();
 builder.Services.AddScoped<IShippingStateService, ShippingStateService>();
+
 
 builder.Services.AddHttpContextAccessor();
 

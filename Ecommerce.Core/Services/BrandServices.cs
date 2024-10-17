@@ -1,75 +1,105 @@
-﻿using Ecommerce.Core.Domain.RepositoryContracts;
+﻿using AutoMapper;
+using Ecommerce.Core.Domain.Entities;
+using Ecommerce.Core.Domain.RepositoryContracts;
+using Ecommerce.Core.ServicesContracts;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Ecommerce.Core.Domain.Entities;
-using Ecommerce.Core.ServicesContracts;
 
 namespace Ecommerce.Core.Services
-{    
-   
-
-    
-public class BrandServices : IBrandServices
+{
+    public class BrandServices : IBrandServices
     {
         private readonly IGenericRepository<Brand?> _brandRepository;
+        private readonly IImageService _imageService;
+        private readonly IMapper _mapper;
 
-        public BrandServices(IGenericRepository<Brand?> brandRepository)
+        public BrandServices(IGenericRepository<Brand?> brandRepository, IImageService imageService, IMapper mapper)
         {
-            _brandRepository = brandRepository;
+            _brandRepository = brandRepository ?? throw new ArgumentNullException(nameof(brandRepository));
+            _imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task AddBrand(Brand? entity)
+        public async Task AddBrand(CreateBrandDto dto)
         {
-            if (entity.Name == null)
+            if (string.IsNullOrWhiteSpace(dto.Name))
             {
-                throw new ArgumentNullException("band name required");
+                throw new ArgumentNullException("Brand name is required");
             }
 
-            await _brandRepository.AddAsync(entity);
+            var brand = _mapper.Map<Brand>(dto);
+
+            if (dto.ImageFile != null)
+            {
+                var uploadResult = await _imageService.UploadImageAsync(dto.ImageFile);
+                brand.ImageUrl = uploadResult.Url;
+            }
+
+            await _brandRepository.AddAsync(brand);
+            await _brandRepository.SaveAsync();
         }
 
-        public async Task<bool> UpdateAsync(Brand? entity)
+        public async Task<bool> UpdateAsync(UpdateBrandDto dto)
         {
-
-            if (entity.Name == null)
+            if (string.IsNullOrWhiteSpace(dto.Name))
             {
-                throw new ArgumentNullException("band name required");
+                throw new ArgumentNullException("Brand name is required");
             }
-            await _brandRepository.UpdateAsync(entity);
+
+            var brand = await _brandRepository.GetByIdAsync(dto.Id);
+            if (brand == null)
+            {
+                throw new KeyNotFoundException("Brand not found");
+            }
+
+            _mapper.Map(dto, brand);
+
+            if (dto.ImageFile != null)
+            {
+                var uploadResult = await _imageService.UploadImageAsync(dto.ImageFile);
+                brand.ImageUrl = uploadResult.Url;
+            }
+
+            await _brandRepository.UpdateAsync(brand);
             await _brandRepository.SaveAsync();
             return true;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-
             var brand = await _brandRepository.GetByIdAsync(id);
+            if (brand == null)
+            {
+                throw new KeyNotFoundException("Brand not found");
+            }
+
             await _brandRepository.DeleteAsync(brand);
             await _brandRepository.SaveAsync();
-
             return true;
-
         }
 
-        public async Task<bool> DeleteRange(IEnumerable<Brand> entities)
+        public async Task<BrandDto> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var brand = await _brandRepository.GetByIdAsync(id);
+            if (brand == null)
+            {
+                throw new KeyNotFoundException("Brand not found");
+            }
+
+            return _mapper.Map<BrandDto>(brand);
         }
 
-        public async Task<Brand> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<IEnumerable<BrandDto>> GetAllAsync(Expression<Func<Brand, bool>>? predicate = null)
+        //{
+        //    var brands = predicate == null
+        //        ? await _brandRepository.GetAllAsync()
+        //        : await _brandRepository.FindAsync(predicate);
 
-        public async Task<IEnumerable<Brand>> GetAllAsync(Expression<Func<Brand, bool>>? predicate, string? includeword)
-        {
-            throw new NotImplementedException();
-        }
-
+        //    return _mapper.Map<IEnumerable<BrandDto>>(brands);
+        //}
 
         public async Task<Brand?> DetermineBrandAsync(string brandName)
         {
@@ -88,9 +118,5 @@ public class BrandServices : IBrandServices
 
             return existingBrand;
         }
-
-
     }
-    
-
 }

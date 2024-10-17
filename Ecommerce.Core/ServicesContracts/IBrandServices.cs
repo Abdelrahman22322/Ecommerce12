@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.RepositoryContracts;
+using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
 
 namespace Ecommerce.Core.ServicesContracts;
@@ -7,18 +8,14 @@ namespace Ecommerce.Core.ServicesContracts;
 public interface IBrandServices 
 {
 
-    Task AddBrand(Brand? entity);
-
+    Task AddBrand(CreateBrandDto dto);
+    Task<bool> UpdateAsync(UpdateBrandDto dto);
+    Task<bool> DeleteAsync(int id);
+    Task<BrandDto> GetByIdAsync(int id);
+ //   Task<IEnumerable<BrandDto>> GetAllAsync(Expression<Func<Brand, bool>>? predicate = null);
     Task<Brand?> DetermineBrandAsync(string brandName);
 
 
-    Task<bool> UpdateAsync(Brand? entity);
-    Task<bool> DeleteAsync(int id);
-    Task<bool> DeleteRange(IEnumerable<Brand> entities);
-    Task<Brand> GetByIdAsync(int id);
-    Task<IEnumerable<Brand>> GetAllAsync(Expression<Func<Brand, bool>>? predicate, string? includeword);
-   
-   
 
 
 }

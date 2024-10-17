@@ -6,9 +6,9 @@ namespace Ecommerce.Core.ServicesContracts;
 
 public interface ICategoriesServices
 {
-    Task AddCategory(CategoryDto? entity);
+    Task AddCategory(CreateCategoryDto entity);
     public Task<Category?> DetermineCategoryAsync(string Categoryname);
-    Task<bool> UpdateAsync(CategoryDto? entity);
+    Task<bool> UpdateAsync(UpdateCategoryDto? entity);
     Task<bool> DeleteAsync(int id);
    // Task<IEnumerable<Category>> FindAsync(Expression<Func<Category, bool>> func);
    Task<CategoryDto?> GetByIdAsync(int id);
