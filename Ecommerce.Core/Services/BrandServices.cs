@@ -118,5 +118,12 @@ namespace Ecommerce.Core.Services
 
             return existingBrand;
         }
+
+        public async Task<IEnumerable<BrandDto>> GetAllAsync()
+        {
+
+            var brands = await _brandRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<BrandDto>>(brands);
+        }
     }
 }

@@ -25,7 +25,7 @@ public class ShippingStatesController : ControllerBase
         catch (Exception ex)
         {
             // Log the exception (not shown here)
-            return StatusCode(500, "Internal server error");
+            return StatusCode(500, "Internal server error" + ex.Message);
         }
     }
 
@@ -44,7 +44,7 @@ public class ShippingStatesController : ControllerBase
         catch (Exception ex)
         {
             // Log the exception (not shown here)
-            return StatusCode(500, "Internal server error");
+            return StatusCode(500, "Internal server error" + ex.Message);
         }
     }
 
@@ -59,12 +59,12 @@ public class ShippingStatesController : ControllerBase
         try
         {
             var createdShippingState = await _shippingStateService.AddShippingStateAsync(shippingStateDto);
-            return CreatedAtAction(nameof(GetShippingStateById), new { id = createdShippingState.Id }, createdShippingState);
+            return CreatedAtAction(nameof(GetShippingStateById), new { id = createdShippingState.Id }, createdShippingState );
         }
         catch (Exception ex)
         {
             // Log the exception (not shown here)
-            return StatusCode(500, "Internal server error");
+            return StatusCode(500, "Internal server error" + ex.Message);
         }
     }
 
@@ -89,7 +89,7 @@ public class ShippingStatesController : ControllerBase
         catch (Exception ex)
         {
             // Log the exception (not shown here)
-            return StatusCode(500, "Internal server error");
+            return StatusCode(500, "Internal server error" + ex.Message);
         }
     }
 
@@ -104,7 +104,7 @@ public class ShippingStatesController : ControllerBase
         catch (Exception ex)
         {
             // Log the exception (not shown here)
-            return StatusCode(500, "Internal server error");
+            return StatusCode(500, "Internal server error" + ex.InnerException);
         }
     }
 

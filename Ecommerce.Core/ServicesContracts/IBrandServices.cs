@@ -14,6 +14,7 @@ public interface IBrandServices
     Task<BrandDto> GetByIdAsync(int id);
  //   Task<IEnumerable<BrandDto>> GetAllAsync(Expression<Func<Brand, bool>>? predicate = null);
     Task<Brand?> DetermineBrandAsync(string brandName);
+    Task<IEnumerable<BrandDto>> GetAllAsync();
 
 
 

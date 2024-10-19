@@ -676,11 +676,3 @@ public class ProductServices : IProductService
         }
 
 }
-
-
-
-
-
-
-
-

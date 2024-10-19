@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Core.Domain.Entities;
+using Ecommerce.Core.Domain.Enums;
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
 using System;

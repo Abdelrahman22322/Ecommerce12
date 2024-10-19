@@ -5,6 +5,6 @@ namespace Ecommerce.Core.ServicesContracts;
 
 public interface ICheckoutService
 {
-    Task CheckoutAsync(CheckoutDto checkoutDto ,int userid);
+    Task CheckoutAsync(CheckoutDto checkoutDto );
     public Task<UserProfile> GetUserProfileByIdAsync(int userId);
 }

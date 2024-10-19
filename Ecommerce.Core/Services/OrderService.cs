@@ -94,6 +94,9 @@ public class OrderService : IOrderService
             await _shippingStateRepository.AddAsync(shippingState);
             await _shippingStateRepository.SaveAsync();
 
+            var orderstate = new OrderStatus { Status = OrderState.Pending };
+            await _orderStatusRepository.AddAsync(orderstate);
+            await _orderStatusRepository.SaveAsync();
             // Generate a new GUID for the tracking number
             var trackingNumber = Guid.NewGuid().ToString();
 
@@ -113,7 +116,7 @@ public class OrderService : IOrderService
             var order = new Order
             {
                 UserId = orderCreateDto.UserId,
-                OrderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0,
+                OrderStatusId = orderstate.Id,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 ShippingCost = shippingPrice,
@@ -223,9 +226,9 @@ public class OrderService : IOrderService
         var orderDetails = await PrepareOrderDetails(cart);
 
         var shippingPrice = await _shippingMethodService.GetShippingPriceAsync(order.Shipping.ShippingMethodId);
-        var orderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0;
+      //  var orderStatusId = (await _orderStatusRepository.GetAllAsync()).FirstOrDefault()?.Id ?? 0;
 
-        order.OrderStatusId = orderStatusId;
+       // order.OrderStatusId = orderStatusId;
         order.UpdatedAt = DateTime.Now;
         order.ShippingCost = shippingPrice;
         order.OrderDetails = orderDetails;
@@ -332,7 +335,7 @@ public class OrderService : IOrderService
 
     public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
     {
-        var orders = await _orderRepository.GetAllAsync();
+        var orders = await _orderRepository.GetAllAsync(includeword: "OrderDetails");
         return _mapper.Map<IEnumerable<OrderDto>>(orders);
     }
 
@@ -353,7 +356,7 @@ public class OrderService : IOrderService
 
     public async Task<IEnumerable<OrderDto>> GetOrdersByStatusAsync(OrderState status)
     {
-        var orders = await _orderRepository.GetAllAsync(o => o.OrderStatus != null && o.OrderStatus.Status == status);
+        var orders = await _orderRepository.GetAllAsync(o => o.OrderStatus != null && o.OrderStatus.Status == status, includeword: "OrderDetails");
         return _mapper.Map<IEnumerable<OrderDto>>(orders);
     }
 

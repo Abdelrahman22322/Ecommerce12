@@ -86,8 +86,9 @@ builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<IShipperService, ShipperService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
-builder.Services.AddScoped<IShippingMethodService, ShippingMethodService >();
+builder.Services.AddScoped<IShippingMethodService, ShippingMethodService>();
 builder.Services.AddScoped<IShippingStateService, ShippingStateService>();
+builder.Services.AddScoped<IOrderStateService, OrderStateService>();
 
 
 builder.Services.AddHttpContextAccessor();
@@ -194,7 +195,8 @@ builder.Services.AddScoped<ICommentService>(provider =>
 {
     var mapper = provider.GetRequiredService<IMapper>();
     var commentRepository = provider.GetRequiredService<IGenericRepository<Comment>>();
-    return new CommentService(mapper, commentRepository, bannedWords);
+    var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
+    return new CommentService(mapper, commentRepository, bannedWords, httpContextAccessor);
 });
 
 var app = builder.Build();

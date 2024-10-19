@@ -3,11 +3,12 @@
 namespace Ecommerce.Core.Domain.Entities;
 
 
+
 public class UserProfile
 {
     public int Id { get; set; }
 
-    public string? Usermane { get; set; } 
+    public string? Username { get; set; } 
 
     [StringLength(50, ErrorMessage = "First Name cannot be longer than 50 characters.")]
     public string? FirstName { get; set; } = string.Empty;
@@ -31,8 +32,10 @@ public class UserProfile
     public string? PhoneNumber { get; set; } = string.Empty;
 
     [EmailAddress(ErrorMessage = "Email must be a valid email address.")]
-    public string? Email { get; set; } 
+    public string? Email { get; set; }
 
     public int UserId { get; set; }
-    public User User { get; set; } 
+    public User User { get; set; }
+
+    public string? ProfilePictureUrl { get; set; } 
 }

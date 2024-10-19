@@ -1,8 +1,11 @@
-﻿namespace Ecommerce.Core.Domain.RepositoryContracts;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Ecommerce.Core.Domain.RepositoryContracts;
 
 public class UserProfileDto
 {
-   //  public int Id { get; set; }
+    //  public int Id { get; set; }
+    public string Username { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string StreetAddress { get; set; }
@@ -11,4 +14,5 @@ public class UserProfileDto
     public string PostalCode { get; set; }
     public string PhoneNumber { get; set; }
     public string Email { get; set; }
+    public string ProfilePictureUrl { get; set; }
 }

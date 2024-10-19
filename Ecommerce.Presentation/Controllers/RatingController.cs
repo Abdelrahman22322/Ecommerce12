@@ -1,9 +1,11 @@
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "UserPolicy")]
 public class RatingController : ControllerBase
 {
     private readonly IRatingService _ratingService;
@@ -20,12 +22,12 @@ public class RatingController : ControllerBase
         return Ok();
     }
 
-    [HttpPut]
-    public async Task<IActionResult> UpdateRating([FromBody] RatingDto ratingDto)
-    {
-        await _ratingService.UpdateRatingAsync(ratingDto);
-        return Ok();
-    }
+    //[HttpPut]
+    //public async Task<IActionResult> UpdateRating([FromBody] RatingDto ratingDto)
+    //{
+    //    await _ratingService.UpdateRatingAsync(ratingDto);
+    //    return Ok();
+    //}
 
     [HttpGet("{productId}/total")]
     public async Task<IActionResult> GetTotalRatings(int productId)

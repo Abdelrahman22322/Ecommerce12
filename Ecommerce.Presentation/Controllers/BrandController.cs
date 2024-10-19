@@ -78,6 +78,21 @@ namespace Ecommerce.Api.Controllers
             }
         }
 
+
+        [HttpGet()]
+        public async Task<IActionResult> GetALL()
+        {
+            try
+            {
+                var brand = await _brandServices.GetAllAsync();
+                return Ok(brand);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Error = ex.Message });
+            }
+        }
+
         //[HttpGet]
         //public async Task<IActionResult> GetAll()
         //{

@@ -7,6 +7,7 @@ using AutoMapper;
 using Ecommerce.Core.DTO;
 using Ecommerce.Core.Domain.Entities;
 using Ecommerce.Core.Domain.RepositoryContracts;
+using Ecommerce.Core.Domain.Enums;
 
 namespace Ecommerce.Core.DTO.Map
 {
@@ -233,9 +234,20 @@ namespace Ecommerce.Core.DTO.Map
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.UnitPrice));
 
 
+            // CreateMap<UpdateUserProfileDto, UserProfile>();
+            // CreateMap<CheckoutDto, UserProfile>();
+            //CreateMap<UserProfile, UpdateUserProfileDto>().ReverseMap();
+            // CreateMap<UserProfile, UpdateUserProfileDto>();
+            // CreateMap<UserProfileDto, UserProfile>();
 
-            CreateMap<UserProfile, UpdateUserProfileDto>().ReverseMap();
-            CreateMap<UserProfileDto, UserProfile>();
+
+
+            CreateMap<UpdateUserProfileDto, UserProfile>().ReverseMap();
+            CreateMap<CheckoutDto, UserProfile>();
+            CreateMap<UserProfileDto, UserProfile>().ReverseMap(); 
+            CreateMap<UserProfile, UserProfileDto>(); 
+
+
             CreateMap<Order, OrderDto>()
                 .ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.OrderStatus.Status))
                 .ReverseMap();
@@ -316,6 +328,11 @@ namespace Ecommerce.Core.DTO.Map
             CreateMap<CreateCategoryDto, Category>();
             CreateMap<UpdateCategoryDto, Category>();
             CreateMap<Category, CategoryDto>();
+
+            CreateMap<ShippingState, ShippingStateDto>();
+            CreateMap<ShippingStateDto, ShippingState>();
+
+            CreateMap<OrderStatus, OrderStatusDto>().ReverseMap();
 
         }
     }

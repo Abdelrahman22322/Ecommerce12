@@ -15,7 +15,7 @@ public class CheckoutService : ICheckoutService
         _mapper = mapper;
     }
 
-    public async Task CheckoutAsync(CheckoutDto checkoutDto ,int userid)
+    public async Task CheckoutAsync(CheckoutDto checkoutDto )
     {
         if (checkoutDto == null)
         {
@@ -23,7 +23,7 @@ public class CheckoutService : ICheckoutService
         }
 
         // Fetch the existing user profile
-        var existingUserProfile = await _userProfileService.GetUserProfileByUserIdAsync(userid);
+        var existingUserProfile = await _userProfileService.GetUserProfileByIdAsync();
         if (existingUserProfile == null)
         {
             throw new KeyNotFoundException("User profile not found.");
@@ -40,7 +40,7 @@ public class CheckoutService : ICheckoutService
         // ...
 
         // Update user profile with provided data
-        await _userProfileService.UpdateUserProfileDuringCheckoutAsync(checkoutDto, userid);
+        await _userProfileService.UpdateUserProfileDuringCheckoutAsync(checkoutDto);
     }
 
     public async Task<UserProfile> GetUserProfileByIdAsync(int userId)

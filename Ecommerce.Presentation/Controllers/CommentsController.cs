@@ -1,8 +1,10 @@
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.ServicesContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
+[Authorize(Policy = "UserPolicy")]
 [ApiController]
 public class CommentsController : ControllerBase
 {
@@ -42,10 +44,10 @@ public class CommentsController : ControllerBase
     }
 
     // PUT: api/Comments/{id}
-    [HttpPut("{id}")]
-    public async Task<ActionResult<CommentDto>> UpdateComment(int id, UpdateCommentDto updateCommentDto)
+    [HttpPut()]
+    public async Task<ActionResult<CommentDto>> UpdateComment(UpdateCommentDto updateCommentDto)
     {
-        var updatedComment = await _commentService.UpdateCommentAsync(id, updateCommentDto);
+        var updatedComment = await _commentService.UpdateCommentAsync(updateCommentDto);
         if (updatedComment == null)
         {
             return NotFound();
@@ -54,10 +56,10 @@ public class CommentsController : ControllerBase
     }
 
     // DELETE: api/Comments/{id}
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteComment(int id)
+    [HttpDelete()]
+    public async Task<ActionResult> DeleteComment()
     {
-        var result = await _commentService.DeleteCommentAsync(id);
+        var result = await _commentService.DeleteCommentAsync();
         if (!result)
         {
             return NotFound();
