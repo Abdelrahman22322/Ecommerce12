@@ -26,13 +26,12 @@ namespace Ecommerce.Core.Domain.Entities
        
         [StringLength(256)]
         public string Password { get; set; }
-        
+
         //[Required(ErrorMessage = "Please confirm your password")]
         //[DataType(DataType.Password)]
         //[Compare("Password", ErrorMessage = "Password does not match")]
         //public string ConfirmPassword { get; set; }
-        
-
+       
         public bool IsActive { get; set; }
         public bool IsVerified { get; set; }
 

@@ -20,5 +20,8 @@ public interface IUserManagerRepository
     Task<bool> VerifyPasswordAsync(User user, string password);
     Task<User> AuthenticateUserAsync(string username, string password);
 
+    Task<PasswordResetToken> GeneratePasswordResetTokenAsync(User user);
+    Task<bool> ResetPasswordAsync(User user, string token, string newPassword);
+
 
 }

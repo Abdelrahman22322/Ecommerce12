@@ -121,6 +121,10 @@
               "target": "Package",
               "version": "[7.6.3, )"
             },
+            "Twilio": {
+              "target": "Package",
+              "version": "[7.6.0, )"
+            },
             "dotenv.net": {
               "target": "Package",
               "version": "[3.2.0, )"

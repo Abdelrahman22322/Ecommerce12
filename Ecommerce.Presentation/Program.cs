@@ -3,6 +3,7 @@ using System.Text;
 using AutoMapper;
 using CloudinaryDotNet;
 using Ecommerce.Core.Domain.Entities;
+using Ecommerce.Core.Domain.helper;
 using Ecommerce.Core.Domain.RepositoryContracts;
 using Ecommerce.Core.Domain.Validators;
 using Ecommerce.Core.DTO;
@@ -11,7 +12,6 @@ using Ecommerce.Core.Services;
 using Ecommerce.Core.ServicesContracts;
 using Ecommerce.Infrastructure.DbContext;
 using Ecommerce.Infrastructure.Repository;
-using Ecommerce.Presentation.helper;
 using Ecommerce.Services;
 using FluentValidation;
 using Hangfire;
@@ -25,6 +25,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PdfSharp.Charting;
 using CloudinarySettings = Wikandoo.Application.Multimedias.CloudinaryMedias.CloudinarySettings;
+using JWT = Ecommerce.Presentation.helper.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,12 +37,11 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // Add console logging
 
-//Add Generic Repository
+// Add Generic Repository
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 // Add specific repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
 
 // Add Hangfire services
 builder.Services.AddHangfire(configuration => configuration
@@ -58,7 +58,6 @@ builder.Services.AddHangfire(configuration => configuration
     }));
 
 builder.Services.AddHangfireServer();
-
 
 // Add services
 builder.Services.AddScoped<IProductService, ProductServices>();
@@ -90,6 +89,19 @@ builder.Services.AddScoped<IShippingMethodService, ShippingMethodService>();
 builder.Services.AddScoped<IShippingStateService, ShippingStateService>();
 builder.Services.AddScoped<IOrderStateService, OrderStateService>();
 
+// Add TokenCleanupService
+//builder.Services.AddScoped<ITokenCleanupService, TokenCleanupService>();
+builder.Services.AddSingleton<Func<IServiceProvider, ITokenCleanupService>>(sp =>
+{
+    return scopeServiceProvider =>
+    {
+        using (var scope = scopeServiceProvider.CreateScope())
+        {
+            return scope.ServiceProvider.GetRequiredService<ITokenCleanupService>();
+        }
+    };
+});
+builder.Services.AddScoped<ITokenCleanupService, TokenCleanupService>();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -110,6 +122,8 @@ builder.Services.AddSingleton(provider =>
     }
     return new Cloudinary(new Account(config.CloudName, config.ApiKey, config.ApiSecret));
 });
+
+builder.Services.Configure<Ecommerce.Core.Domain.helper.Twilio>(builder.Configuration.GetSection("Twilio"));
 
 
 builder.Services.AddAuthentication(o =>
@@ -190,7 +204,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Add CommentService with banned words
-var bannedWords = new List<string> { "ﬂ”„ﬂ", "·»ÊÂ", "„ ‰«ﬂ" ,"ﬁÕ»Â" ,"ŒÊ·"};
+var bannedWords = new List<string> { "ﬂ”„ﬂ", "·»ÊÂ", "„ ‰«ﬂ", "ﬁÕ»Â", "ŒÊ·" };
 builder.Services.AddScoped<ICommentService>(provider =>
 {
     var mapper = provider.GetRequiredService<IMapper>();
@@ -221,4 +235,23 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+//// Schedule the cleanup job to run every hour
+//var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
+//recurringJobManager.AddOrUpdate(
+//    "CleanupExpiredTokens",
+//    () => app.Services.GetService<ITokenCleanupService>()!.CleanupExpiredTokensAsync(),
+//    Cron.Hourly);
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var tokenCleanupFactory = scope.ServiceProvider.GetRequiredService<Func<IServiceProvider, ITokenCleanupService>>();
+    var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+
+    recurringJobManager.AddOrUpdate(
+        "TokenCleanupJob",
+        () => tokenCleanupFactory(app.Services).CleanupExpiredTokensAsync(),
+        Cron.Hourly);
+}
 app.Run();

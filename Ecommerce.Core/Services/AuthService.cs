@@ -75,7 +75,35 @@ namespace Ecommerce.Core.Services
             };
         }
 
+        public async Task<string> ForgetPasswordAsync(string email)
+        {
+            var user = await _userManagerRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                _logger.LogWarning("Invalid email.");
+                return "Invalid email.";
+            }
 
+            var token = await _userManagerRepository.GeneratePasswordResetTokenAsync(user);
+            var resetLink = $"https://localhost:5190/reset-password?email={email}&token={token}";
+
+            await _emailService.SendEmailAsync(email, "Password Reset", $"Reset your password using this link: {resetLink}");
+
+            return "Password reset link has been sent to your email.";
+        }
+
+        public async Task<bool> ResetPasswordAsync(string email, string token, string newPassword)
+        {
+            var user = await _userManagerRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                _logger.LogWarning("Invalid email.");
+                return false;
+            }
+
+            var result = await _userManagerRepository.ResetPasswordAsync(user, token, newPassword);
+            return result;
+        }
 
         //public async Task<AuthModel> LoginAsync(LoginModel model)
         //{

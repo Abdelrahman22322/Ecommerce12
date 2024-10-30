@@ -329,6 +329,31 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.ToTable("OrderStatuses");
                 });
 
+            modelBuilder.Entity("Ecommerce.Core.Domain.Entities.PasswordResetToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordResetTokens");
+                });
+
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
@@ -985,6 +1010,17 @@ namespace Ecommerce.Infrastructure.Migrations
                     b.Navigation("Discount");
 
                     b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Ecommerce.Core.Domain.Entities.PasswordResetToken", b =>
+                {
+                    b.HasOne("Ecommerce.Core.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ecommerce.Core.Domain.Entities.Product", b =>

@@ -49,6 +49,9 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.ProductTag> ProductTags { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Ecommerce.Core.Domain.Entities.Tag> Tags { get; set; }
 
+    
+    public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "EWO0h+bWyP4ChLFWhYjFJatVZr6RlQolTBBwCb0kZkXC+BxACVuY5Q3l9Ivm4MIR5uWnBJYhPjQDbm1/yTCH8g==",
+  "dgSpecHash": "Acx6e3Hqxl8csShtHPBoInOaj9DlQXQz7xDLaZxQu7imVegkALqRPtvN/klMPh2CsuOZH89d9m7rQGVxyslm9w==",
   "success": true,
   "projectFilePath": "C:\\Users\\ASUS\\source\\repos\\Ecommerce\\Ecommerce.Presentation\\Ecommerce.Presentation.csproj",
   "expectedPackageFiles": [
@@ -115,6 +115,8 @@
     "C:\\Users\\ASUS\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\system.collections.nongeneric\\4.3.0\\system.collections.nongeneric.4.3.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\system.collections.specialized\\4.3.0\\system.collections.specialized.4.3.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.composition.attributedmodel\\6.0.0\\system.composition.attributedmodel.6.0.0.nupkg.sha512",
@@ -195,6 +197,7 @@
     "C:\\Users\\ASUS\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\twilio\\7.6.0\\twilio.7.6.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\wikandoo.application\\4.3.3\\wikandoo.application.4.3.3.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\wikandoo.core\\4.3.3\\wikandoo.core.4.3.3.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\wikandoo.domain\\4.3.3\\wikandoo.domain.4.3.3.nupkg.sha512",

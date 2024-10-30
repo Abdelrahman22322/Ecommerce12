@@ -138,5 +138,31 @@ namespace Ecommerce.Presentation.Controllers
 
             return Ok();
         }
+
+
+        [HttpPost("forget-password")]
+        public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordDto model)
+        {
+            var result = await _authService.ForgetPasswordAsync(model.Email);
+            return Ok(result);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
+        {
+            var result = await _authService.ResetPasswordAsync(model.Email, model.Token, model.NewPassword);
+            return Ok(result);
+        }
     }
+}
+public class ForgetPasswordDto
+{
+    public string Email { get; set; }
+}
+
+public class ResetPasswordDto
+{
+    public string Email { get; set; }
+    public string Token { get; set; }
+    public string NewPassword { get; set; }
 }

@@ -15,4 +15,8 @@ public interface IAuthService
         Task<bool> VerifyEmailAsync(string email, string code);
         Task<AuthModel> CompleteRegistrationAsync(string email, string code);
 
+
+        Task<string> ForgetPasswordAsync(string email);
+        Task<bool> ResetPasswordAsync(string email, string token, string newPassword);
+
 }

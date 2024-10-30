@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -249,6 +250,47 @@ namespace Ecommerce.Infrastructure.Repository
         public async Task<User> AuthenticateUserAsync(string username, string password)
         {
             throw new NotImplementedException();
+        }
+
+
+       
+
+        public async Task<PasswordResetToken> GeneratePasswordResetTokenAsync(User user)
+        {
+            var token = new PasswordResetToken
+            {
+                Token = Guid.NewGuid().ToString(),
+                ExpiryDate = DateTime.UtcNow.AddHours(1),
+                UserId = user.Id
+            };
+
+            _context.PasswordResetTokens.Add(token);
+            await _context.SaveChangesAsync();
+            return token;
+        }
+
+        public async Task<bool> ResetPasswordAsync(User user, string token, string newPassword)
+        {
+            var resetToken = await _context.PasswordResetTokens
+                .FirstOrDefaultAsync(t => t.Token == token && t.UserId == user.Id);
+
+            if (resetToken == null || resetToken.ExpiryDate < DateTime.UtcNow)
+            {
+                return false;
+            }
+
+            user.Password = HashPassword(newPassword);
+            _context.PasswordResetTokens.Remove(resetToken);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
+        private string HashPassword(string password)
+        {
+            using var sha256 = SHA256.Create();
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return Convert.ToBase64String(hashedBytes);
         }
 
         private bool IsPasswordComplex(string password)
